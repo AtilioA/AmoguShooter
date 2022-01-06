@@ -24,20 +24,30 @@ void parseCircle(XMLElement *c)
 
     // Point center = {cx, cy};
 
-    string fill = c->Attribute("fill");
+    string circFill = c->Attribute("fill");
 
-    if (fill == "red")
+    if (circFill == "red")
     {
+        cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
     }
-    else if (fill == "green")
+    else if (circFill == "green")
     {
+        cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
     }
-    else if (fill == "blue")
+    else if (circFill == "blue")
     {
+        cout << "-- BACKGROUND --" << endl;
         color = {0.0, 0.0, 1.0};
     }
+    else
+    {
+        cout << "-- ARENA --" << endl;
+        color = {1.0, 1.0, 1.0};
+    }
+
+    cout << "cx: " << cx << " cy: " << cy << " r: " << r << " circFill: " << circFill << endl;
 
     // if (i == 1)
     // {
@@ -62,16 +72,26 @@ void parseRect(XMLElement *ret)
 
     if (rectFill == "red")
     {
+        cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
     }
     else if (rectFill == "green")
     {
+        cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
     }
     else if (rectFill == "blue")
     {
+        cout << "-- BACKGROUND --" << endl;
         color = {0.0, 0.0, 1.0};
     }
+    else
+    {
+        cout << "-- ARENA --" << endl;
+        color = {1.0, 1.0, 1.0};
+    }
+
+    cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
 
     // Arena *arena = new Arena(x, y, width, height, color);
     // arenaSVG = arena;
@@ -81,11 +101,13 @@ void parseSVGFile(string filepath)
 {
     XMLDocument arenaSVGfile;
 
+    cout << filepath << endl;
+
     arenaSVGfile.LoadFile(filepath.c_str());
 
     if (arenaSVGfile.ErrorID() != 0)
     {
-        cout << "Erro no arquivo de entrada config.xml" << endl;
+        cout << "Erro ao ler arquivo de entrada " << filepath << endl;
     }
     else
     {

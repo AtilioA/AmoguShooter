@@ -5,6 +5,8 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "include/svg_reader.hpp"
+
 #define INC_KEY 1
 #define INC_KEYIDLE 1
 
@@ -175,6 +177,8 @@ int main(int argc, char *argv[])
     glutKeyboardUpFunc(keyup);
 
     init();
+
+    parseSVGFile("input/arena_teste.svg");
 
     glutMainLoop();
 
