@@ -12,53 +12,99 @@
 // #define radiusWheel 30
 #define M_PI 3.14159265358979323846
 
-class Character
+class Character // abstract class
 {
     Point center;
     Color color;
     float radius;
-    GLfloat gX;
-    GLfloat gTheta1;
+    float height;
+
+    // Angle of each joint
+    GLfloat gThetaFoot;
+    GLfloat gThetaLeg;
+    GLfloat gThetaArm;
+
     GLfloat direction;
     GLfloat speed;
 
-private:
-    void DrawHead(GLint height, GLint width,
-                  GLfloat R, GLfloat G, GLfloat B);
-    void DrawBody(GLint radius, GLfloat R,
-                  GLfloat G, GLfloat B);
-    void DrawLeg(GLfloat x, GLfloat y, GLfloat thetaWheel,
-                 GLfloat R, GLfloat G, GLfloat B);
-    void DrawFoot(GLfloat x, GLfloat y, GLfloat thetaWheel,
-                  GLfloat R, GLfloat G, GLfloat B);
-    void DrawArm(GLfloat x, GLfloat y, GLfloat theta1,
-                 GLfloat theta2, GLfloat theta3);
-    void DrawCharacter(GLfloat x, GLfloat y, GLfloat thetaWheel,
-                       GLfloat theta1, GLfloat theta2, GLfloat theta3);
-
 public:
+    virtual void f() = 0;
+
+    void set_center(Point p) {
+        this->center = p;
+    }
+
+    Point get_center() {
+        return this->center;
+    }
+
+    void set_color(Color c) {
+        this->color = c;
+    }
+
+    Color get_color() {
+        return this->color;
+    }
+
+    void set_radius(float r) {
+        this->radius = r;
+    }
+
+    float get_radius() {
+        return this->radius;
+    }
+
+    void set_height(float h) {
+        this->height = h;
+    }
+
+    float get_height() {
+        return this->height;
+    }
+
     Character()
     {
-        gX = 0;
-        gTheta1 = 0;
+        // gX = 0;
+        gThetaFoot = 0;
+        gThetaLeg = 0;
+        gThetaArm = 0;
     };
+
     // void Draw()
     // {
     //   gTheta2, gTheta3);
     // };
 
     void RotateArm(GLfloat inc);
-    void RotateForearm(GLfloat inc);
+    void RotateLeg(GLfloat inc);
+    void RotateFoot(GLfloat inc);
     void MoveX(GLfloat dx);
 
-    // Tiro *Atira();
-    
-    GLfloat GetX()
-    {
-        return gX;
-    };
+    // Tiro *Shoot();
 
-    GLfloat GetY(){};
+    // GLfloat GetX()
+    // {
+    //     return 0;
+    // };
+
+    // GLfloat GetY()
+    // {
+    //     return 0;
+    // };
+
+private:
+    void DrawCharacter(GLfloat x, GLfloat y, GLfloat thetaWheel,
+                       GLfloat thetaFoot, GLfloat thetaLeg, GLfloat thetaArm);
+    void DrawFoot(GLfloat x, GLfloat y, GLfloat thetaWheel,
+                  GLfloat R, GLfloat G, GLfloat B);
+    void DrawLeg(GLfloat x, GLfloat y, GLfloat thetaWheel,
+                 GLfloat R, GLfloat G, GLfloat B);
+    void DrawBody(GLint radius, GLfloat R,
+                  GLfloat G, GLfloat B);
+    void DrawArm(GLfloat x, GLfloat y, GLfloat thetaFoot,
+                 GLfloat thetaLeg, GLfloat thetaArm);
+    void DrawHead(GLint height, GLint width,
+                  GLfloat R, GLfloat G, GLfloat B);
 };
 
 #endif /* CHARACTER_H */
