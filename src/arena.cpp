@@ -1,5 +1,5 @@
-
 #include <iostream>
-#include "input.hpp"
-#include "player.hpp"
-#include "arena.hpp"
+#include <stdio.h>
+#include "../include/arena.hpp"
+
+using namespace std;

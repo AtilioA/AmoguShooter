@@ -5,9 +5,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "robo.h"
-#include "alvo.h"
-
 #define INC_KEY 1
 #define INC_KEYIDLE 1
 
@@ -27,9 +24,9 @@ const GLint ViewingHeight = 500;
 // int animate = 0;
 
 // Componentes do mundo virtual sendo modelado
-Robo robo;
-Tiro *tiro = NULL; // Um tiro por vez
-Alvo alvo(0, 200); // Um alvo por vez
+// Robo robo;
+// Tiro *tiro = NULL; // Um tiro por vez
+// Alvo alvo(0, 200); // Um alvo por vez
 
 void renderScene(void)
 {
@@ -51,7 +48,7 @@ void keyPress(unsigned char key, int x, int y)
     switch (key)
     {
     case '1':
-        animate = !animate;
+        // animate = !animate;
         break;
     case 'a':
     case 'A':
@@ -63,7 +60,7 @@ void keyPress(unsigned char key, int x, int y)
         break;
     case 'w':
     case 'W':
-        player.JUMP();
+        // player.Jump();
         break;
     case ' ':
         // if (!tiro)

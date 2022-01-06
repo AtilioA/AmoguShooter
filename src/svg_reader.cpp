@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include "../include/character.hpp"
+#include "../include/player.hpp"
+#include "../include/enemy.hpp"
 #include "../include/arena.hpp"
 #include "../include/tinyxml2.hpp"
 
@@ -8,10 +10,10 @@ using namespace tinyxml2;
 using namespace std;
 
 extern Arena *arenaSVG;
-extern Lutador *lutadorPrincipal;
-extern Oponente *lutadorOponente;
+extern Player *player;
+extern Enemy *enemy;
 
-void parseCircle(XMLElement *c, int i)
+void parseCircle(XMLElement *c)
 {
     float cx, cy, r;
     Color color;
@@ -20,7 +22,7 @@ void parseCircle(XMLElement *c, int i)
     c->QueryFloatAttribute("cy", &cy);
     c->QueryFloatAttribute("r", &r);
 
-    Point center = {cx, cy};
+    // Point center = {cx, cy};
 
     string fill = c->Attribute("fill");
 
@@ -36,6 +38,7 @@ void parseCircle(XMLElement *c, int i)
     {
         color = {0.0, 0.0, 1.0};
     }
+
     // if (i == 1)
     // {
     //   lutadorPrincipal = new Lutador(center, r, color, 0);
@@ -89,7 +92,7 @@ void parseSVGFile(string filepath)
         XMLElement *svgHeader = arenaSVGfile.FirstChildElement("svg");
         XMLElement *svgBody = svgHeader->FirstChildElement();
 
-        int i = 0;
+        // int i = 0;
         while (svgBody != NULL)
         {
             string tagType = svgBody->Value();
@@ -100,7 +103,7 @@ void parseSVGFile(string filepath)
             }
             else if (tagType == "circle")
             {
-                parseCircle(svgBody, i);
+                parseCircle(svgBody);
             }
 
             svgBody = svgBody->NextSiblingElement();
