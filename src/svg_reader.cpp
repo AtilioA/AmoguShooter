@@ -1,9 +1,8 @@
 
 #include <iostream>
-#include "../include/input.hpp"
-#include "../include/player.hpp"
+#include "../include/character.hpp"
 #include "../include/arena.hpp"
-#include "../include/tinyxml2.h"
+#include "../include/tinyxml2.hpp"
 
 using namespace tinyxml2;
 using namespace std;
@@ -103,7 +102,7 @@ void parseSVGFile(string filepath)
             {
                 parseCircle(svgBody, i);
             }
-            
+
             svgBody = svgBody->NextSiblingElement();
         }
     }
