@@ -1,7 +1,7 @@
 #include <math.h>
 #include <GL/glut.h>
 
-#include "character.hpp"
+#include "../include/character.hpp"
 
 void Character::DrawHead(GLint radius, GLfloat R, GLfloat G, GLfloat B)
 {
@@ -72,31 +72,31 @@ void Character::DrawArm(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat
     glEnd();
 }
 
-void Character::DrawCharacter(GLfloat x, GLfloat y, GLfloat thetaFoot,
+void Character::DrawCharacter(GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B, GLfloat thetaFoot,
                               GLfloat thetaLeg, GLfloat thetaArm)
 {
     // Cada perna e pé
     glPushMatrix();
     glTranslatef(x, y, 0);
-    Character::DrawFoot(0, baseHeight, GLfloat R, GLfloat G, GLfloat B);
-    Character::DrawLeg(0, baseHeight, GLfloat R, GLfloat G, GLfloat B);
+    Character::DrawFoot(x, y, R, G, B);
+    Character::DrawLeg(x, y, R, G, B);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(x, y, 0);
-    Character::DrawFoot(0, baseHeight, GLfloat R, GLfloat G, GLfloat B);
-    Character::DrawLeg(0, baseHeight, GLfloat R, GLfloat G, GLfloat B);
+    Character::DrawFoot(x, y, R, G, B);
+    Character::DrawLeg(x, y, R, G, B);
     glPopMatrix();
 
     // Parte superior do personagem
     glPushMatrix();
-    Character::DrawBody(0, baseHeight, GLfloat R, GLfloat G, GLfloat B);
+    Character::DrawBody(x, y, R, G, B);
     glPopMatrix();
     // Ou transladar braço
-    Character::DrawArm(0, baseHeight, GLfloat R, GLfloat G, GLfloat B);
+    Character::DrawArm(x, y, R, G, B);
 
     // Constrói cabeça acima do tronco/corpo e termina
-    Character::DrawHead(radius);
+    Character::DrawHead(radius, R, G, B);
 }
 
 void Character::RotateFoot(GLfloat inc)
@@ -117,7 +117,7 @@ void Character::RotateArm(GLfloat inc)
 void Character::MoveEmX(GLfloat dx)
 {
     // Placeholder
-    GLdouble deltaTime = 1;
+    // GLdouble deltaTime = 1;
 
     // Character::gX += dx * deltaTime;
     // gThetaWheel -= (180 * dx * deltaTime) / (M_PI * radiusWheel);

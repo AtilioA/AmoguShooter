@@ -31,13 +31,13 @@ void parseCircle(XMLElement *c)
     {
         cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
-        enemy = new Enemy(position, r, color);
+        // enemy = new Enemy(position, r, color);
     }
     else if (circFill == "green")
     {
         cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
-        player = new Player(position, r, color);
+        // player = new Player(position, r, color);
     }
     else if (circFill == "blue")
     {

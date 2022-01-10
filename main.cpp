@@ -95,9 +95,11 @@ void init(void)
 {
     ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity(alpha).
+    glClearColor(0.15f, 0.15f, 0.15f, 1.0f); // Black, no opacity(alpha).
 
-    glMatrixMode(GL_PROJECTION);  // Select the projection matrix
+    glMatrixMode(GL_PROJECTION); // Select the projection matrix
+    glLoadIdentity();
+    // glOrtho(xlim1 / 2, xlim2 / 2, ylim1 / 2, ylim2 / 2, -100, 100);
     glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
             (ViewingWidth / 2),   // X coordinate of right edge
             -(ViewingHeight / 2), // Y coordinate of bottom edge

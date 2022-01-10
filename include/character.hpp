@@ -30,35 +30,43 @@ class Character // abstract class
 public:
     virtual void f() = 0;
 
-    void set_center(Point p) {
+    void set_center(Point p)
+    {
         this->center = p;
     }
 
-    Point get_center() {
+    Point get_center()
+    {
         return this->center;
     }
 
-    void set_color(Color c) {
+    void set_color(Color c)
+    {
         this->color = c;
     }
 
-    Color get_color() {
+    Color get_color()
+    {
         return this->color;
     }
 
-    void set_radius(float r) {
+    void set_radius(float r)
+    {
         this->radius = r;
     }
 
-    float get_radius() {
+    float get_radius()
+    {
         return this->radius;
     }
 
-    void set_height(float h) {
+    void set_height(float h)
+    {
         this->height = h;
     }
 
-    float get_height() {
+    float get_height()
+    {
         return this->height;
     }
 
@@ -78,7 +86,7 @@ public:
     void RotateArm(GLfloat inc);
     void RotateLeg(GLfloat inc);
     void RotateFoot(GLfloat inc);
-    void MoveX(GLfloat dx);
+    void MoveEmX(GLfloat dx);
 
     // Tiro *Shoot();
 
@@ -93,18 +101,13 @@ public:
     // };
 
 private:
-    void DrawCharacter(GLfloat x, GLfloat y, GLfloat thetaWheel,
-                       GLfloat thetaFoot, GLfloat thetaLeg, GLfloat thetaArm);
-    void DrawFoot(GLfloat x, GLfloat y, GLfloat thetaWheel,
-                  GLfloat R, GLfloat G, GLfloat B);
-    void DrawLeg(GLfloat x, GLfloat y, GLfloat thetaWheel,
-                 GLfloat R, GLfloat G, GLfloat B);
-    void DrawBody(GLint radius, GLfloat R,
-                  GLfloat G, GLfloat B);
-    void DrawArm(GLfloat x, GLfloat y, GLfloat thetaFoot,
-                 GLfloat thetaLeg, GLfloat thetaArm);
-    void DrawHead(GLint height, GLint width,
-                  GLfloat R, GLfloat G, GLfloat B);
+    void DrawCharacter(GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B, GLfloat thetaFoot,
+                       GLfloat thetaLeg, GLfloat thetaArm);
+    void DrawFoot(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */);
+    void DrawLeg(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */);
+    void DrawBody(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B);
+    void DrawArm(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */);
+    void DrawHead(GLint radius, GLfloat R, GLfloat G, GLfloat B);
 };
 
 #endif /* CHARACTER_H */
