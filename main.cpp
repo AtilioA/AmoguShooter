@@ -180,7 +180,8 @@ int main(int argc, char *argv[])
 
     init();
 
-    parseSVGFile("input/arena_teste.svg");
+
+    parseSVGFile("input/arena_azul.svg");
 
     glutMainLoop();
 
