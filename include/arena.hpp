@@ -19,7 +19,7 @@ typedef struct tColor
     float b;
 } Color;
 
-class Arena
+class ArenaComponent
 {
     Point pos;
     Color color;
@@ -27,8 +27,8 @@ class Arena
     float height;
 
 public:
-    Arena(float x, float y, float width, float height, Color c);
-    void draw_arena(float width, float height, Color c);
+    ArenaComponent(Point position, float width, float height, Color color);
+    void draw_arena_component(/*float width, float height, Color color*/);
 
     void set_vertex(Point p);
     Point get_pos();

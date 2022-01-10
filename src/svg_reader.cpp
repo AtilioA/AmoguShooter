@@ -1,5 +1,6 @@
 
 #include <iostream>
+
 #include "../include/character.hpp"
 #include "../include/player.hpp"
 #include "../include/enemy.hpp"
@@ -9,7 +10,7 @@
 using namespace tinyxml2;
 using namespace std;
 
-extern Arena *arenaSVG;
+extern ArenaComponent *arenaSVG;
 extern Player *player;
 extern Enemy *enemy;
 
@@ -22,7 +23,7 @@ void parseCircle(XMLElement *c)
     c->QueryFloatAttribute("cy", &cy);
     c->QueryFloatAttribute("r", &r);
 
-    // Point center = {cx, cy};
+    Point position = {cx, cy};
 
     string circFill = c->Attribute("fill");
 
@@ -30,11 +31,13 @@ void parseCircle(XMLElement *c)
     {
         cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
+        enemy = new Enemy(position, r, color);
     }
     else if (circFill == "green")
     {
         cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
+        player = new Player(position, r, color);
     }
     else if (circFill == "blue")
     {
@@ -48,15 +51,6 @@ void parseCircle(XMLElement *c)
     }
 
     cout << "cx: " << cx << " cy: " << cy << " r: " << r << " circFill: " << circFill << endl;
-
-    // if (i == 1)
-    // {
-    //   lutadorPrincipal = new Lutador(center, r, color, 0);
-    // }
-    // else
-    // {
-    //   lutadorOponente = new Oponente(center, r, color, 0);
-    // }
 }
 
 void parseRect(XMLElement *ret)
@@ -69,6 +63,8 @@ void parseRect(XMLElement *ret)
     ret->QueryFloatAttribute("width", &width);
     ret->QueryFloatAttribute("height", &height);
     string rectFill = ret->Attribute("fill");
+
+    Point position = {x, y};
 
     if (rectFill == "red")
     {
@@ -93,7 +89,8 @@ void parseRect(XMLElement *ret)
 
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
 
-    // Arena *arena = new Arena(x, y, width, height, color);
+    ArenaComponent *arenaComponent = new ArenaComponent(position, width, height, color);
+    arenaComponent->draw_arena_component();
     // arenaSVG = arena;
 }
 

@@ -17,6 +17,11 @@ public:
         this->set_height(radius * 2);
     };
 
+    virtual void f()
+    {
+        cout << "";
+    };
+
     void draw_player();
     void change_position(Point pos);
     void move_player(float dx, float dy);

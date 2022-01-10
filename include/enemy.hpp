@@ -17,6 +17,11 @@ public:
         this->set_height(radius * 2);
     };
 
+    virtual void f()
+    {
+        cout << "";
+    };
+
     void draw_enemy();
     void change_position(Point pos);
     void move_enemy(float dx, float dy);
