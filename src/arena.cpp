@@ -18,13 +18,13 @@ void ArenaComponent::draw_arena_component(/*float width, float height, Color col
 {
     glColor3f(this->color.r, this->color.g, this->color.b);
 
-    cout << "this->pos.x: " << this->pos.x << " this->pos.y: " << this->pos.y << " this->width: " << this->width << " this->height: " << this->height << " this->color.r: " << this->color.r << " this->color.g: " << this->color.g << " this->color.b: " << this->color.b << endl;
+    cout << "this->pos.x: " << this->pos.x << " this->pos.y: " << this->pos.y << " this->width: " << this->width << " this->height: " << this->height << /*" this->color.r: " << this->color.r << " this->color.g: " << this->color.g << " this->color.b: " << this->color.b << */ endl;
 
     glBegin(GL_QUADS);
-    glVertex2f(0, 0);
-    glVertex2f(this->width, 0);
+    glVertex2f(this->pos.x, this->pos.y);
+    glVertex2f(this->width, this->pos.y);
     glVertex2f(this->width, this->height);
-    glVertex2f(0, this->height);
+    glVertex2f(this->pos.x, this->height);
     glEnd();
 
     // glBegin(GL_QUADS);
