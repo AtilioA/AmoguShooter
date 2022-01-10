@@ -1,8 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <rect
-     width="364.1373"
-     height="300.659218"
-     x="-163.43195"
-     y="95.538696"
-     fill="blue" />
+  <rect width="364.1373" height="300.659218" x="-163.43195" y="95.538696" fill="blue" />
+  <rect width="5.8586302" height="6.614583" x="20.169592" y="180.7007" fill="black" />
+  <rect width="23.62351" height="3.0238097" x="45.26265" y="163.29092" fill="black" />
+  <rect width="23.623512" height="3.0238097" x="65.788681" y="145.82112" fill="black" />
 </svg>

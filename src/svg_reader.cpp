@@ -84,7 +84,7 @@ void parseRect(XMLElement *ret)
     else
     {
         cout << "-- ARENA --" << endl;
-        color = {1.0, 1.0, 1.0};
+        color = {0.0, 0.0, 0.0};
     }
 
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
