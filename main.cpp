@@ -5,6 +5,9 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "include/enemy.hpp"
+#include "include/player.hpp"
+#include "include/character.hpp"
 #include "include/svg_reader.hpp"
 
 #define INC_KEY 1
@@ -15,8 +18,8 @@ int keyStatus[256];
 
 // Window dimensions
 // "será exibida em uma janela de 500x500 pixel do sistema operacional"
-const GLint Width = 500;
-const GLint Height = 500;
+const GLint Width = 700;
+const GLint Height = 700;
 
 // Viewing dimensions
 const GLint ViewingWidth = 500;
@@ -34,6 +37,15 @@ void renderScene(void)
 {
     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
+
+    parseSVGFile("input/arena_teste.svg");
+
+    // glBegin(GL_QUADS);
+    // glVertex2f(0, 0);
+    // glVertex2f(200, 0);
+    // glVertex2f(200, 50);
+    // glVertex2f(0, 50);
+    // glEnd();
 
     // robo.Draw();
 
@@ -95,7 +107,8 @@ void init(void)
 {
     ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
-    glClearColor(0.15f, 0.15f, 0.15f, 1.0f); // Black, no opacity(alpha).
+    // glClearColor((GLfloat)r, (GLfloat)g, (GLfloat)b, 1);
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // Dark gray, no opacity(alpha).
 
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
     glLoadIdentity();
@@ -179,9 +192,6 @@ int main(int argc, char *argv[])
     glutKeyboardUpFunc(keyup);
 
     init();
-
-
-    parseSVGFile("input/arena_azul.svg");
 
     glutMainLoop();
 
