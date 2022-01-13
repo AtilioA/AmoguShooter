@@ -20,19 +20,21 @@ void ArenaComponent::draw_arena_component(/*float width, float height, Color col
 
     cout << "this->pos.x: " << this->pos.x << " this->pos.y: " << this->pos.y << " this->width: " << this->width << " this->height: " << this->height << /*" this->color.r: " << this->color.r << " this->color.g: " << this->color.g << " this->color.b: " << this->color.b << */ endl;
 
-    glBegin(GL_QUADS);
-    glVertex2f(this->pos.x, this->pos.y);
-    glVertex2f(this->width, this->pos.y);
+    glPushMatrix();
+
+    glTranslatef(this->pos.x, -this->pos.y, 0);
+
+    glRotatef(180, 0, 0, 1);
+
+    // Fix polygons being drawn upside down
+    glBegin(GL_POLYGON);
+    // clang-format off
+    glVertex2f(-this->width, 0);
+    glVertex2f(this->width, 0);
     glVertex2f(this->width, this->height);
-    glVertex2f(this->pos.x, this->height);
+    glVertex2f(-this->width, this->height);
     glEnd();
 
-    // glBegin(GL_QUADS);
-    // // clang-format off
-    //     glVertex2f(0, 0);
-    //     glVertex2f(this->width, 0);
-    //     glVertex2f(this->width, this->height);
-    //     glVertex2f(0, this->height);
-    // // clang-format on
-    // glEnd();
+
+    glPopMatrix();
 }
