@@ -14,6 +14,7 @@
 
 class Character // abstract class
 {
+private:
     Point center;
     Color color;
     float radius;
@@ -78,7 +79,7 @@ public:
         gThetaArm = 0;
     };
 
-    // void Draw()
+    // void draw()
     // {
     //   gTheta2, gTheta3);
     // };
@@ -100,14 +101,14 @@ public:
     //     return 0;
     // };
 
-private:
-    void DrawCharacter(GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B, GLfloat thetaFoot,
-                       GLfloat thetaLeg, GLfloat thetaArm);
-    void DrawFoot(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */);
-    void DrawLeg(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */);
-    void DrawBody(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B);
-    void DrawArm(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */);
-    void DrawHead(GLint radius, GLfloat R, GLfloat G, GLfloat B);
+    void draw_character(/*, GLfloat thetaFoot,
+                        GLfloat thetaLeg, GLfloat thetaArm*/
+    );
+    void draw_foot(/*, GLfloat theta */);
+    void draw_leg(/*, GLfloat theta */);
+    void draw_body();
+    void draw_arm(/*, GLfloat theta */);
+    void draw_head(GLint radius);
 };
 
 #endif /* CHARACTER_H */

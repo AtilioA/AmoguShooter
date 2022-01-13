@@ -3,9 +3,9 @@
 
 #include "../include/character.hpp"
 
-void Character::DrawHead(GLint radius, GLfloat R, GLfloat G, GLfloat B)
+void Character::draw_head(GLint radius)
 {
-    glColor3f(R, G, B);
+    glColor3f(color.r, color.g, color.b);
 
     glPointSize(6);
 
@@ -20,83 +20,84 @@ void Character::DrawHead(GLint radius, GLfloat R, GLfloat G, GLfloat B)
 }
 
 // Draw a sequence of points representing the wheel of the character
-void Character::DrawBody(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B)
+void Character::draw_body()
 {
-    glColor3f(R, G, B);
+    glColor3f(color.r, color.g, color.b);
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-width / 2, 0);
-        glVertex2f(width / 2, 0);
-        glVertex2f(width / 2, height);
-        glVertex2f(-width / 2, height);
+        glVertex2f(-this->radius / 2, 0);
+        glVertex2f(this->radius / 2, 0);
+        glVertex2f(this->radius / 2, height);
+        glVertex2f(-this->radius / 2, height);
     // clang-format on
     glEnd();
 }
 
-void Character::DrawLeg(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */)
+void Character::draw_leg(/*, GLfloat theta */)
 {
-    glColor3f(R, G, B);
+    glColor3f(color.r, color.g, color.b);
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-width / 2, 0);
-        glVertex2f(width / 2, 0);
-        glVertex2f(width / 2, height);
-        glVertex2f(-width / 2, height);
+        glVertex2f(-this->radius / 2, 0);
+        glVertex2f(this->radius / 2, 0);
+        glVertex2f(this->radius / 2, height);
+        glVertex2f(-this->radius / 2, height);
     // clang-format on
     glEnd();
 }
 
-void Character::DrawFoot(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */)
+void Character::draw_foot(/*, GLfloat theta */)
 {
-    glColor3f(R, G, B);
+    glColor3f(color.r, color.g, color.b);
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-width / 2, 0);
-        glVertex2f(width / 2, 0);
-        glVertex2f(width / 2, height);
-        glVertex2f(-width / 2, height);
+        glVertex2f(-this->radius / 2, 0);
+        glVertex2f(this->radius / 2, 0);
+        glVertex2f(this->radius / 2, height);
+        glVertex2f(-this->radius / 2, height);
     // clang-format on
     glEnd();
 }
 
-void Character::DrawArm(GLint width, GLint height, GLfloat R, GLfloat G, GLfloat B /*, GLfloat theta */)
+void Character::draw_arm(/*, GLfloat theta */)
 {
-    glColor3f(R, G, B);
+    glColor3f(color.r, color.g, color.b);
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-width / 2, 0);
-        glVertex2f(width / 2, 0);
-        glVertex2f(width / 2, height);
-        glVertex2f(-width / 2, height);
+        glVertex2f(-this->radius / 2, 0);
+        glVertex2f(this->radius / 2, 0);
+        glVertex2f(this->radius / 2, height);
+        glVertex2f(-this->radius / 2, height);
     // clang-format on
     glEnd();
 }
 
-void Character::DrawCharacter(GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B, GLfloat thetaFoot,
-                              GLfloat thetaLeg, GLfloat thetaArm)
+void Character::draw_character(/*, GLfloat thetaFoot,
+                              GLfloat thetaLeg, GLfloat thetaArm*/
+)
 {
     // Cada perna e pé
     glPushMatrix();
-    glTranslatef(x, y, 0);
-    Character::DrawFoot(x, y, R, G, B);
-    Character::DrawLeg(x, y, R, G, B);
+    glTranslatef(this->center.x, this->center.y, 0);
+
+    Character::draw_foot();
+    Character::draw_leg();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(x, y, 0);
-    Character::DrawFoot(x, y, R, G, B);
-    Character::DrawLeg(x, y, R, G, B);
+    glTranslatef(this->center.x, this->center.y, 0);
+    Character::draw_foot();
+    Character::draw_leg();
     glPopMatrix();
 
     // Parte superior do personagem
     glPushMatrix();
-    Character::DrawBody(x, y, R, G, B);
+    Character::draw_body();
     glPopMatrix();
     // Ou transladar braço
-    Character::DrawArm(x, y, R, G, B);
+    Character::draw_arm();
 
-    // Constrói cabeça acima do tronco/corpo e termina
-    Character::DrawHead(radius, R, G, B);
+    // Constrói cabeça acima do tronco/this->radius, height);
 }
 
 void Character::RotateFoot(GLfloat inc)
@@ -124,7 +125,7 @@ void Character::MoveEmX(GLfloat dx)
 }
 
 // Funcao auxiliar de rotacao
-void RotatePoint(GLfloat x, GLfloat y, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
+void RotatePoint(Point position, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
 {
 }
 
