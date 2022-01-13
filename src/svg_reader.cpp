@@ -5,6 +5,7 @@
 #include "../include/player.hpp"
 #include "../include/enemy.hpp"
 #include "../include/arena.hpp"
+// #include "../include/terrain.hpp"
 #include "../include/tinyxml2.hpp"
 
 using namespace tinyxml2;
@@ -12,7 +13,6 @@ using namespace std;
 
 extern ArenaComponent *arenaSVG;
 extern Player *player;
-extern Enemy *enemy;
 
 void parseCircle(XMLElement *c)
 {
@@ -31,7 +31,8 @@ void parseCircle(XMLElement *c)
     {
         cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
-        // enemy = new Enemy(position, r, color);
+        Enemy *enemy = new Enemy(position, r, color);
+        enemy->draw_character();
     }
     else if (circFill == "green")
     {
@@ -66,25 +67,15 @@ void parseRect(XMLElement *ret)
 
     Point position = {x, y};
 
-    if (rectFill == "red")
+    if (rectFill == "black")
     {
-        cout << "-- ENEMY --" << endl;
-        color = {1.0, 0.0, 0.0};
-    }
-    else if (rectFill == "green")
-    {
-        cout << "-- PLAYER --" << endl;
-        color = {0.0, 1.0, 0.0};
+        cout << "-- TERRAIN --" << endl;
+        color = {0.0, 0.0, 0.0};
     }
     else if (rectFill == "blue")
     {
         cout << "-- BACKGROUND --" << endl;
         color = {0.0, 0.0, 1.0};
-    }
-    else
-    {
-        cout << "-- ARENA --" << endl;
-        color = {0.0, 0.0, 0.0};
     }
 
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
