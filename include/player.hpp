@@ -24,7 +24,7 @@ public:
 
     void draw_player();
     void change_position(Point pos);
-    void move_player(float dx, float dy);
+    // void move_player(float dx, float dy);
 
     // Point update_player(bool w, bool s, bool a, bool d, GLdouble time);
 };

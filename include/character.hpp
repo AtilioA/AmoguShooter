@@ -104,6 +104,7 @@ public:
     void draw_character(/*, GLfloat thetaFoot,
                         GLfloat thetaLeg, GLfloat thetaArm*/
     );
+    void move_character(float dx, float dy);
     void draw_foot(/*, GLfloat theta */);
     void draw_leg(/*, GLfloat theta */);
     void draw_body();

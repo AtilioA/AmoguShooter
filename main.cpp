@@ -18,8 +18,8 @@ int keyStatus[256];
 
 // Window dimensions
 // "será exibida em uma janela de 500x500 pixel do sistema operacional"
-const GLint Width = 700;
-const GLint Height = 700;
+const GLint Width = 500;
+const GLint Height = 500;
 
 // Viewing dimensions
 const GLint ViewingWidth = 500;
@@ -29,7 +29,7 @@ const GLint ViewingHeight = 500;
 // int animate = 0;
 
 // Componentes do mundo virtual sendo modelado
-// Robo robo;
+Player player;
 // Tiro *tiro = NULL; // Um tiro por vez
 // Alvo alvo(0, 200); // Um alvo por vez
 
@@ -125,16 +125,28 @@ void init(void)
 
 void idle(void)
 {
-    // double inc = INC_KEYIDLE;
-    // // Treat keyPress
-    // if (keyStatus[(int)('a')])
-    // {
-    //     robo.MoveEmX(-inc);
-    // }
-    // if (keyStatus[(int)('d')])
-    // {
-    //     robo.MoveEmX(inc);
-    // }
+    static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
+    GLdouble curTime, deltaTime;
+    curTime = glutGet(GLUT_ELAPSED_TIME);
+    deltaTime = curTime - prevTime;
+    prevTime = curTime;
+    framerate = 1.0 / deltaTime * 1000;
+
+    double inc = INC_KEYIDLE;
+    if (!shouldPreserveFramerateSpeed)
+    {
+        deltaTime = 1;
+    }
+    double inc = INC_KEYIDLE;
+    // Treat keyPress
+    if (keyStatus[(int)('a')])
+    {
+        player.move_player(-inc, deltaTime);
+    }
+    if (keyStatus[(int)('d')])
+    {
+        player.move_player(inc, deltaTime);
+    }
 
     // // Trata o tiro (só permite um tiro por vez)
     // // Poderia usar uma lista para tratar varios tiros

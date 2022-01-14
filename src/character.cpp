@@ -152,12 +152,12 @@ void Character::rotate_arm(GLfloat inc)
     Character::gThetaArm += inc;
 }
 
-void Character::move_em_x(GLfloat dx)
+void Character::move_character(GLfloat dx, GLfloat deltaTime)
 {
     // Placeholder
     // GLdouble deltaTime = 1;
 
-    // Character::gX += dx * deltaTime;
+    Character::center.x += dx * deltaTime;
     // gThetaWheel -= (180 * dx * deltaTime) / (M_PI * radiusWheel);
 }
 
