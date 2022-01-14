@@ -84,10 +84,10 @@ public:
     //   gTheta2, gTheta3);
     // };
 
-    void RotateArm(GLfloat inc);
-    void RotateLeg(GLfloat inc);
-    void RotateFoot(GLfloat inc);
-    void MoveEmX(GLfloat dx);
+    void rotate_arm(GLfloat inc);
+    void rotate_leg(GLfloat inc);
+    void rotate_foot(GLfloat inc);
+    void move_em_x(GLfloat dx);
 
     // Tiro *Shoot();
 
@@ -108,7 +108,7 @@ public:
     void draw_leg(/*, GLfloat theta */);
     void draw_body();
     void draw_arm(/*, GLfloat theta */);
-    void draw_head(GLint radius);
+    void draw_head(/* GLint radius */);
 };
 
 #endif /* CHARACTER_H */

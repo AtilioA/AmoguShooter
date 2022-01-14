@@ -35,6 +35,5 @@ void ArenaComponent::draw_arena_component(/*float width, float height, Color col
     glVertex2f(-this->width, this->height);
     glEnd();
 
-
     glPopMatrix();
 }
