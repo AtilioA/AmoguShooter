@@ -29,9 +29,12 @@ const GLint ViewingHeight = 500;
 // int animate = 0;
 
 // Componentes do mundo virtual sendo modelado
-Player player;
+Player *player;
 // Tiro *tiro = NULL; // Um tiro por vez
 // Alvo alvo(0, 200); // Um alvo por vez
+
+static bool shouldPreserveFramerateSpeed = true;
+static GLdouble framerate = 0;
 
 void renderScene(void)
 {
@@ -132,20 +135,20 @@ void idle(void)
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
 
-    double inc = INC_KEYIDLE;
     if (!shouldPreserveFramerateSpeed)
     {
         deltaTime = 1;
     }
+
     double inc = INC_KEYIDLE;
     // Treat keyPress
     if (keyStatus[(int)('a')])
     {
-        player.move_player(-inc, deltaTime);
+        player->move_character(-inc, deltaTime);
     }
     if (keyStatus[(int)('d')])
     {
-        player.move_player(inc, deltaTime);
+        player->move_character(inc, deltaTime);
     }
 
     // // Trata o tiro (só permite um tiro por vez)
