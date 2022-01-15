@@ -38,7 +38,8 @@ void parseCircle(XMLElement *c)
     {
         cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
-        // player = new Player(position, r, color);
+        player = new Player(position, r, color);
+        player->draw_character();
     }
     else if (circFill == "blue")
     {
