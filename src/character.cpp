@@ -7,7 +7,7 @@ void Character::draw_head()
 {
     glColor3f(172.0 / 255, 66.0 / 255, 85.0 / 255); // rgb(172,66,85)
 
-    glPointSize(4);
+    glPointSize(3);
 
     glBegin(GL_POINTS);
     // clang-format off
@@ -73,68 +73,34 @@ void Character::draw_arm(/*, GLfloat theta */)
     glEnd();
 }
 
-void Character::draw_character(/*, GLfloat thetaFoot,
-                              GLfloat thetaLeg, GLfloat thetaArm*/
-)
+// Draw a character
+void Character::draw_character()
 {
     glPushMatrix();
 
-    // glTranslatef(0, -this->center.y, 0);
-    // glRotatef(180, 0, 0, 1);
-
-    // Cada perna e pé
-    glPushMatrix();
-    glTranslatef(this->center.x + 2, this->center.y - this->radius, 0);
-    glRotatef(-170, 0, 0, 1);
-    Character::draw_foot();
-    glPopMatrix();
+    glTranslatef(this->center.x, -this->center.y, 0);
+    // glRotatef(theta, 0, 0, 1);
 
     glPushMatrix();
-    glTranslatef(this->center.x, this->center.y - this->radius, 0);
     glTranslatef(0, this->height / 2, 0);
-    glRotatef(-160, 0, 0, 1);
-    Character::draw_leg();
+    this->draw_leg(/*, theta */);
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(this->center.x - 2, this->center.y - this->radius, 0);
-    glRotatef(170, 0, 0, 1);
-    Character::draw_foot();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(this->center.x, this->center.y - this->radius, 0);
     glTranslatef(0, this->height / 2, 0);
-    glRotatef(160, 0, 0, 1);
-    Character::draw_leg();
-    glPopMatrix();
-
-    // Parte superior do personagem
-    glPushMatrix();
-    glTranslatef(this->center.x, this->center.y - this->radius, 0);
-    glTranslatef(0, this->height / 2, 0);
-    glTranslatef(0, this->height / 2, 0);
-    glRotatef(-90, 0, 0, 1);
-    Character::draw_arm();
+    this->draw_foot(/*, theta */);
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(this->center.x, this->center.y - this->radius, 0);
     glTranslatef(0, this->height / 2, 0);
-    Character::draw_body();
+    this->draw_arm(/*, theta */);
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(this->center.x, this->center.y, 0);
-    glTranslatef(0, this->height, 0);
-    Character::draw_head();
-    glPopMatrix();
+    this->draw_body();
 
-    // glEnd();
+    this->draw_head();
 
     glPopMatrix();
-
-    // Constrói cabeça acima do tronco/this->radius, this->height / 2);
 }
 
 void Character::rotate_foot(GLfloat inc)
