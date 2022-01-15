@@ -22,17 +22,11 @@ void ArenaComponent::draw_arena_component(/*float width, float height, Color col
 
     glPushMatrix();
 
-    glTranslatef(this->pos.x, -this->pos.y, 0);
-
-    glRotatef(180, 0, 0, 1);
-
-    // Fix polygons being drawn upside down
     glBegin(GL_POLYGON);
-    // clang-format off
-    glVertex2f(-this->width, 0);
-    glVertex2f(this->width, 0);
-    glVertex2f(this->width, this->height);
-    glVertex2f(-this->width, this->height);
+    glVertex2f(this->pos.x, -this->pos.y);
+    glVertex2f(this->pos.x + this->width, -this->pos.y);
+    glVertex2f(this->pos.x + this->width, -this->pos.y - this->height);
+    glVertex2f(this->pos.x, -this->pos.y - this->height);
     glEnd();
 
     glPopMatrix();
