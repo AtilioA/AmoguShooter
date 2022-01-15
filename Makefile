@@ -39,5 +39,5 @@ exe:
 
 # Limpa objetos e o executável do programa
 clean:
-	-rm $(OBJ)/*.o
-	-rm $(EXE)
+	@rm $(OBJ)/*.o
+	@rm $(EXE)
