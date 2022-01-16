@@ -1,9 +1,10 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include <iostream>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "../include/character.hpp"
+#include "character.hpp"
 
 class Enemy : public Character
 {
@@ -19,7 +20,7 @@ public:
 
     virtual void f()
     {
-        cout << "";
+        std::cout << "";
     };
 
     void draw_enemy();

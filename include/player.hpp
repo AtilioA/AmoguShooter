@@ -1,9 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <iostream>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "../include/character.hpp"
+#include "character.hpp"
 
 class Player : public Character
 {
@@ -19,7 +20,7 @@ public:
 
     virtual void f()
     {
-        cout << "";
+        std::cout << "";
     };
 
     void draw_player();
