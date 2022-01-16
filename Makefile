@@ -35,10 +35,10 @@ $(OBJ)/$(PROJETO).o: $(PROJETO).cpp
 	$(CC) -c $(CFLAGS) $(PROJETO).cpp -o "$(OBJ)/$(PROJETO).o"
 
 run: all
-	./$(EXE) "input/arena_teste.svg"
+	./$(EXE) input/arena_teste.svg
 
 exe:
-	./$(EXE) "input/arena_teste.svg"
+	./$(EXE) input/arena_teste.svg
 
 # Limpa objetos e o executável do programa
 clean:

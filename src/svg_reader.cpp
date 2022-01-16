@@ -14,18 +14,18 @@ using namespace std;
 extern Game *gameSVG;
 extern Player *player;
 
-void parseCircle(XMLElement *c)
+void parseCircle(XMLElement *circ)
 {
     float cx, cy, r;
     Color color;
 
-    c->QueryFloatAttribute("cx", &cx);
-    c->QueryFloatAttribute("cy", &cy);
-    c->QueryFloatAttribute("r", &r);
+    circ->QueryFloatAttribute("cx", &cx);
+    circ->QueryFloatAttribute("cy", &cy);
+    circ->QueryFloatAttribute("r", &r);
 
     Point position = {cx, cy};
 
-    string circFill = c->Attribute("fill");
+    string circFill = circ->Attribute("fill");
 
     if (circFill == "red")
     {
@@ -55,16 +55,16 @@ void parseCircle(XMLElement *c)
     cout << "cx: " << cx << " cy: " << cy << " r: " << r << " circFill: " << circFill << endl;
 }
 
-void parseRect(XMLElement *ret)
+void parseRect(XMLElement *rect)
 {
     float x, y, width, height;
     Color color;
 
-    ret->QueryFloatAttribute("x", &x);
-    ret->QueryFloatAttribute("y", &y);
-    ret->QueryFloatAttribute("width", &width);
-    ret->QueryFloatAttribute("height", &height);
-    string rectFill = ret->Attribute("fill");
+    rect->QueryFloatAttribute("x", &x);
+    rect->QueryFloatAttribute("y", &y);
+    rect->QueryFloatAttribute("width", &width);
+    rect->QueryFloatAttribute("height", &height);
+    string rectFill = rect->Attribute("fill");
 
     Point position = {x, y};
 
@@ -82,7 +82,8 @@ void parseRect(XMLElement *ret)
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
 
     Terrain *terrain = new Terrain(position, width, height, color);
-    // Game *game = new Game(position, width, height, color);
+    // game->add_terrain(terrain);
+    // Game game = new Game(position, width, height, color);
     // game->draw_game_component();
     // gameSVG = game;
 }
@@ -104,7 +105,8 @@ void parseSVGFile(string filepath)
         XMLElement *svgHeader = gameSVGfile.FirstChildElement("svg");
         XMLElement *svgBody = svgHeader->FirstChildElement();
 
-        // int i = 0;
+        // Create Game object and use it to add the game components such as terrain, enemies, player.
+
         while (svgBody != NULL)
         {
             string tagType = svgBody->Value();
@@ -113,7 +115,7 @@ void parseSVGFile(string filepath)
             {
                 parseRect(svgBody);
             }
-            else if (tagType == "circle")
+            else
             {
                 parseCircle(svgBody);
             }
