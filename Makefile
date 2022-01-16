@@ -7,14 +7,17 @@ EXE 	 := trabalhocg
 PROJETO  := main
 
 # Cria objetos de todos os arquivos de código-fonte para então linká-los no programa final
-all: clean $(OBJ)/tinyxml2.o $(OBJ)/arena.o $(OBJ)/character.o $(OBJ)/player.o $(OBJ)/enemy.o $(OBJ)/svg_reader.o $(OBJ)/$(PROJETO).o
+all: clean $(OBJ)/tinyxml2.o $(OBJ)/game.o $(OBJ)/terrain.o $(OBJ)/character.o $(OBJ)/player.o $(OBJ)/enemy.o $(OBJ)/svg_reader.o $(OBJ)/$(PROJETO).o
 	$(CC) $(OBJ)/*.o -o $(EXE) $(CFLAGS)
 
 $(OBJ)/tinyxml2.o: $(SRC)/tinyxml2.cpp $(INC)/tinyxml2.hpp
 	$(CC) -c $(CFLAGS) "$(SRC)/tinyxml2.cpp" -o "$(OBJ)/tinyxml2.o"
 
-$(OBJ)/arena.o: $(SRC)/arena.cpp $(INC)/arena.hpp
-	$(CC) -c $(CFLAGS) "$(SRC)/arena.cpp" -o "$(OBJ)/arena.o"
+$(OBJ)/game.o: $(SRC)/game.cpp $(INC)/game.hpp
+	$(CC) -c $(CFLAGS) "$(SRC)/game.cpp" -o "$(OBJ)/game.o"
+
+$(OBJ)/terrain.o: $(SRC)/terrain.cpp $(INC)/terrain.hpp
+	$(CC) -c $(CFLAGS) "$(SRC)/terrain.cpp" -o "$(OBJ)/terrain.o"
 
 $(OBJ)/character.o: $(SRC)/character.cpp $(INC)/character.hpp
 	$(CC) -c $(CFLAGS) "$(SRC)/character.cpp" -o "$(OBJ)/character.o"

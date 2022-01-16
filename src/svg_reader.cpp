@@ -4,14 +4,14 @@
 #include "../include/character.hpp"
 #include "../include/player.hpp"
 #include "../include/enemy.hpp"
-#include "../include/arena.hpp"
-// #include "../include/terrain.hpp"
+#include "../include/game.hpp"
+#include "../include/terrain.hpp"
 #include "../include/tinyxml2.hpp"
 
 using namespace tinyxml2;
 using namespace std;
 
-extern ArenaComponent *arenaSVG;
+extern Game *gameSVG;
 extern Player *player;
 
 void parseCircle(XMLElement *c)
@@ -48,7 +48,7 @@ void parseCircle(XMLElement *c)
     }
     else
     {
-        cout << "-- ARENA --" << endl;
+        cout << "-- TERRAIN --" << endl;
         color = {1.0, 1.0, 1.0};
     }
 
@@ -81,26 +81,27 @@ void parseRect(XMLElement *ret)
 
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
 
-    ArenaComponent *arenaComponent = new ArenaComponent(position, width, height, color);
-    arenaComponent->draw_arena_component();
-    // arenaSVG = arena;
+    Terrain *terrain = new Terrain(position, width, height, color);
+    // Game *game = new Game(position, width, height, color);
+    // game->draw_game_component();
+    // gameSVG = game;
 }
 
 void parseSVGFile(string filepath)
 {
-    XMLDocument arenaSVGfile;
+    XMLDocument gameSVGfile;
 
     cout << filepath << endl;
 
-    arenaSVGfile.LoadFile(filepath.c_str());
+    gameSVGfile.LoadFile(filepath.c_str());
 
-    if (arenaSVGfile.ErrorID() != 0)
+    if (gameSVGfile.ErrorID() != 0)
     {
         cout << "Erro ao ler arquivo de entrada " << filepath << endl;
     }
     else
     {
-        XMLElement *svgHeader = arenaSVGfile.FirstChildElement("svg");
+        XMLElement *svgHeader = gameSVGfile.FirstChildElement("svg");
         XMLElement *svgBody = svgHeader->FirstChildElement();
 
         // int i = 0;
