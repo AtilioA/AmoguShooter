@@ -19,7 +19,7 @@ class Game
     Player player;
 
 public:
-    Game(Point position, float width, float height, Color color);
+    Game(Point position, GLfloat width, GLfloat height, Color color);
 
     void add_enemy(Enemy enemy);
     vector<Enemy> get_enemies();

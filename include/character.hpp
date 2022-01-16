@@ -10,8 +10,8 @@ class Character // abstract class
 private:
     Point center;
     Color color;
-    float radius;
-    float height;
+    GLfloat radius;
+    GLfloat height;
 
     // Angle of each joint
     GLfloat gThetaFoot;
@@ -30,11 +30,11 @@ public:
     void set_color(Color c);
     Color get_color();
 
-    void set_radius(float r);
-    float get_radius();
+    void set_radius(GLfloat r);
+    GLfloat get_radius();
 
-    void set_height(float h);
-    float get_height();
+    void set_height(GLfloat h);
+    GLfloat get_height();
 
     Character()
     {
@@ -63,7 +63,7 @@ public:
     void draw_character(/*, GLfloat thetaFoot,
                         GLfloat thetaLeg, GLfloat thetaArm*/
     );
-    void move_character(float dx, float dy);
+    void move_character(GLfloat dx, GLfloat dy);
     void draw_foot(/*, GLfloat theta */);
     void draw_leg(/*, GLfloat theta */);
     void draw_body();

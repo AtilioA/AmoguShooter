@@ -10,7 +10,7 @@ class Player : public Character
 {
 
 public:
-    Player(Point pos, float radius, Color color)
+    Player(Point pos, GLfloat radius, Color color)
     {
         this->set_center(pos);
         this->set_radius(radius);
@@ -25,7 +25,7 @@ public:
 
     void draw_player();
     void change_position(Point pos);
-    // void move_player(float dx, float dy);
+    // void move_player(GLfloat dx, GLfloat dy);
 
     // Point update_player(bool w, bool s, bool a, bool d, GLdouble time);
 };

@@ -16,7 +16,7 @@ extern Player *player;
 
 void parseCircle(XMLElement *circ)
 {
-    float cx, cy, r;
+    GLfloat cx, cy, r;
     Color color;
 
     circ->QueryFloatAttribute("cx", &cx);
@@ -57,7 +57,7 @@ void parseCircle(XMLElement *circ)
 
 void parseRect(XMLElement *rect)
 {
-    float x, y, width, height;
+    GLfloat x, y, width, height;
     Color color;
 
     rect->QueryFloatAttribute("x", &x);

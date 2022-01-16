@@ -144,11 +144,11 @@ void Character::set_color(Color c)
 {
     this->color = c;
 }
-void Character::set_radius(float r)
+void Character::set_radius(GLfloat r)
 {
     this->radius = r;
 }
-void Character::set_height(float h)
+void Character::set_height(GLfloat h)
 {
     this->height = h;
 }
@@ -163,12 +163,12 @@ Color Character::get_color()
     return this->color;
 }
 
-float Character::get_radius()
+GLfloat Character::get_radius()
 {
     return this->radius;
 }
 
-float Character::get_height()
+GLfloat Character::get_height()
 {
     return this->height;
 }

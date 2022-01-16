@@ -10,7 +10,7 @@ class Enemy : public Character
 {
 
 public:
-    Enemy(Point pos, float radius, Color color)
+    Enemy(Point pos, GLfloat radius, Color color)
     {
         this->set_center(pos);
         this->set_radius(radius);
@@ -25,7 +25,7 @@ public:
 
     void draw_enemy();
     void change_position(Point pos);
-    void move_enemy(float dx, float dy);
+    void move_enemy(GLfloat dx, GLfloat dy);
 };
 
 #endif /* ENEMY_H */

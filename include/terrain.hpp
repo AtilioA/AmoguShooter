@@ -14,7 +14,7 @@ private:
     GLfloat height;
 
 public:
-    Terrain(Point position, float width, float height, Color color)
+    Terrain(Point position, GLfloat width, GLfloat height, Color color)
     {
         this->pos = position;
         this->width = width;
@@ -27,8 +27,8 @@ public:
     void set_vertex(Point p);
     Point get_pos();
     Color get_color();
-    float get_width();
-    float get_height();
+    GLfloat get_width();
+    GLfloat get_height();
 };
 
 #endif /* TERRAIN_H */

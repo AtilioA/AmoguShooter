@@ -5,15 +5,15 @@
 
 typedef struct tPoint
 {
-    float x;
-    float y;
+    GLfloat x;
+    GLfloat y;
 } Point;
 
 typedef struct tColor
 {
-    float r;
-    float g;
-    float b;
+    GLfloat r;
+    GLfloat g;
+    GLfloat b;
 } Color;
 
 #endif /* UTILS_H */
