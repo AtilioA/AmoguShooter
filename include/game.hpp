@@ -2,31 +2,28 @@
 #define GAME_H_
 
 #include <bits/stdc++.h>
-#include <iostream>
 #include "utils.hpp"
-
-
-using namespace std;
-
 #include "player.hpp"
 #include "enemy.hpp"
 #include "terrain.hpp"
 
 class Game
 {
-    vector<Enemy> enemies;
-    vector<Terrain> terrains;
+private:
+    std::vector<Enemy> enemies;
+    std::vector<Terrain> terrains;
+    Terrain background;
     Player player;
 
 public:
-    Game(Point position, GLfloat width, GLfloat height, Color color);
+    Game();
 
     void add_enemy(Enemy enemy);
-    vector<Enemy> get_enemies();
+    std::vector<Enemy> get_enemies();
     void draw_enemies();
 
-    void add_terrain(Terrain terrain);
-    vector<Terrain> get_terrains();
+    void add_terrain(Terrain *terrain);
+    std::vector<Terrain> get_terrains();
     void draw_terrains();
 
     void add_player(Player player);

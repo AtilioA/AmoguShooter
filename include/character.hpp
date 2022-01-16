@@ -2,7 +2,6 @@
 #define CHARACTER_H
 #include <GL/gl.h>
 #include <GL/glu.h>
-// #include "game.hpp"
 #include "utils.hpp"
 
 class Character // abstract class

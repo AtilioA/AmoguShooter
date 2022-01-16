@@ -5,9 +5,10 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "include/enemy.hpp"
-#include "include/player.hpp"
+#include "include/game.hpp"
 #include "include/character.hpp"
+#include "include/player.hpp"
+#include "include/enemy.hpp"
 #include "include/svg_reader.hpp"
 
 #define INC_KEY 1
@@ -198,6 +199,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
     string arena_filename = argv[1];
+
+    // Game *game = new Game();
     parseSVGFile(arena_filename);
 
     glutInit(&argc, argv);

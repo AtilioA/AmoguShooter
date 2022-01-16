@@ -26,9 +26,9 @@ void Game::draw_enemies()
 }
 
 // Terrain interface
-void Game::add_terrain(Terrain terrain)
+void Game::add_terrain(Terrain *terrain)
 {
-    this->terrains.push_back(terrain);
+    this->terrains.push_back(*terrain);
 }
 
 vector<Terrain> Game::get_terrains()
