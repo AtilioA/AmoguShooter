@@ -41,7 +41,7 @@ void renderScene(void)
     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
 
-    parseSVGFile("input/arena_teste.svg");
+    // parseSVGFile("input/arena_teste.svg");
 
     // glBegin(GL_QUADS);
     // glVertex2f(0, 0);
@@ -114,7 +114,7 @@ void init(void)
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // Dark gray, no opacity(alpha).
 
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
-    glLoadIdentity();
+    // glLoadIdentity();
     // glOrtho(xlim1 / 2, xlim2 / 2, ylim1 / 2, ylim2 / 2, -100, 100);
     glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
             (ViewingWidth / 2),   // X coordinate of right edge
@@ -192,6 +192,14 @@ int main(int argc, char *argv[])
 {
     // Initialize openGL with Double buffer and RGB color without transparency.
     // Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.
+    if (argc < 2)
+    {
+        printf("Usage: %s <svg file>\n", argv[0]);
+        exit(1);
+    }
+    string arena_filename = argv[1];
+    parseSVGFile(arena_filename);
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
