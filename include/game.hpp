@@ -12,19 +12,6 @@ using namespace std;
 #include "enemy.hpp"
 #include "terrain.hpp"
 
-// typedef struct tPoint
-// {
-//     float x;
-//     float y;
-// } Point;
-
-// typedef struct tColor
-// {
-//     float r;
-//     float g;
-//     float b;
-// } Color;
-
 class Game
 {
     vector<Enemy> enemies;

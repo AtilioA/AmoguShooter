@@ -26,28 +26,22 @@ public:
 
     void set_center(Point p);
     Point get_center();
-    
+
     void set_color(Color c);
     Color get_color();
-    
+
     void set_radius(float r);
     float get_radius();
-    
+
     void set_height(float h);
     float get_height();
-    
+
     Character()
     {
-        // gX = 0;
         gThetaFoot = 0;
         gThetaLeg = 0;
         gThetaArm = 0;
     };
-
-    // void draw()
-    // {
-    //   gTheta2, gTheta3);
-    // };
 
     void rotate_arm(GLfloat inc);
     void rotate_leg(GLfloat inc);

@@ -26,8 +26,6 @@ public:
     void draw_enemy();
     void change_position(Point pos);
     void move_enemy(float dx, float dy);
-
-    // Point update_enemy(bool w, bool s, bool a, bool d, GLdouble time);
 };
 
 #endif /* ENEMY_H */
