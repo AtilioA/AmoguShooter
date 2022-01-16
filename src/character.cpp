@@ -132,7 +132,7 @@ void RotatePoint(Point position, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
 {
 }
 
-// Tiro *Character::Shoot()
+// Gunshot *Character::Shoot()
 // {
 // }
 

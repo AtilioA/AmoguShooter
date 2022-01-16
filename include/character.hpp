@@ -48,7 +48,7 @@ public:
     void rotate_foot(GLfloat inc);
     void move_em_x(GLfloat dx);
 
-    // Tiro *Shoot();
+    // Gunshot *Shoot();
 
     // GLfloat GetX()
     // {

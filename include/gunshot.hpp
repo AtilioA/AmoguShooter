@@ -1,11 +1,11 @@
-#ifndef TIRO_H
-#define TIRO_H
+#ifndef GUNSHOT_H
+#define GUNSHOT_H
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#define radiusTiro 5
+#define radiusGunshot 5
 
-class Tiro
+class Gunshot
 {
     GLfloat gXInit;
     GLfloat gYInit;
@@ -15,11 +15,11 @@ class Tiro
     GLfloat gVel;
 
 private:
-    void DrawCirc(GLint radius, GLfloat R, GLfloat G, GLfloat B);
-    void DrawTiro(GLfloat x, GLfloat y);
+    void draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B);
+    void draw_gunshot(GLfloat x, GLfloat y);
 
 public:
-    Tiro(GLfloat x, GLfloat y, GLfloat directionAng)
+    Gunshot(GLfloat x, GLfloat y, GLfloat directionAng)
     {
         gXInit = x;
         gYInit = y;
@@ -28,17 +28,17 @@ public:
         gDirectionAng = directionAng;
         gVel = 0.1;
     };
-    void Draw()
+    void draw()
     {
-        DrawTiro(gX, gY);
+        draw_gunshot(gX, gY);
     };
-    void Move();
-    bool Valido();
-    void GetPos(GLfloat &xOut, GLfloat &yOut)
+    void move();
+    bool is_valid();
+    void get_pos(GLfloat &xOut, GLfloat &yOut)
     {
         xOut = gX;
         yOut = gY;
     };
 };
 
-#endif /* TIRO_H */
+#endif /* GUNSHOT_H */

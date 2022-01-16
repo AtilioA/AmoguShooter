@@ -30,7 +30,7 @@ const GLint ViewingHeight = 500;
 
 // Componentes do mundo virtual sendo modelado
 Player *player;
-// Tiro *tiro = NULL; // Um tiro por vez
+// Gunshot *gunshot = NULL; // One gunshot at a time
 // Alvo alvo(0, 200); // Um alvo por vez
 
 static bool shouldPreserveFramerateSpeed = true;
@@ -52,9 +52,9 @@ void renderScene(void)
 
     // robo.Draw();
 
-    // if (tiro)
+    // if (gunshot)
     // {
-    //     tiro->Draw();
+    //     gunshot->draw();
     // }
 
     glutSwapBuffers(); // Draw the new frame of the game.
@@ -80,9 +80,9 @@ void keyPress(unsigned char key, int x, int y)
         // player.Jump();
         break;
     case ' ':
-        // if (!tiro)
+        // if (!gunshot)
         // {
-        //     // tiro = robo.Atira();
+        //     // gunshot = robo.Atira();
         // }
         break;
     case 27:
@@ -151,22 +151,22 @@ void idle(void)
         player->move_character(inc, deltaTime);
     }
 
-    // // Trata o tiro (só permite um tiro por vez)
-    // // Poderia usar uma lista para tratar varios tiros
-    // if (tiro)
+    // Handle gunshot (only allows one gunshot at a time)
+    // Could use a list to handle multiple gunshots
+    // if (gunshot)
     // {
-    //     tiro->Move();
+    //     gunshot->move();
 
     //     // Trata colisao
-    //     if (alvo.Atingido(tiro))
+    //     if (alvo.Atingido(gunshot))
     //     {
     //         alvo.Recria(rand() % 500 - 250, 200);
     //     }
 
-    //     if (!tiro->Valido())
+    //     if (!gunshot->is_valid())
     //     {
-    //         delete tiro;
-    //         tiro = NULL;
+    //         delete gunshot;
+    //         gunshot = NULL;
     //     }
     // }
 
