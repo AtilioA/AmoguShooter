@@ -135,3 +135,40 @@ void RotatePoint(Point position, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
 // Tiro *Character::Shoot()
 // {
 // }
+
+void Character::set_center(Point p)
+{
+    this->center = p;
+}
+void Character::set_color(Color c)
+{
+    this->color = c;
+}
+void Character::set_radius(float r)
+{
+    this->radius = r;
+}
+void Character::set_height(float h)
+{
+    this->height = h;
+}
+
+Point Character::get_center()
+{
+    return this->center;
+}
+
+Color Character::get_color()
+{
+    return this->color;
+}
+
+float Character::get_radius()
+{
+    return this->radius;
+}
+
+float Character::get_height()
+{
+    return this->height;
+}

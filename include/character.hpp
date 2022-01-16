@@ -2,15 +2,8 @@
 #define CHARACTER_H
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "../include/arena.hpp"
-
-// Dimensions
-// #define paddleHeight 80
-// #define paddleWidth 10
-// #define baseHeight 40
-// #define baseWidth 100
-// #define radiusWheel 30
-#define M_PI 3.14159265358979323846
+// #include "game.hpp"
+#include "utils.hpp"
 
 class Character // abstract class
 {
@@ -31,46 +24,18 @@ private:
 public:
     virtual void f() = 0;
 
-    void set_center(Point p)
-    {
-        this->center = p;
-    }
-
-    Point get_center()
-    {
-        return this->center;
-    }
-
-    void set_color(Color c)
-    {
-        this->color = c;
-    }
-
-    Color get_color()
-    {
-        return this->color;
-    }
-
-    void set_radius(float r)
-    {
-        this->radius = r;
-    }
-
-    float get_radius()
-    {
-        return this->radius;
-    }
-
-    void set_height(float h)
-    {
-        this->height = h;
-    }
-
-    float get_height()
-    {
-        return this->height;
-    }
-
+    void set_center(Point p);
+    Point get_center();
+    
+    void set_color(Color c);
+    Color get_color();
+    
+    void set_radius(float r);
+    float get_radius();
+    
+    void set_height(float h);
+    float get_height();
+    
     Character()
     {
         // gX = 0;
