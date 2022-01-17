@@ -7,27 +7,33 @@
 #include "enemy.hpp"
 #include "terrain.hpp"
 
+using namespace std;
+
 class Game
 {
 private:
-    std::vector<Enemy> enemies;
-    std::vector<Terrain> terrains;
-    Terrain background;
-    Player player;
+    vector<Enemy *> enemies;
+    Player *player;
+    vector<Terrain *> terrains;
+    Terrain *background;
+    string *arenaSVGFilename;
 
 public:
-    Game();
+    Game(string *arenaSVGFilename)
+    {
+        this->arenaSVGFilename = arenaSVGFilename;
+    };
 
-    void add_enemy(Enemy enemy);
-    std::vector<Enemy> get_enemies();
+    void add_enemy(Enemy *enemy);
+    std::vector<Enemy *> get_enemies();
     void draw_enemies();
 
     void add_terrain(Terrain *terrain);
-    std::vector<Terrain> get_terrains();
+    std::vector<Terrain *> get_terrains();
     void draw_terrains();
 
-    void add_player(Player player);
-    Player get_player();
+    void add_player(Player *player);
+    Player *get_player();
     void draw_player();
 };
 
