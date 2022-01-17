@@ -1,7 +1,3 @@
-#include <iostream>
-#include <stdio.h>
-#include <GL/glut.h>
-
 #include "../include/game.hpp"
 
 using namespace std;
@@ -58,4 +54,34 @@ void Game::add_player(Player *player)
 void Game::draw_player()
 {
     (this->player)->draw_character();
+}
+
+void Game::set_arena_background(Terrain *background)
+{
+    this->background = background;
+}
+
+Terrain *Game::get_arena_background()
+{
+    return this->background;
+}
+
+void Game::set_arena_svg_filename(string *arenaSVGFilename)
+{
+    this->arenaSVGFilename = arenaSVGFilename;
+}
+
+string *Game::get_arena_svg_filename()
+{
+    return this->arenaSVGFilename;
+}
+
+void Game::set_arena_dimensions(Dimensions arenaDimensions)
+{
+    this->arenaDimensions = arenaDimensions;
+}
+
+Dimensions Game::get_arena_dimensions()
+{
+    return this->arenaDimensions;
 }
