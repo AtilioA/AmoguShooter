@@ -3,10 +3,13 @@
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <math.h>
-#include <stdio.h>
+#include <iostream>
 
 #include "include/game.hpp"
 #include "include/svg_reader.hpp"
+#include "include/utils.hpp"
+
+using namespace std;
 
 #define INC_KEY 1
 #define INC_KEYIDLE 1
@@ -104,15 +107,19 @@ void ResetKeyStatus()
         keyStatus[i] = 0;
 }
 
-void init(void)
+void init(Game *game)
 {
     ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
     // glClearColor((GLfloat)r, (GLfloat)g, (GLfloat)b, 1);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // Dark gray, no opacity(alpha).
 
+    cout << "\nArena width: " << game->get_arena_dimensions().width << ", height: " << game->get_arena_dimensions().height << endl;
+    GLfloat smallestArenaDimension = smallest_dimension(game->get_arena_dimensions());
+    cout << "Smallest arena dimension: " << smallestArenaDimension << endl;
+
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
-    // glLoadIdentity();
+    glLoadIdentity();
     // glOrtho(xlim1 / 2, xlim2 / 2, ylim1 / 2, ylim2 / 2, -100, 100);
     glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
             (ViewingWidth / 2),   // X coordinate of right edge
@@ -199,7 +206,20 @@ int main(int argc, char *argv[])
 
     Game *game = new Game(&arena_filename);
 
+    cout << "Parsing SVG file..." << endl;
     parseSVGFile(arena_filename, game);
+    cout << "Finished parsing SVG file." << endl;
+
+    cout << "\nDrawing game elements:" << endl;
+    cout << "Drawing background... ";
+    game->get_arena_background()->draw_terrain();
+    cout << "Drawing player... ";
+    game->draw_player();
+    cout << "Drawing terrains... ";
+    game->draw_terrains();
+    cout << "Drawing enemies..." << endl;
+    game->draw_enemies();
+    cout << "Finished drawing game elements." << endl;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -215,7 +235,7 @@ int main(int argc, char *argv[])
     glutIdleFunc(idle);
     glutKeyboardUpFunc(keyup);
 
-    init();
+    init(game);
 
     glutMainLoop();
 
