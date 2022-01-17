@@ -6,8 +6,8 @@
 
 typedef struct tDimensions
 {
-    GLint width;
-    GLint height;
+    GLfloat width;
+    GLfloat height;
 } Dimensions;
 
 typedef struct tPoint
