@@ -2,6 +2,13 @@
 #define UTILS_H
 
 #define M_PI 3.14159265358979323846
+#include <GL/glut.h>
+
+typedef struct tDimensions
+{
+    GLint width;
+    GLint height;
+} Dimensions;
 
 typedef struct tPoint
 {
@@ -15,5 +22,7 @@ typedef struct tColor
     GLfloat g;
     GLfloat b;
 } Color;
+
+GLfloat smallest_dimension(Dimensions dimensions);
 
 #endif /* UTILS_H */
