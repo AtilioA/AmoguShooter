@@ -11,10 +11,10 @@
 using namespace tinyxml2;
 using namespace std;
 
-extern Game *gameSVG;
-extern Player *player;
+// extern Game *gameSVG;
+// extern Player *player;
 
-void parseCircle(XMLElement *circ)
+void parseCircle(XMLElement *circ, Game *game)
 {
     GLfloat cx, cy, r;
     Color color;
@@ -32,30 +32,31 @@ void parseCircle(XMLElement *circ)
         cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
         Enemy *enemy = new Enemy(position, r, color);
-        enemy->draw_character();
+        game->add_enemy(enemy);
     }
     else if (circFill == "green")
     {
         cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
-        player = new Player(position, r, color);
+        Player *player = new Player(position, r, color);
         player->draw_character();
+        game->add_player(player);
     }
-    else if (circFill == "blue")
-    {
-        cout << "-- BACKGROUND --" << endl;
-        color = {0.0, 0.0, 1.0};
-    }
-    else
-    {
-        cout << "-- TERRAIN --" << endl;
-        color = {1.0, 1.0, 1.0};
-    }
+    // else if (circFill == "blue")
+    // {
+    //     cout << "-- BACKGROUND --" << endl;
+    //     color = {0.0, 0.0, 1.0};
+    // }
+    // else
+    // {
+    //     cout << "-- TERRAIN --" << endl;
+    //     color = {1.0, 1.0, 1.0};
+    // }
 
     cout << "cx: " << cx << " cy: " << cy << " r: " << r << " circFill: " << circFill << endl;
 }
 
-void parseRect(XMLElement *rect)
+void parseRect(XMLElement *rect, Game *game)
 {
     GLfloat x, y, width, height;
     Color color;
@@ -77,22 +78,21 @@ void parseRect(XMLElement *rect)
     {
         cout << "-- BACKGROUND --" << endl;
         color = {0.0, 0.0, 1.0};
+        Terrain *background = new Terrain(position, width, height, color);
+        game->set_arena_background(background);
     }
 
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
 
     Terrain *terrain = new Terrain(position, width, height, color);
-    // game->add_terrain(terrain);
-    // Game game = new Game(position, width, height, color);
-    // game->draw_game_component();
-    // gameSVG = game;
+    game->add_terrain(terrain);
 }
 
-void parseSVGFile(string filepath)
+void parseSVGFile(string filepath, Game *game)
 {
     XMLDocument gameSVGfile;
 
-    cout << filepath << endl;
+    cout << "Parsing " << filepath << endl;
 
     gameSVGfile.LoadFile(filepath.c_str());
 
@@ -105,19 +105,17 @@ void parseSVGFile(string filepath)
         XMLElement *svgHeader = gameSVGfile.FirstChildElement("svg");
         XMLElement *svgBody = svgHeader->FirstChildElement();
 
-        // Create Game object and use it to add the game components such as terrain, enemies, player.
-
         while (svgBody != NULL)
         {
             string tagType = svgBody->Value();
 
             if (tagType == "rect")
             {
-                parseRect(svgBody);
+                parseRect(svgBody, game);
             }
             else
             {
-                parseCircle(svgBody);
+                parseCircle(svgBody, game);
             }
 
             svgBody = svgBody->NextSiblingElement();
