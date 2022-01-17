@@ -78,8 +78,12 @@ void parseRect(XMLElement *rect, Game *game)
     {
         cout << "-- BACKGROUND --" << endl;
         color = {0.0, 0.0, 1.0};
+
         Terrain *background = new Terrain(position, width, height, color);
         game->set_arena_background(background);
+
+        Dimensions dimensions = {width, height};
+        game->set_arena_dimensions(dimensions);
     }
 
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
