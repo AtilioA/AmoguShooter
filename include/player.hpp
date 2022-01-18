@@ -27,6 +27,7 @@ public:
     void change_position(Point pos);
     // void move_player(GLfloat dx, GLfloat dy);
 
+    Point update_player(GLfloat inc, bool w, bool s, bool a, bool d, GLdouble time);
     // Point update_player(bool w, bool s, bool a, bool d, GLdouble time);
 };
 
