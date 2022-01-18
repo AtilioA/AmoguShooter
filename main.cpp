@@ -30,19 +30,28 @@ const GLint ViewingHeight = 500;
 // int animate = 0;
 
 // Componentes do mundo virtual sendo modelado
-Player *player;
 // Gunshot *gunshot = NULL; // One gunshot at a time
 // Alvo alvo(0, 200); // Um alvo por vez
 
 static bool shouldPreserveFramerateSpeed = true;
 static GLdouble framerate = 0;
+Game *game = new Game(NULL);
 
-void renderScene(void)
+void renderScene()
 {
     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // parseSVGFile("input/arena_teste.svg");
+    // cout << "\nDrawing game elements:" << endl;
+    // cout << "Drawing background... ";
+    game->get_arena_background()->draw_terrain();
+    // cout << "Drawing terrains... ";
+    game->draw_terrains();
+    // cout << "Drawing player... ";
+    game->draw_player();
+    // cout << "Drawing enemies..." << endl;
+    game->draw_enemies();
+    // cout << "Finished drawing game elements." << endl;
 
     // glBegin(GL_QUADS);
     // glVertex2f(0, 0);
@@ -120,14 +129,14 @@ void init(Game *game)
 
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
     glLoadIdentity();
-    // glOrtho(xlim1 / 2, xlim2 / 2, ylim1 / 2, ylim2 / 2, -100, 100);
     glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
             (ViewingWidth / 2),   // X coordinate of right edge
             -(ViewingHeight / 2), // Y coordinate of bottom edge
             (ViewingHeight / 2),  // Y coordinate of top edge
             -100,                 // Z coordinate of the “near” plane
             100);                 // Z coordinate of the “far” plane
-    glMatrixMode(GL_MODELVIEW);   // Select the projection matrix
+
+    glMatrixMode(GL_MODELVIEW); // Select the projection matrix
     glLoadIdentity();
 }
 
@@ -149,11 +158,11 @@ void idle(void)
     // Treat keyPress
     if (keyStatus[(int)('a')])
     {
-        player->move_character(-inc, deltaTime);
+        game->get_player()->move_character(-inc, deltaTime);
     }
     if (keyStatus[(int)('d')])
     {
-        player->move_character(inc, deltaTime);
+        game->get_player()->move_character(inc, deltaTime);
     }
 
     // Handle gunshot (only allows one gunshot at a time)
@@ -204,22 +213,9 @@ int main(int argc, char *argv[])
     }
     string arena_filename = argv[1];
 
-    Game *game = new Game(&arena_filename);
-
     cout << "Parsing SVG file..." << endl;
     parseSVGFile(arena_filename, game);
     cout << "Finished parsing SVG file." << endl;
-
-    cout << "\nDrawing game elements:" << endl;
-    cout << "Drawing background... ";
-    game->get_arena_background()->draw_terrain();
-    cout << "Drawing player... ";
-    game->draw_player();
-    cout << "Drawing terrains... ";
-    game->draw_terrains();
-    cout << "Drawing enemies..." << endl;
-    game->draw_enemies();
-    cout << "Finished drawing game elements." << endl;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
