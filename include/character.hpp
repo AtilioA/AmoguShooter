@@ -6,7 +6,7 @@
 
 class Character // abstract class
 {
-private:
+protected:
     Point center;
     Color color;
     GLfloat radius;
