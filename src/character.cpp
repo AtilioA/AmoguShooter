@@ -123,14 +123,14 @@ void Character::move_character(GLfloat dx, GLfloat deltaTime)
     // Placeholder
     // GLdouble deltaTime = 1;
 
-    Character::center.x += dx * deltaTime;
+    Character::center.x += dx /** deltaTime*/;
     // gThetaWheel -= (180 * dx * deltaTime) / (M_PI * radiusWheel);
 }
 
 // Funcao auxiliar de rotacao
-void RotatePoint(Point position, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
-{
-}
+// void RotatePoint(Point position, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
+// {
+// }
 
 // Gunshot *Character::Shoot()
 // {

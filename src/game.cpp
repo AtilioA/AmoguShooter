@@ -53,7 +53,7 @@ void Game::add_player(Player *player)
 
 void Game::draw_player()
 {
-    (this->player)->draw_character();
+    this->player->draw_character();
 }
 
 void Game::set_arena_background(Terrain *background)
