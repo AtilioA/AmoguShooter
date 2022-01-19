@@ -52,7 +52,7 @@ void Game::reset_game()
 
 bool Game::is_inside_arena(Character *character)
 {
-    return this->player->is_inside_terrain(this->background);
+    return character->is_inside_terrain(this->background);
 }
 
 bool Game::is_player_inside_any_enemy()
@@ -69,29 +69,42 @@ bool Game::is_player_inside_any_enemy()
     return false;
 }
 
-bool Game::is_player_inside_any_terrain()
+bool Game::is_character_inside_any_terrain(Character *character)
 {
     for (size_t i = 0; i < this->terrains.size(); i++)
     {
         Terrain *terrain = this->terrains[i];
-        if (this->player->is_inside_terrain(terrain))
+        if (character->is_inside_terrain(terrain))
         {
             if (this->debugOptions.highlightCollision)
             {
-                terrain->set_color({1, 0, 0});
+                if (character == this->player)
+                {
+                    terrain->set_color({0, 1, 0});
+                }
+                else
+                {
+                    terrain->set_color({1, 0, 0});
+                }
             }
+
             return true;
         }
         else
         {
-            if (this->debugOptions.highlightCollision)
-            {
-                terrain->set_color({0, 0, 0});
-            }
+            // if (this->debugOptions.highlightCollision)
+            // {
+            //     terrain->set_color({0, 0, 0});
+            // }
         }
     }
 
     return false;
+}
+
+bool Game::is_player_inside_any_terrain()
+{
+    return is_character_inside_any_terrain(this->player);
 }
 
 // Enemy interface

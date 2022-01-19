@@ -49,10 +49,14 @@ public:
     void reset_game();
 
     bool is_inside_arena(Character *character);
+    bool is_character_inside_any_terrain(Character *character);
     bool is_player_inside_any_enemy();
     bool is_player_inside_any_terrain();
 
     void apply_gravity(GLfloat deltaTime);
+
+    void move_enemy_randomly(Enemy *enemy, float deltaTime);
+    void move_enemies_randomly(float deltaTime);
 
     void add_player(Player *player);
     Player *get_player();
