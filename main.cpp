@@ -35,7 +35,7 @@ const GLint ViewingHeight = 500;
 
 static bool shouldPreserveFramerateSpeed = true;
 static GLdouble framerate = 0;
-Game *game = new Game(NULL);
+Game *game = new Game();
 
 void renderScene()
 {
@@ -94,6 +94,10 @@ void keyPress(unsigned char key, int x, int y)
     case 'D':
         keyStatus[(int)('d')] = 1; // Using keyStatus trick
         break;
+    case 'r':
+    case 'R':
+        keyStatus[(int)('r')] = 1; // Using keyStatus trick
+        break;
     case ' ':
         // if (!gunshot)
         // {
@@ -118,7 +122,9 @@ void ResetKeyStatus()
 
     // Initialize keyStatus
     for (i = 0; i < 256; i++)
+    {
         keyStatus[i] = 0;
+    }
 }
 
 void init(Game *game)
@@ -236,6 +242,12 @@ void idle(void)
     //     }
     //     robo.MoveEmX(dir * INC_KEYIDLE);
     // }
+
+    if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
+    {
+        // cout << "Parsing " << game->get_arena_svg_filename() << endl;
+        game->reset_game();
+    }
 
     glutPostRedisplay();
 }

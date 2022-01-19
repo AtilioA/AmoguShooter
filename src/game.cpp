@@ -1,4 +1,5 @@
 #include "../include/game.hpp"
+#include "../include/svg_reader.hpp"
 
 using namespace std;
 
@@ -12,6 +13,41 @@ void Game::apply_gravity(GLfloat deltaTime)
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
     this->player->move_character(0, 0.33);
+}
+
+void Game::free_terrains()
+{
+    for (auto &terrain : this->terrains)
+    {
+        delete terrain;
+    }
+}
+
+void Game::free_enemies()
+{
+    for (size_t i = 0; i < this->enemies.size(); i++)
+    {
+        if (this->enemies[i] != NULL)
+        {
+            delete this->enemies[i];
+        }
+    }
+}
+
+void Game::free()
+{
+    delete this->player;
+
+    // free_terrains();
+    // free_enemies();
+
+    delete this->background;
+}
+
+void Game::reset_game()
+{
+    this->free();
+    parseSVGFile(this->arenaSVGFilename, this);
 }
 
 bool Game::is_inside_arena(Character *character)
@@ -122,12 +158,12 @@ Terrain *Game::get_arena_background()
     return this->background;
 }
 
-void Game::set_arena_svg_filename(string *arenaSVGFilename)
+void Game::set_arena_svg_filename(string arenaSVGFilename)
 {
     this->arenaSVGFilename = arenaSVGFilename;
 }
 
-string *Game::get_arena_svg_filename()
+string Game::get_arena_svg_filename()
 {
     return this->arenaSVGFilename;
 }

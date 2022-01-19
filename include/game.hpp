@@ -23,19 +23,30 @@ private:
     vector<Enemy *> enemies;
     vector<Terrain *> terrains;
     Terrain *background;
-    string *arenaSVGFilename;
+    string arenaSVGFilename;
     Dimensions arenaDimensions;
     Debug debugOptions;
 
 public:
-    Game(string *arenaSVGFilename)
+    Game()
     {
-        this->arenaSVGFilename = arenaSVGFilename;
+        this->player = NULL;
+        this->enemies = vector<Enemy *>();
+        this->terrains = vector<Terrain *>();
+        this->background = NULL;
+        this->arenaSVGFilename = "";
+        this->arenaDimensions = {0, 0};
+        this->debugOptions = {false, false, false};
     };
 
     void add_enemy(Enemy *enemy);
     std::vector<Enemy *> get_enemies();
     void draw_enemies();
+
+    void free_terrains();
+    void free_enemies();
+    void free();
+    void reset_game();
 
     bool is_inside_arena(Character *character);
     bool is_player_inside_any_enemy();
@@ -54,8 +65,8 @@ public:
     void set_arena_background(Terrain *background);
     Terrain *get_arena_background();
 
-    void set_arena_svg_filename(string *arenaSVGFilename);
-    string *get_arena_svg_filename();
+    void set_arena_svg_filename(string arenaSVGFilename);
+    string get_arena_svg_filename();
 
     void set_arena_dimensions(Dimensions arenaDimensions);
     Dimensions get_arena_dimensions();
