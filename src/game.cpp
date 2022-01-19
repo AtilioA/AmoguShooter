@@ -114,14 +114,7 @@ bool Game::is_character_inside_any_terrain(Character *character)
         {
             if (this->debugOptions.highlightCollision)
             {
-                if (character == this->player)
-                {
-                    terrain->set_color({0, 1, 0});
-                }
-                else
-                {
-                    terrain->set_color({1, 0, 0});
-                }
+                terrain->set_color(character->get_color());
             }
 
             return true;
