@@ -160,12 +160,17 @@ void idle(void)
     prevTime = curTime;
     framerate = 1.0 / deltaTime * 1000;
 
+    // cout << "Framerate: " << (int)framerate << endl;
+    // cout << "deltaTime: " << deltaTime << endl;
+
     if (!shouldPreserveFramerateSpeed)
     {
         deltaTime = 1;
     }
 
     Player *player = game->get_player();
+
+    game->move_enemies_randomly(framerate);
 
     double inc = INC_KEYIDLE;
     // Treat keyPress
@@ -270,6 +275,9 @@ int main(int argc, char *argv[])
         debug = true;
     }
     game->set_debug_options(debug);
+
+    // Generate seed for random enemy activity
+    srand(time(NULL));
 
     cout << "Parsing SVG file..." << endl;
     parseSVGFile(arena_filename, game);
