@@ -20,3 +20,23 @@ void Terrain::draw_terrain()
 
     glPopMatrix();
 }
+
+Point Terrain::get_pos()
+{
+    return this->pos;
+}
+
+Color Terrain::get_color()
+{
+    return this->color;
+}
+
+GLfloat Terrain::get_width()
+{
+    return this->width;
+}
+
+GLfloat Terrain::get_height()
+{
+    return this->height;
+}
