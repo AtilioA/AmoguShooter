@@ -69,19 +69,20 @@ void Game::free_enemies()
     }
 }
 
+// WIP
 void Game::free()
 {
-    // delete this->player;
+    delete this->player;
 
-    // free_terrains();
-    // free_enemies();
+    this->enemies.clear();
+    this->terrains.clear();
 
-    // delete this->background;
+    delete this->background;
 }
 
 void Game::reset_game()
 {
-    // this->free();
+    this->free();
     parseSVGFile(this->arenaSVGFilename, this);
 }
 
