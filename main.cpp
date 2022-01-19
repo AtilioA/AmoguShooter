@@ -159,15 +159,38 @@ void idle(void)
         deltaTime = 1;
     }
 
+    Player *player = game->get_player();
+
     double inc = INC_KEYIDLE;
     // Treat keyPress
-    if (keyStatus[(int)('a')])
+    if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
     {
-        game->get_player()->move_character(-inc, deltaTime);
+        // cout << "d" << endl;
+        dx += inc;
     }
-    if (keyStatus[(int)('d')])
+    if (keyStatus['a'] == 1 || keyStatus['A'] == 1)
     {
-        game->get_player()->move_character(inc, deltaTime);
+        // cout << "a" << endl;
+        dx -= inc;
+    }
+    if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
+    {
+        // cout << "w" << endl;
+        dy -= inc;
+    }
+    if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
+    {
+        // cout << "s" << endl;
+        dy += inc;
+    }
+    player->move_character(dx, dy);
+
+    // bool isInsideArena = game->is_inside_arena(player);
+    // bool isInsideAnyEnemy = game->is_player_inside_any_enemy();
+    // bool isInsideAnyTerrain = game->is_player_inside_any_terrain();
+    if (!game->is_inside_arena(player) || game->is_player_inside_any_terrain() || game->is_player_inside_any_enemy())
+    {
+        player->move_character(-dx, -dy);
     }
 
     // Handle gunshot (only allows one gunshot at a time)
