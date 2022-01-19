@@ -40,3 +40,8 @@ GLfloat Terrain::get_height()
 {
     return this->height;
 }
+
+void Terrain::set_color(Color c)
+{
+    this->color = c;
+}

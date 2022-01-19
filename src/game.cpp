@@ -28,7 +28,18 @@ bool Game::is_player_inside_any_terrain()
         Terrain *terrain = this->terrains[i];
         if (this->player->is_inside_terrain(terrain))
         {
+            if (this->debugOptions.highlightCollision)
+            {
+                terrain->set_color({1, 0, 0});
+            }
             return true;
+        }
+        else
+        {
+            if (this->debugOptions.highlightCollision)
+            {
+                terrain->set_color({0, 0, 0});
+            }
         }
     }
 
@@ -117,4 +128,17 @@ void Game::set_arena_dimensions(Dimensions arenaDimensions)
 Dimensions Game::get_arena_dimensions()
 {
     return this->arenaDimensions;
+}
+
+// If debug is true, make Debug struct have all elements as true. If false, make Debug struct have all elements as false (default)
+void Game::set_debug_options(bool debug)
+{
+    this->debugOptions.highlightCollision = debug;
+    this->debugOptions.pacificEnemies = debug;
+    this->debugOptions.invinciblePlayer = debug;
+}
+
+Debug Game::get_debug_options()
+{
+    return this->debugOptions;
 }

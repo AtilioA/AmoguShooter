@@ -241,6 +241,14 @@ int main(int argc, char *argv[])
     }
     string arena_filename = argv[1];
 
+    // Check if third argv argument is -d (for debug), set debug flag
+    bool debug = false;
+    if (argc >= 3 && strcmp(argv[2], "-d") == 0)
+    {
+        debug = true;
+    }
+    game->set_debug_options(debug);
+
     cout << "Parsing SVG file..." << endl;
     parseSVGFile(arena_filename, game);
     cout << "Finished parsing SVG file." << endl;

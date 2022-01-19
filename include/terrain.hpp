@@ -29,6 +29,8 @@ public:
     Color get_color();
     GLfloat get_width();
     GLfloat get_height();
+
+    void set_color(Color c);
 };
 
 #endif /* TERRAIN_H */

@@ -9,15 +9,23 @@
 
 using namespace std;
 
+typedef struct tDebug
+{
+    bool highlightCollision;
+    bool invinciblePlayer;
+    bool pacificEnemies;
+} Debug;
+
 class Game
 {
 private:
-    vector<Enemy *> enemies;
     Player *player;
+    vector<Enemy *> enemies;
     vector<Terrain *> terrains;
     Terrain *background;
     string *arenaSVGFilename;
     Dimensions arenaDimensions;
+    Debug debugOptions;
 
 public:
     Game(string *arenaSVGFilename)
@@ -49,6 +57,9 @@ public:
 
     void set_arena_dimensions(Dimensions arenaDimensions);
     Dimensions get_arena_dimensions();
+
+    void set_debug_options(bool debug);
+    Debug get_debug_options();
 };
 
 #endif /* GAME_H_ */

@@ -40,6 +40,9 @@ $(OBJ)/$(PROJETO).o: $(PROJETO).cpp
 run: all
 	./$(EXE) input/arena_teste.svg
 
+debug: all
+	./$(EXE) input/arena_teste.svg -d
+
 exe:
 	./$(EXE) input/arena_teste.svg
 
