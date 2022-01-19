@@ -2,6 +2,39 @@
 
 using namespace std;
 
+bool Game::is_inside_arena(Character *character)
+{
+    return this->player->is_inside_terrain(this->background);
+}
+
+bool Game::is_player_inside_any_enemy()
+{
+    for (size_t i = 0; i < this->enemies.size(); i++)
+    {
+        Enemy *enemy = this->enemies[i];
+        if (this->player->is_inside_another_character(enemy))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Game::is_player_inside_any_terrain()
+{
+    for (size_t i = 0; i < this->terrains.size(); i++)
+    {
+        Terrain *terrain = this->terrains[i];
+        if (this->player->is_inside_terrain(terrain))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // Enemy interface
 void Game::add_enemy(Enemy *enemy)
 {

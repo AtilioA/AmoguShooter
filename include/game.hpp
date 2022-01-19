@@ -29,6 +29,10 @@ public:
     std::vector<Enemy *> get_enemies();
     void draw_enemies();
 
+    bool is_inside_arena(Character *character);
+    bool is_player_inside_any_enemy();
+    bool is_player_inside_any_terrain();
+
     void add_player(Player *player);
     Player *get_player();
     void draw_player();

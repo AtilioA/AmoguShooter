@@ -11,7 +11,7 @@ void Character::draw_head()
 
     glBegin(GL_POINTS);
     // clang-format off
-        for (int i = 0; i < 360; i += 90)
+        for (size_t i = 0; i < 360; i += 90)
         {
             glVertex2f(this->radius / 2 * cos(i * M_PI / 180), this->radius / 2 * sin(i * M_PI / 180));
         }
@@ -118,13 +118,45 @@ void Character::rotate_arm(GLfloat inc)
     Character::gThetaArm += inc;
 }
 
-void Character::move_character(GLfloat dx, GLfloat deltaTime)
+void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
 {
     // Placeholder
     // GLdouble deltaTime = 1;
 
     Character::center.x += dx /** deltaTime*/;
+    Character::center.y += dy /** deltaTime*/;
     // gThetaWheel -= (180 * dx * deltaTime) / (M_PI * radiusWheel);
+}
+
+bool Character::is_inside_terrain(Terrain *terrain)
+{
+    Point backgroundPos = terrain->get_pos();
+
+    if (this->center.x >= backgroundPos.x &&
+        this->center.x <= backgroundPos.x + terrain->get_width() &&
+        this->center.y >= backgroundPos.y &&
+        this->center.y <= backgroundPos.y + terrain->get_height())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Character::is_inside_another_character(Character *character)
+{
+    if (this->center.x + this->radius > character->center.x - character->radius &&
+        this->center.x - this->radius<character->center.x + character->radius &&this->center.y + this->radius> character->center.y - character->radius &&
+        this->center.y - this->radius < character->center.y + character->radius)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 // Funcao auxiliar de rotacao

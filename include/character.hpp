@@ -3,6 +3,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "utils.hpp"
+#include "terrain.hpp"
 
 class Character // abstract class
 {
@@ -62,6 +63,10 @@ public:
     void draw_character(/*, GLfloat thetaFoot,
                         GLfloat thetaLeg, GLfloat thetaArm*/
     );
+
+    bool is_inside_another_character(Character *character);
+    bool is_inside_terrain(Terrain *terrain);
+
     void move_character(GLfloat dx, GLfloat dy);
     void draw_foot(/*, GLfloat theta */);
     void draw_leg(/*, GLfloat theta */);
