@@ -7,11 +7,11 @@ void Character::draw_head()
 {
     glColor3f(172.0 / 255, 66.0 / 255, 85.0 / 255); // rgb(172,66,85)
 
-    glPointSize(3);
+    glPointSize(4);
 
     glBegin(GL_POINTS);
     // clang-format off
-        for (size_t i = 0; i < 360; i += 90)
+        for (size_t i = 0; i < 360; i += 180)
         {
             glVertex2f(this->radius / 2 * cos(i * M_PI / 180), this->radius / 2 * sin(i * M_PI / 180));
         }
@@ -22,7 +22,7 @@ void Character::draw_head()
 // Draw a sequence of points representing the wheel of the character
 void Character::draw_body()
 {
-    glColor3f(56.0 / 255, 76.0 / 255, 92.0 / 255); // rgb(56,76,92)
+    glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(-this->radius / 4, 0);
@@ -194,13 +194,12 @@ void Character::jump(GLfloat clock)
 {
     if (clock <= 0)
     {
-
         return;
     }
 
-    GLint jumpTime = 4;
-    GLfloat jumpHeight = 3 * this->height;
-    GLfloat jumpVelocity = jumpHeight / jumpTime / 2;
+    // GLint jumpTime = 4;
+    // GLfloat jumpHeight = 3 * this->height;
+    // GLfloat jumpVelocity = jumpHeight / jumpTime / 2;
 
     // GLfloat jumpAcceleration = jumpVelocity / jumpTime;
 }
