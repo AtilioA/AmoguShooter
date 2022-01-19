@@ -6,13 +6,48 @@ using namespace std;
 void Game::apply_gravity(GLfloat deltaTime)
 {
     // Player should be affected by gravity in a way that they reach the ground in 2 seconds after when standing 3 times their own height from the ground.
-    GLint MAX_JUMP_HEIGHT = this->player->get_height() * 3;
-    GLint MAX_JUMP_TIME = 2;
-    GLfloat gravityVelocity = MAX_JUMP_HEIGHT / deltaTime / MAX_JUMP_TIME;
+    // GLint MAX_JUMP_HEIGHT = this->player->get_height() * 3;
+    // GLint MAX_JUMP_TIME = 2;
+    // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / deltaTime / MAX_JUMP_TIME;
     // cout << "gravityVelocity: " << gravityVelocity << endl;
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
     this->player->move_character(0, 0.33);
+}
+
+void Game::move_enemy_randomly(Enemy *enemy, float deltaTime)
+{
+    int integerDeltaTime = (int)deltaTime;
+
+    int randomNumber = rand() % integerDeltaTime;
+    switch (randomNumber)
+    {
+    case 1:
+        enemy->move_character(-1, 0);
+        if (this->is_character_inside_any_terrain(enemy) || !this->is_inside_arena(enemy) || enemy->is_inside_another_character(this->player))
+        {
+            enemy->move_character(1, 0);
+        }
+
+        break;
+    case 2:
+        enemy->move_character(1, 0);
+        if (this->is_character_inside_any_terrain(enemy) || !this->is_inside_arena(enemy) || enemy->is_inside_another_character(this->player))
+        {
+            enemy->move_character(-1, 0);
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+void Game::move_enemies_randomly(float deltaTime)
+{
+    for (size_t i = 0; i < this->enemies.size(); i++)
+    {
+        this->move_enemy_randomly(this->enemies[i], deltaTime);
+    }
 }
 
 void Game::free_terrains()
@@ -36,17 +71,17 @@ void Game::free_enemies()
 
 void Game::free()
 {
-    delete this->player;
+    // delete this->player;
 
     // free_terrains();
     // free_enemies();
 
-    delete this->background;
+    // delete this->background;
 }
 
 void Game::reset_game()
 {
-    this->free();
+    // this->free();
     parseSVGFile(this->arenaSVGFilename, this);
 }
 
