@@ -2,6 +2,18 @@
 
 using namespace std;
 
+void Game::apply_gravity(GLfloat deltaTime)
+{
+    // Player should be affected by gravity in a way that they reach the ground in 2 seconds after when standing 3 times their own height from the ground.
+    GLint MAX_JUMP_HEIGHT = this->player->get_height() * 3;
+    GLint MAX_JUMP_TIME = 2;
+    GLfloat gravityVelocity = MAX_JUMP_HEIGHT / deltaTime / MAX_JUMP_TIME;
+    // cout << "gravityVelocity: " << gravityVelocity << endl;
+    // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
+
+    this->player->move_character(0, 0.33);
+}
+
 bool Game::is_inside_arena(Character *character)
 {
     return this->player->is_inside_terrain(this->background);

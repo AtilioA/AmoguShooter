@@ -103,21 +103,6 @@ void Character::draw_character()
     glPopMatrix();
 }
 
-void Character::rotate_foot(GLfloat inc)
-{
-    Character::gThetaFoot += inc;
-}
-
-void Character::rotate_leg(GLfloat inc)
-{
-    Character::gThetaLeg += inc;
-}
-
-void Character::rotate_arm(GLfloat inc)
-{
-    Character::gThetaArm += inc;
-}
-
 void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
 {
     // Placeholder
@@ -125,7 +110,6 @@ void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
 
     Character::center.x += dx /** deltaTime*/;
     Character::center.y += dy /** deltaTime*/;
-    // gThetaWheel -= (180 * dx * deltaTime) / (M_PI * radiusWheel);
 }
 
 bool Character::is_inside_terrain(Terrain *terrain)
@@ -203,4 +187,20 @@ GLfloat Character::get_radius()
 GLfloat Character::get_height()
 {
     return this->height;
+}
+
+// Make character jump for 4 seconds. The maximum height will be equal to 3 times the character's height and shall be reached in 2 seconds.
+void Character::jump(GLfloat clock)
+{
+    if (clock <= 0)
+    {
+
+        return;
+    }
+
+    GLint jumpTime = 4;
+    GLfloat jumpHeight = 3 * this->height;
+    GLfloat jumpVelocity = jumpHeight / jumpTime / 2;
+
+    // GLfloat jumpAcceleration = jumpVelocity / jumpTime;
 }

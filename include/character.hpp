@@ -13,6 +13,9 @@ protected:
     GLfloat radius;
     GLfloat height;
 
+    bool isJumping;
+    GLfloat jumpTime;
+
     // Angle of each joint
     GLfloat gThetaFoot;
     GLfloat gThetaLeg;
@@ -43,22 +46,7 @@ public:
         gThetaArm = 0;
     };
 
-    void rotate_arm(GLfloat inc);
-    void rotate_leg(GLfloat inc);
-    void rotate_foot(GLfloat inc);
-    void move_em_x(GLfloat dx);
-
     // Gunshot *Shoot();
-
-    // GLfloat GetX()
-    // {
-    //     return 0;
-    // };
-
-    // GLfloat GetY()
-    // {
-    //     return 0;
-    // };
 
     void draw_character(/*, GLfloat thetaFoot,
                         GLfloat thetaLeg, GLfloat thetaArm*/
@@ -68,11 +56,17 @@ public:
     bool is_inside_terrain(Terrain *terrain);
 
     void move_character(GLfloat dx, GLfloat dy);
+    void jump(GLfloat clock);
+
     void draw_foot(/*, GLfloat theta */);
     void draw_leg(/*, GLfloat theta */);
     void draw_body();
     void draw_arm(/*, GLfloat theta */);
     void draw_head(/* GLint radius */);
+
+    void rotate_arm(GLfloat inc);
+    void rotate_leg(GLfloat inc);
+    void rotate_foot(GLfloat inc);
 };
 
 #endif /* CHARACTER_H */

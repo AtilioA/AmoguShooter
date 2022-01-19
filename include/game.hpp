@@ -41,6 +41,8 @@ public:
     bool is_player_inside_any_enemy();
     bool is_player_inside_any_terrain();
 
+    void apply_gravity(GLfloat deltaTime);
+
     void add_player(Player *player);
     Player *get_player();
     void draw_player();

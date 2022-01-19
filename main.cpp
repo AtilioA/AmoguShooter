@@ -185,12 +185,22 @@ void idle(void)
     }
     player->move_character(dx, dy);
 
-    // bool isInsideArena = game->is_inside_arena(player);
-    // bool isInsideAnyEnemy = game->is_player_inside_any_enemy();
-    // bool isInsideAnyTerrain = game->is_player_inside_any_terrain();
     if (!game->is_inside_arena(player) || game->is_player_inside_any_terrain() || game->is_player_inside_any_enemy())
     {
         player->move_character(-dx, -dy);
+    }
+
+    game->apply_gravity(deltaTime);
+
+    if (!game->is_inside_arena(player) || game->is_player_inside_any_terrain() || game->is_player_inside_any_enemy())
+    {
+        GLint MAX_JUMP_HEIGHT = player->get_height() * 3;
+        GLint MAX_JUMP_TIME = 2;
+        GLfloat gravityVelocity = MAX_JUMP_HEIGHT / deltaTime / MAX_JUMP_TIME;
+
+        // cout << framerate << " " << deltaTime << endl;
+        player->move_character(0, -0.33);
+        // cout << "gravityVelocity: " << gravityVelocity << endl;
     }
 
     // Handle gunshot (only allows one gunshot at a time)
