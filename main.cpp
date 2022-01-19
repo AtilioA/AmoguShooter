@@ -77,17 +77,22 @@ void keyPress(unsigned char key, int x, int y)
     case '1':
         // animate = !animate;
         break;
+    case 'w':
+    case 'W':
+        // player.jump();
+        keyStatus[(int)('w')] = 1; // Using keyStatus trick
+        break;
     case 'a':
     case 'A':
         keyStatus[(int)('a')] = 1; // Using keyStatus trick
         break;
+    case 's':
+    case 'S':
+        keyStatus[(int)('s')] = 1; // Using keyStatus trick
+        break;
     case 'd':
     case 'D':
         keyStatus[(int)('d')] = 1; // Using keyStatus trick
-        break;
-    case 'w':
-    case 'W':
-        // player.Jump();
         break;
     case ' ':
         // if (!gunshot)
