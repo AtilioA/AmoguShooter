@@ -222,21 +222,6 @@ void idle(void)
     //     }
     // }
 
-    // Control animation
-    // if (animate)
-    // {
-    //     static int dir = 1;
-    //     if (robo.ObtemX() > (ViewingWidth / 2))
-    //     {
-    //         dir *= -1;
-    //     }
-    //     else if (robo.ObtemX() < -(ViewingWidth / 2))
-    //     {
-    //         dir *= -1;
-    //     }
-    //     robo.MoveEmX(dir * INC_KEYIDLE);
-    // }
-
     if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
     {
         // cout << "Parsing " << game->get_arena_svg_filename() << endl;

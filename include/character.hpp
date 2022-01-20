@@ -34,6 +34,7 @@ public:
         this->set_color(color);
         this->set_height(radius * 2);
         this->set_id(id);
+        this->set_terrain_below(NULL);
     };
 
     virtual void f() = 0;
