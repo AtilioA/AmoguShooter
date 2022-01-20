@@ -116,17 +116,26 @@ bool Character::is_inside_terrain(Terrain *terrain)
 {
     Point backgroundPos = terrain->get_center();
 
-    if (this->center.x >= backgroundPos.x &&
-        this->center.x <= backgroundPos.x + terrain->get_width() &&
-        this->center.y >= backgroundPos.y &&
+    if (this->center.y >= backgroundPos.y &&
         this->center.y <= backgroundPos.y + terrain->get_height())
     {
-        return true;
+        if (this->center.x >= backgroundPos.x && this->center.x <= backgroundPos.x + terrain->get_width())
+        {
+            if (terrain->get_color().b != 1)
+            {
+                this->terrainBelow = terrain;
+            }
+
+            return true;
+        }
     }
-    else
+
+    if (terrain->get_color().b == 1)
     {
-        return false;
+        this->terrainBelow = NULL;
     }
+
+    return false;
 }
 
 bool Character::is_inside_another_character(Character *character)
@@ -151,6 +160,11 @@ bool Character::is_inside_another_character(Character *character)
 // Gunshot *Character::Shoot()
 // {
 // }
+
+void Character::set_terrain_below(Terrain *terrain)
+{
+    this->terrainBelow = terrain;
+}
 
 void Character::set_center(Point p)
 {
@@ -187,6 +201,11 @@ GLfloat Character::get_radius()
 GLfloat Character::get_height()
 {
     return this->height;
+}
+
+Terrain *Character::get_terrain_below()
+{
+    return this->terrainBelow;
 }
 
 // Make character jump for 4 seconds. The maximum height will be equal to 3 times the character's height and shall be reached in 2 seconds.
