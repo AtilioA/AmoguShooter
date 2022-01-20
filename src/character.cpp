@@ -183,6 +183,11 @@ void Character::set_height(GLfloat h)
     this->height = h;
 }
 
+void Character::set_id(GLint id)
+{
+    this->id = id;
+}
+
 GLint Character::get_id()
 {
     return this->id;

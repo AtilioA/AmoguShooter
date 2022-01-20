@@ -27,8 +27,18 @@ protected:
     GLfloat speed;
 
 public:
+    Character(Point pos, GLfloat radius, Color color, GLint id)
+    {
+        this->set_center(pos);
+        this->set_radius(radius);
+        this->set_color(color);
+        this->set_height(radius * 2);
+        this->set_id(id);
+    };
+
     virtual void f() = 0;
 
+    void set_id(GLint id);
     GLint get_id();
 
     void set_center(Point p);
