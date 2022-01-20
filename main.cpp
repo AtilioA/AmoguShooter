@@ -173,46 +173,35 @@ void idle(void)
     game->move_enemies_randomly(framerate);
 
     double inc = INC_KEYIDLE;
+    GLfloat dx = 0, dy = 0;
+
     // Treat keyPress
     if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
     {
         // cout << "d" << endl;
         dx += inc;
+        game->move_a_character(player, dx, dy);
     }
     if (keyStatus['a'] == 1 || keyStatus['A'] == 1)
     {
         // cout << "a" << endl;
         dx -= inc;
+        game->move_a_character(player, dx, dy);
     }
     if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
     {
         // cout << "w" << endl;
         dy -= inc;
+        game->move_a_character(player, dx, dy);
     }
     if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
     {
         // cout << "s" << endl;
         dy += inc;
-    }
-    player->move_character(dx, dy);
-
-    if (!game->is_inside_arena(player) || game->is_player_inside_any_terrain() || game->is_player_inside_any_enemy())
-    {
-        player->move_character(-dx, -dy);
+        game->move_a_character(player, dx, dy);
     }
 
     game->apply_gravity(deltaTime);
-
-    if (!game->is_inside_arena(player) || game->is_player_inside_any_terrain() || game->is_player_inside_any_enemy())
-    {
-        GLint MAX_JUMP_HEIGHT = player->get_height() * 3;
-        GLint MAX_JUMP_TIME = 2;
-        GLfloat gravityVelocity = MAX_JUMP_HEIGHT / deltaTime / MAX_JUMP_TIME;
-
-        // cout << framerate << " " << deltaTime << endl;
-        player->move_character(0, -0.33);
-        // cout << "gravityVelocity: " << gravityVelocity << endl;
-    }
 
     // Handle gunshot (only allows one gunshot at a time)
     // Could use a list to handle multiple gunshots

@@ -41,6 +41,10 @@ public:
         this->debugOptions = {false, false, false};
     };
 
+    void move_a_character(Character *character, GLfloat dx, GLfloat dy);
+    bool check_collision(Character *character);
+    void handle_collision(Character *character, GLfloat dx, GLfloat dy);
+
     void add_enemy(Enemy *enemy);
     std::vector<Enemy *> get_enemies();
     void draw_enemies();
@@ -50,6 +54,7 @@ public:
     void free();
     void reset_game();
 
+    bool is_character_inside_any_other_character(Character *character);
     bool is_inside_arena(Character *character);
     bool is_character_inside_any_terrain(Character *character);
     bool is_player_inside_any_enemy();
