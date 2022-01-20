@@ -185,6 +185,7 @@ bool Game::is_player_inside_any_terrain()
 void Game::add_enemy(Enemy *enemy)
 {
     this->enemies.push_back(enemy);
+    this->nCharacters++;
 }
 
 vector<Enemy *> Game::get_enemies()
@@ -228,6 +229,7 @@ Player *Game::get_player()
 void Game::add_player(Player *player)
 {
     this->player = player;
+    this->nCharacters++;
 }
 
 void Game::draw_player()
@@ -243,6 +245,11 @@ void Game::set_arena_background(Terrain *background)
 Terrain *Game::get_arena_background()
 {
     return this->background;
+}
+
+GLint Game::get_n_characters()
+{
+    return this->nCharacters;
 }
 
 void Game::set_arena_svg_filename(string arenaSVGFilename)

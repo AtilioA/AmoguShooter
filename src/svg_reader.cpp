@@ -29,14 +29,14 @@ void parseCircle(XMLElement *circ, Game *game)
     {
         cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
-        Enemy *enemy = new Enemy(position, r, color);
+        Enemy *enemy = new Enemy(position, r, color, game->get_n_characters());
         game->add_enemy(enemy);
     }
     else if (circFill == "green")
     {
         cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
-        Player *player = new Player(position, r, color);
+        Player *player = new Player(position, r, color, game->get_n_characters());
         game->add_player(player);
     }
 }

@@ -23,6 +23,7 @@ private:
     vector<Enemy *> enemies;
     vector<Terrain *> terrains;
     Terrain *background;
+    GLint nCharacters;
     string arenaSVGFilename;
     Dimensions arenaDimensions;
     Debug debugOptions;
@@ -34,6 +35,7 @@ public:
         this->enemies = vector<Enemy *>();
         this->terrains = vector<Terrain *>();
         this->background = NULL;
+        this->nCharacters = 0;
         this->arenaSVGFilename = "";
         this->arenaDimensions = {0, 0};
         this->debugOptions = {false, false, false};
@@ -69,6 +71,8 @@ public:
 
     void set_arena_background(Terrain *background);
     Terrain *get_arena_background();
+
+    GLint get_n_characters();
 
     void set_arena_svg_filename(string arenaSVGFilename);
     string get_arena_svg_filename();
