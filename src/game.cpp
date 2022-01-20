@@ -12,29 +12,74 @@ void Game::apply_gravity(GLfloat deltaTime)
     // cout << "gravityVelocity: " << gravityVelocity << endl;
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
-    this->player->move_character(0, 0.33);
+    GLfloat gravityVelocity = 0.33;
+
+    this->player->move_character(0, gravityVelocity);
+    Enemy *currentEnemy = NULL;
+    for (size_t i = 0; i < this->enemies.size(); i++)
+    {
+        currentEnemy = this->enemies[i];
+        currentEnemy->move_character(0, gravityVelocity);
+        if (!this->is_inside_arena(currentEnemy) || this->is_character_inside_any_terrain(currentEnemy) || this->is_player_inside_any_enemy())
+        {
+            currentEnemy->move_character(0, -gravityVelocity);
+        }
+    }
+}
+
+bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx)
+{
+    Terrain *terrainBelowEnemy = enemy->get_terrain_below();
+    if (terrainBelowEnemy == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        // Add character trunk width / 2 later
+        cout << "new: " << enemy->get_center().x + dx << endl;
+        cout << "terrain: " << terrainBelowEnemy->get_center().x << " + " << terrainBelowEnemy->get_width() << "(" << terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width() << ")" << endl;
+        GLfloat newX = enemy->get_center().x + dx;
+        if (newX <= terrainBelowEnemy->get_center().x ||
+            newX >= terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void Game::move_enemy_randomly(Enemy *enemy, float deltaTime)
 {
     int integerDeltaTime = (int)deltaTime;
 
+    // Placeholder
+    GLfloat dx = 1.0;
+
     int randomNumber = rand() % integerDeltaTime;
     switch (randomNumber)
     {
     case 1:
-        enemy->move_character(-1, 0);
-        if (this->is_character_inside_any_terrain(enemy) || !this->is_inside_arena(enemy) || enemy->is_inside_another_character(this->player))
+        if (!will_enemy_fall(enemy, -dx))
         {
-            enemy->move_character(1, 0);
+            // REFACTOR: check collision before movement
+            enemy->move_character(-dx, 0);
+            if (this->is_character_inside_any_terrain(enemy) || !this->is_inside_arena(enemy) || enemy->is_inside_another_character(this->player))
+            {
+                enemy->move_character(dx, 0);
+            }
         }
-
         break;
     case 2:
-        enemy->move_character(1, 0);
-        if (this->is_character_inside_any_terrain(enemy) || !this->is_inside_arena(enemy) || enemy->is_inside_another_character(this->player))
+        if (!will_enemy_fall(enemy, dx))
         {
-            enemy->move_character(-1, 0);
+            // REFACTOR: check collision before movement
+            enemy->move_character(dx, 0);
+            if (this->is_character_inside_any_terrain(enemy) || !this->is_inside_arena(enemy) || enemy->is_inside_another_character(this->player))
+            {
+                enemy->move_character(-dx, 0);
+            }
         }
         break;
     default:

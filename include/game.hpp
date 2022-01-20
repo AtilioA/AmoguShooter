@@ -55,6 +55,7 @@ public:
 
     void apply_gravity(GLfloat deltaTime);
 
+    bool will_enemy_fall(Enemy *enemy, GLfloat dx);
     void move_enemy_randomly(Enemy *enemy, float deltaTime);
     void move_enemies_randomly(float deltaTime);
 
