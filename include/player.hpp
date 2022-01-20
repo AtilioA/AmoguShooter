@@ -10,12 +10,13 @@ class Player : public Character
 {
 
 public:
-    Player(Point pos, GLfloat radius, Color color)
+    Player(Point pos, GLfloat radius, Color color, GLint id)
     {
         this->set_center(pos);
         this->set_radius(radius);
         this->set_color(color);
         this->set_height(radius * 2);
+        this->id = id;
     };
 
     virtual void f()

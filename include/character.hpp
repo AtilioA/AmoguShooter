@@ -8,6 +8,7 @@
 class Character // abstract class
 {
 protected:
+    GLint id;
     Point center;
     Color color;
     GLfloat radius;
@@ -27,6 +28,8 @@ protected:
 
 public:
     virtual void f() = 0;
+
+    GLint get_id();
 
     void set_center(Point p);
     Point get_center();

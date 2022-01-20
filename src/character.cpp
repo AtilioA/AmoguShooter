@@ -183,6 +183,11 @@ void Character::set_height(GLfloat h)
     this->height = h;
 }
 
+GLint Character::get_id()
+{
+    return this->id;
+}
+
 Point Character::get_center()
 {
     return this->center;
