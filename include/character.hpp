@@ -12,6 +12,7 @@ protected:
     Color color;
     GLfloat radius;
     GLfloat height;
+    Terrain *terrainBelow;
 
     bool isJumping;
     GLfloat jumpTime;
@@ -39,8 +40,12 @@ public:
     void set_height(GLfloat h);
     GLfloat get_height();
 
+    void set_terrain_below(Terrain *terrain);
+    Terrain *get_terrain_below();
+
     Character()
     {
+        terrainBelow = NULL;
         gThetaFoot = 0;
         gThetaLeg = 0;
         gThetaArm = 0;
