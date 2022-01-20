@@ -21,7 +21,7 @@ void Terrain::draw_terrain()
     glPopMatrix();
 }
 
-Point Terrain::get_pos()
+Point Terrain::get_center()
 {
     return this->pos;
 }

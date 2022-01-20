@@ -114,7 +114,7 @@ void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
 
 bool Character::is_inside_terrain(Terrain *terrain)
 {
-    Point backgroundPos = terrain->get_pos();
+    Point backgroundPos = terrain->get_center();
 
     if (this->center.x >= backgroundPos.x &&
         this->center.x <= backgroundPos.x + terrain->get_width() &&

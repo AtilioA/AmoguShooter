@@ -34,7 +34,7 @@ public:
     };
     void move();
     bool is_valid();
-    // void get_pos(GLfloat &xOut, GLfloat &yOut)
+    // void get_center(GLfloat &xOut, GLfloat &yOut)
     // {
     //     xOut = gX;
     //     yOut = gY;

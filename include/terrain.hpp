@@ -25,7 +25,7 @@ public:
     void draw_terrain();
 
     void set_vertex(Point p);
-    Point get_pos();
+    Point get_center();
     Color get_color();
     GLfloat get_width();
     GLfloat get_height();
