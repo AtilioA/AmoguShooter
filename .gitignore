@@ -33,3 +33,4 @@ trabalhocg
 *.app
 
 .vscode
+*_ignore*
