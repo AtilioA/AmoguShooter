@@ -230,8 +230,8 @@ bool Character::is_inside_terrain(Terrain *terrain)
 bool Character::is_inside_another_character(Character *character)
 {
     if (this->center.x + this->trunkWidth > character->center.x - character->trunkWidth &&
-        this->center.x - this->trunkWidth<character->center.x + character->trunkWidth &&this->center.y + this->height> character->center.y - character->height &&
-        this->center.y - this->height < character->center.y + character->height)
+        this->center.x - this->trunkWidth<character->center.x + character->trunkWidth &&this->center.y + this->radius> character->center.y - character->radius &&
+        this->center.y - this->radius < character->center.y + character->radius)
     {
         return true;
     }
