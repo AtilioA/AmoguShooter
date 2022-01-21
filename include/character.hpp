@@ -16,13 +16,21 @@ protected:
     GLfloat trunkWidth;
     Terrain *terrainBelow;
 
+    bool isWalking;
+    bool isAnimationObverse;
+
     bool isJumping;
     GLfloat jumpTime;
 
     // Angle of each joint
-    GLfloat gThetaFoot;
+    GLfloat gThetaThigh;
     GLfloat gThetaLeg;
+    GLfloat gThetaLegMAX;
+    GLfloat gThetaLegMIN;
     GLfloat gThetaArm;
+    GLfloat gThetaArmMAX;
+    GLfloat gThetaArmMIN;
+    bool animateHead;
 
     GLfloat direction;
     GLfloat speed;
@@ -60,18 +68,10 @@ public:
     void set_terrain_below(Terrain *terrain);
     Terrain *get_terrain_below();
 
-    Character()
-    {
-        terrainBelow = NULL;
-        gThetaFoot = 0;
-        gThetaLeg = 0;
-        gThetaArm = 0;
-    };
-
     // Gunshot *Shoot();
 
-    void draw_character(/*, GLfloat thetaFoot,
-                        GLfloat thetaLeg, GLfloat thetaArm*/
+    void draw_character(/*, GLfloat thetaLeg,
+                        GLfloat thetaThigh, GLfloat thetaArm*/
     );
 
     bool is_inside_another_character(Character *character);
