@@ -14,6 +14,8 @@ typedef struct tDebug
     bool highlightCollision;
     bool invinciblePlayer;
     bool pacificEnemies;
+    bool drawObjectCenter;
+    bool drawCharacterHitbox;
 } Debug;
 
 class Game
@@ -38,7 +40,7 @@ public:
         this->nCharacters = 0;
         this->arenaSVGFilename = "";
         this->arenaDimensions = {0, 0};
-        this->debugOptions = {false, false, false};
+        this->debugOptions = {false, false, false, false, false};
     };
 
     void move_a_character(Character *character, GLfloat dx, GLfloat dy);

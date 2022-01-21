@@ -132,9 +132,9 @@ void Game::free_enemies()
 // WIP
 void Game::free()
 {
-    delete this->player;
+    // delete this->player;
 
-    this->enemies.clear();
+    // this->enemies.clear();
     this->terrains.clear();
 
     delete this->background;
@@ -312,6 +312,8 @@ void Game::set_debug_options(bool debug)
     this->debugOptions.highlightCollision = debug;
     this->debugOptions.pacificEnemies = debug;
     this->debugOptions.invinciblePlayer = debug;
+    this->debugOptions.drawObjectCenter = debug;
+    this->debugOptions.drawCharacterHitbox = debug;
 }
 
 Debug Game::get_debug_options()

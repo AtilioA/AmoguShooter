@@ -21,8 +21,31 @@ void Terrain::draw_terrain()
     glVertex2f(this->width, -this->height);
     glVertex2f(0, -this->height);
     glEnd();
-
     glPopMatrix();
+
+    if (game->get_debug_options().drawObjectCenter)
+    {
+        glPushMatrix();
+        glTranslatef(this->center.x, -this->center.y, 0);
+        glPointSize(3);
+
+        glColor3f(0.0, 1.0, 1.0);
+        glBegin(GL_POINTS);
+        glVertex2f(0, 0);
+        glEnd();
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(this->center.x, -this->center.y, 0);
+        glColor3f(1.0, 0.0, 0.0);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(0, 0);
+        glVertex2f(this->width, 0);
+        glVertex2f(this->width, -this->height);
+        glVertex2f(0, -this->height);
+        glEnd();
+        glPopMatrix();
+    }
 }
 
 Point Terrain::get_center()
