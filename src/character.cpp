@@ -209,7 +209,7 @@ bool Character::is_inside_terrain(Terrain *terrain)
     if (this->center.y + this->radius >= terrainPos.y &&
         this->center.y - this->radius <= terrainPos.y + terrain->get_height())
     {
-        if (this->center.x + this->radius >= terrainPos.x && this->center.x <= terrainPos.x + this->radius + terrain->get_width())
+        if (this->center.x >= terrainPos.x && this->center.x <= terrainPos.x + terrain->get_width())
         {
             if (terrain->get_color().b != 1)
             {
@@ -300,6 +300,16 @@ GLfloat Character::get_radius()
 GLfloat Character::get_height()
 {
     return this->height;
+}
+
+void Character::set_trunk_width(GLfloat t)
+{
+    this->trunkWidth = t;
+}
+
+GLfloat Character::get_trunk_width()
+{
+    return this->trunkWidth;
 }
 
 Terrain *Character::get_terrain_below()

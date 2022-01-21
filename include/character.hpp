@@ -65,6 +65,9 @@ public:
     void set_height(GLfloat h);
     GLfloat get_height();
 
+    void set_trunk_width(GLfloat t);
+    GLfloat get_trunk_width();
+
     void set_terrain_below(Terrain *terrain);
     Terrain *get_terrain_below();
 

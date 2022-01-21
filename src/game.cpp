@@ -166,7 +166,7 @@ bool Game::is_outside_arena(Character *character)
     }
 
     // Replace radius with trunkWidth
-    if (character->get_center().x - character->get_radius() < terrainPos.x || character->get_center().x + character->get_radius() > terrainPos.x + terrain->get_width())
+    if (character->get_center().x - character->get_trunk_width() / 2 < terrainPos.x || character->get_center().x + character->get_trunk_width() / 2 > terrainPos.x + terrain->get_width())
     {
         return true;
     }
