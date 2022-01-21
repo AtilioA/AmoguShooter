@@ -13,6 +13,7 @@ protected:
     Color color;
     GLfloat radius;
     GLfloat height;
+    GLfloat trunkWidth;
     Terrain *terrainBelow;
 
     bool isJumping;
@@ -27,14 +28,16 @@ protected:
     GLfloat speed;
 
 public:
-    Character(Point pos, GLfloat radius, Color color, GLint id)
+    Character(Point center, GLfloat radius, Color color, GLint id)
     {
-        this->set_center(pos);
+        this->set_center(center);
         this->set_radius(radius);
         this->set_color(color);
         this->set_height(radius * 2);
         this->set_id(id);
         this->set_terrain_below(NULL);
+        this->trunkWidth = radius * 0.2;
+        this->animateHead = true;
     };
 
     virtual void f() = 0;

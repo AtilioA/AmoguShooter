@@ -114,18 +114,17 @@ void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
 
 bool Character::is_inside_terrain(Terrain *terrain)
 {
-    Point backgroundPos = terrain->get_center();
+    Point terrainPos = terrain->get_center();
 
-    if (this->center.y >= backgroundPos.y &&
-        this->center.y <= backgroundPos.y + terrain->get_height())
+    if (this->center.y + this->radius >= terrainPos.y &&
+        this->center.y - this->radius <= terrainPos.y + terrain->get_height())
     {
-        if (this->center.x >= backgroundPos.x && this->center.x <= backgroundPos.x + terrain->get_width())
+        if (this->center.x + this->radius >= terrainPos.x && this->center.x <= terrainPos.x + this->radius + terrain->get_width())
         {
             if (terrain->get_color().b != 1)
             {
                 this->terrainBelow = terrain;
             }
-
             return true;
         }
     }
@@ -140,9 +139,9 @@ bool Character::is_inside_terrain(Terrain *terrain)
 
 bool Character::is_inside_another_character(Character *character)
 {
-    if (this->center.x + this->radius > character->center.x - character->radius &&
-        this->center.x - this->radius<character->center.x + character->radius &&this->center.y + this->radius> character->center.y - character->radius &&
-        this->center.y - this->radius < character->center.y + character->radius)
+    if (this->center.x + this->trunkWidth > character->center.x - character->trunkWidth &&
+        this->center.x - this->trunkWidth<character->center.x + character->trunkWidth &&this->center.y + this->height> character->center.y - character->height &&
+        this->center.y - this->height < character->center.y + character->height)
     {
         return true;
     }
