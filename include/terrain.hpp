@@ -8,15 +8,15 @@
 class Terrain
 {
 private:
-    Point pos;
+    Point center;
     Color color;
     GLfloat width;
     GLfloat height;
 
 public:
-    Terrain(Point position, GLfloat width, GLfloat height, Color color)
+    Terrain(Point center, GLfloat width, GLfloat height, Color color)
     {
-        this->pos = position;
+        this->center = center;
         this->width = width;
         this->height = height;
         this->color = color;

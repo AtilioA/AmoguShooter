@@ -3,13 +3,17 @@
 // #include <iostream>
 // using namespace std;
 
+// Import game to check debug options
+#include "../include/game.hpp"
+extern Game *game;
+
 void Terrain::draw_terrain()
 {
     glColor3f(this->color.r, this->color.g, this->color.b);
 
     glPushMatrix();
 
-    glTranslatef(this->pos.x, -this->pos.y, 0);
+    glTranslatef(this->center.x, -this->center.y, 0);
 
     glBegin(GL_POLYGON);
     glVertex2f(0, 0);
@@ -23,7 +27,7 @@ void Terrain::draw_terrain()
 
 Point Terrain::get_center()
 {
-    return this->pos;
+    return this->center;
 }
 
 Color Terrain::get_color()

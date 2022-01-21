@@ -21,7 +21,7 @@ void parseCircle(XMLElement *circ, Game *game)
     circ->QueryFloatAttribute("r", &r);
     string circFill = circ->Attribute("fill");
 
-    Point position = {cx, cy};
+    Point center = {cx, cy};
 
     cout << "cx: " << cx << " cy: " << cy << " r: " << r << " circFill: " << circFill << endl;
 
@@ -29,14 +29,14 @@ void parseCircle(XMLElement *circ, Game *game)
     {
         cout << "-- ENEMY --" << endl;
         color = {1.0, 0.0, 0.0};
-        Enemy *enemy = new Enemy(position, r, color, game->get_n_characters());
+        Enemy *enemy = new Enemy(center, r, color, game->get_n_characters());
         game->add_enemy(enemy);
     }
     else if (circFill == "green")
     {
         cout << "-- PLAYER --" << endl;
         color = {0.0, 1.0, 0.0};
-        Player *player = new Player(position, r, color, game->get_n_characters());
+        Player *player = new Player(center, r, color, game->get_n_characters());
         game->add_player(player);
     }
 }
@@ -52,7 +52,7 @@ void parseRect(XMLElement *rect, Game *game)
     rect->QueryFloatAttribute("height", &height);
     string rectFill = rect->Attribute("fill");
 
-    Point position = {x, y};
+    Point center = {x, y};
 
     cout << "x: " << x << " y: " << y << " width: " << width << " height: " << height << " rectFill: " << rectFill << endl;
 
@@ -60,7 +60,7 @@ void parseRect(XMLElement *rect, Game *game)
     {
         cout << "-- TERRAIN --" << endl;
         color = {0.0, 0.0, 0.0};
-        Terrain *terrain = new Terrain(position, width, height, color);
+        Terrain *terrain = new Terrain(center, width, height, color);
         terrain->draw_terrain();
         game->add_terrain(terrain);
     }
@@ -69,7 +69,7 @@ void parseRect(XMLElement *rect, Game *game)
         cout << "-- BACKGROUND --" << endl;
         color = {0.0, 0.0, 1.0};
 
-        Terrain *background = new Terrain(position, width, height, color);
+        Terrain *background = new Terrain(center, width, height, color);
         game->set_arena_background(background);
 
         Dimensions dimensions = {width, height};
