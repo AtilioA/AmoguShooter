@@ -14,26 +14,15 @@ void Character::toggle_animate_head()
 
 void Character::draw_head()
 {
-    glColor3f(200.0 / 255, 66.0 / 255, 85.0 / 255); // rgb(200,66,85)
+    // glColor3f(200.0 / 255, 66.0 / 255, 85.0 / 255); // rgb(200,66,85)
+    glColor3f(255.0 / 255, 255.0 / 255, 255.0 / 255);
 
-    glPointSize(3);
-
-    GLint inc = 0;
-    if (rand() % 10 == 1)
-    {
-        this->toggle_animate_head();
-    }
-    if (this->animateHead)
-    {
-        inc = 45;
-    }
-
-    glBegin(GL_POINTS);
+    glBegin(GL_POLYGON);
     // clang-format off
-        for (size_t i = 0; i < 360; i += 90)
-        {
-            glVertex2f(this->radius / 2 * cos((i+inc) * M_PI / 180), this->radius / 2 * sin((i+inc) * M_PI / 180));
-        }
+        glVertex2f(-this->trunkWidth / 2, 0);
+        glVertex2f(this->trunkWidth / 2, 0);
+        glVertex2f(this->trunkWidth / 2, this->height / 8);
+        glVertex2f(-this->trunkWidth / 2, this->height / 8);
     // clang-format on
     glEnd();
 }
@@ -44,52 +33,54 @@ void Character::draw_body()
     glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-this->trunkWidth, 0);
-        glVertex2f(this->trunkWidth, 0);
-        glVertex2f(this->trunkWidth, this->height / 8 * 4);
-        glVertex2f(-this->trunkWidth, this->height / 8 * 4);
+        glVertex2f(-this->trunkWidth / 2, 0);
+        glVertex2f(this->trunkWidth / 2, 0);
+        glVertex2f(this->trunkWidth / 2, this->height / 8 * 3);
+        glVertex2f(-this->trunkWidth / 2, this->height / 8 * 3);
     // clang-format on
     glEnd();
 }
 
 // 4/8 / 2
-void Character::draw_thigh(/*, GLfloat theta */)
+void Character::draw_thigh()
 {
     glColor3f(228.0 / 255, 170.0 / 255, 141.0 / 255); // rgb(228, 170, 141)
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
-        glVertex2f(this->trunkWidth / 1.5, 0);
-        glVertex2f(this->trunkWidth / 1.5, -this->height / 8 * 1.5);
-        glVertex2f(0, -this->height / 8 * 1.5);
+        glVertex2f(this->trunkWidth / 3, 0);
+        glVertex2f(this->trunkWidth / 3, -this->height / 8 * 2);
+        glVertex2f(0, -this->height / 8 * 2);
     // clang-format on
     glEnd();
 }
 
 // 4/8 / 2
-void Character::draw_leg(/*, GLfloat theta */)
+void Character::draw_leg()
 {
     glColor3f(121.0 / 255, 200.0 / 255, 226.0 / 255); // rgb(121, 200, 255)
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
-        glVertex2f(this->trunkWidth / 1.5, 0);
-        glVertex2f(this->trunkWidth / 1.5, -this->height / 8 * 1.5);
-        glVertex2f(0, -this->height / 8 * 1.5);
+        glVertex2f(this->trunkWidth / 3, 0);
+        glVertex2f(this->trunkWidth / 3, -this->height / 8 * 2);
+        glVertex2f(0, -this->height / 8 * 2);
     // clang-format on
     glEnd();
 }
 
-void Character::draw_arm(/*, GLfloat theta */)
+void Character::draw_arm()
 {
-    glColor3f(151.0 / 255, 220.0 / 255, 226.0 / 255); // rgb(151, 220, 255)
+    glColor3f(200.0 / 255, 180.0 / 255, 255.0 / 255); // rgb(200, 180, 255)
+
+    glRotatef(this->gThetaArm, 0, 0, 1);
 
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
-        glVertex2f(this->trunkWidth / 2, 0);
-        glVertex2f(this->trunkWidth / 2, -this->height / 8 * 1.5);
-        glVertex2f(0, -this->height / 8 * 1.5);
+        glVertex2f(this->trunkWidth / 4, 0);
+        glVertex2f(this->trunkWidth / 4, -this->height / 8 * 2);
+        glVertex2f(0, -this->height / 8 * 4);
     // clang-format on
     glEnd();
 }
@@ -97,61 +88,59 @@ void Character::draw_arm(/*, GLfloat theta */)
 // Draw a character
 void Character::draw_character()
 {
-    // glPushMatrix();
+    glPushMatrix();
 
-    // glTranslatef(this->center.x, -this->center.y, 0);
+    glTranslatef(this->center.x, -this->center.y, 0);
 
-    // glPushMatrix();
-    // // glTranslatef(0, 5, 0);
-    // this->draw_leg(/*, theta */);
-    // glPopMatrix();
+    // Left leg
+    glPushMatrix();
+    glTranslatef(-this->trunkWidth / 2, -this->radius + this->height / 8 * 2, 0);
+    this->draw_leg(/*, theta */);
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(0, this->height / 8 * 1.5, 0);
-    // this->draw_thigh(/*, theta */);
-    // glPopMatrix();
-    // glPopMatrix();
+    // Right leg
+    glPushMatrix();
+    glTranslatef(this->trunkWidth / 3 / 2, -this->radius + this->height / 8 * 2, 0);
+    this->draw_leg(/*, theta */);
+    glPopMatrix();
 
-    // glPushMatrix();
-    // // glTranslatef(this->center.x, -this->center.y, 0);
-    // glTranslatef(this->center.x + this->trunkWidth / 3 * 3, -this->center.y, 0);
-    // glPushMatrix();
-    // // glTranslatef(0, 5, 0);
-    // this->draw_leg(/*, theta */);
-    // glPopMatrix();
+    // Left thigh
+    glPushMatrix();
+    glTranslatef(-this->trunkWidth / 2, -this->radius + this->height / 8 * 4, 0);
+    this->draw_thigh(/*, theta */);
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(0, this->height / 8 * 1.5, 0);
-    // this->draw_thigh(/*, theta */);
-    // glPopMatrix();
+    // Right thigh
+    glPushMatrix();
+    glTranslatef(this->trunkWidth / 3 / 2, -this->radius + this->height / 8 * 4, 0);
+    this->draw_thigh(/*, theta */);
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(0, this->height / 8 * 3, 0);
-    // // this->draw_arm(/*, theta */);
-    // // glPopMatrix();
+    // Body
+    glPushMatrix();
+    this->draw_body();
+    glPopMatrix();
 
-    // this->draw_body();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(0, this->height, 0);
-    // this->draw_head();
-    // glPopMatrix();
-
-    // glPopMatrix();
+    // Head
+    glPushMatrix();
+    glTranslatef(0, this->height / 8 * 3, 0);
+    this->draw_head();
+    glPopMatrix();
 
     // Draw a circle of radius this->radius
-    glPushMatrix();
-    glTranslatef(this->center.x, -this->center.y, 0);
-    glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
-    glBegin(GL_POLYGON);
-    // clang-format off
-        for (size_t i = 0; i < 360; i += 5)
-        {
-            glVertex2f(this->radius * cos(i * M_PI / 180), this->radius * sin(i * M_PI / 180));
-        }
-    // clang-format on
-    glEnd();
+    // glPushMatrix();
+    // glTranslatef(this->center.x, -this->center.y, 0);
+    // glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
+    // glBegin(GL_POLYGON);
+    // // clang-format off
+    //     for (size_t i = 0; i < 360; i += 5)
+    //     {
+    //         glVertex2f(this->radius * cos(i * M_PI / 180), this->radius * sin(i * M_PI / 180));
+    //     }
+    // // clang-format on
+    // glEnd();
+    // glPopMatrix();
+
     glPopMatrix();
 
     if (game->get_debug_options().drawObjectCenter)
@@ -191,6 +180,14 @@ void Character::draw_character()
         glEnd();
         glPopMatrix();
     }
+
+    // Arm
+    glPushMatrix();
+    glTranslatef(this->center.x, -this->center.y, 0);
+
+    glTranslatef(this->trunkWidth / 4, this->height / 8 * 3 / 2, 0);
+    this->draw_arm();
+    glPopMatrix();
 }
 
 void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
@@ -209,7 +206,7 @@ bool Character::is_inside_terrain(Terrain *terrain)
     if (this->center.y + this->radius >= terrainPos.y &&
         this->center.y - this->radius <= terrainPos.y + terrain->get_height())
     {
-        if (this->center.x >= terrainPos.x && this->center.x <= terrainPos.x + terrain->get_width())
+        if (this->center.x + this->trunkWidth / 2 >= terrainPos.x && this->center.x - this->trunkWidth / 2 <= terrainPos.x + terrain->get_width())
         {
             if (terrain->get_color().b != 1)
             {
@@ -229,8 +226,8 @@ bool Character::is_inside_terrain(Terrain *terrain)
 
 bool Character::is_inside_another_character(Character *character)
 {
-    if (this->center.x + this->trunkWidth > character->center.x - character->trunkWidth &&
-        this->center.x - this->trunkWidth<character->center.x + character->trunkWidth &&this->center.y + this->radius> character->center.y - character->radius &&
+    if (this->center.x + this->trunkWidth / 2 > character->center.x - character->trunkWidth / 2 &&
+        this->center.x - this->trunkWidth / 2 < character->center.x + character->trunkWidth / 2 && this->center.y + this->radius > character->center.y - character->radius &&
         this->center.y - this->radius < character->center.y + character->radius)
     {
         return true;

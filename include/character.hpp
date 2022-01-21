@@ -44,8 +44,9 @@ public:
         this->set_height(radius * 2);
         this->set_id(id);
         this->set_terrain_below(NULL);
-        this->trunkWidth = radius * 0.2;
+        this->trunkWidth = radius;
         this->animateHead = true;
+        this->gThetaArm = 80;
     };
 
     virtual void f() = 0;
@@ -85,11 +86,11 @@ public:
 
     void determine_animation_direction();
 
-    void draw_leg(/*, GLfloat theta */);
-    void draw_thigh(/*, GLfloat theta */);
+    void draw_leg();
+    void draw_thigh();
     void draw_body();
-    void draw_arm(/*, GLfloat theta */);
-    void draw_head(/* GLint radius */);
+    void draw_arm();
+    void draw_head();
     void toggle_animate_head();
 
     void rotate_arm(GLfloat inc);
