@@ -3,17 +3,36 @@
 
 #include "../include/character.hpp"
 
+// Import game to check debug options
+#include "../include/game.hpp"
+extern Game *game;
+
+void Character::toggle_animate_head()
+{
+    this->animateHead = !this->animateHead;
+}
+
 void Character::draw_head()
 {
-    glColor3f(172.0 / 255, 66.0 / 255, 85.0 / 255); // rgb(172,66,85)
+    glColor3f(200.0 / 255, 66.0 / 255, 85.0 / 255); // rgb(200,66,85)
 
-    glPointSize(4);
+    glPointSize(3);
+
+    GLint inc = 0;
+    if (rand() % 10 == 1)
+    {
+        this->toggle_animate_head();
+    }
+    if (this->animateHead)
+    {
+        inc = 45;
+    }
 
     glBegin(GL_POINTS);
     // clang-format off
-        for (size_t i = 0; i < 360; i += 180)
+        for (size_t i = 0; i < 360; i += 90)
         {
-            glVertex2f(this->radius / 2 * cos(i * M_PI / 180), this->radius / 2 * sin(i * M_PI / 180));
+            glVertex2f(this->radius / 2 * cos((i+inc) * M_PI / 180), this->radius / 2 * sin((i+inc) * M_PI / 180));
         }
     // clang-format on
     glEnd();
@@ -25,36 +44,38 @@ void Character::draw_body()
     glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-this->radius / 4, 0);
-        glVertex2f(this->radius / 4, 0);
-        glVertex2f(this->radius / 4, this->height / 1.5);
-        glVertex2f(-this->radius / 4, this->height / 1.5);
+        glVertex2f(-this->trunkWidth, 0);
+        glVertex2f(this->trunkWidth, 0);
+        glVertex2f(this->trunkWidth, this->height / 8 * 4);
+        glVertex2f(-this->trunkWidth, this->height / 8 * 4);
     // clang-format on
     glEnd();
 }
 
-void Character::draw_leg(/*, GLfloat theta */)
+// 4/8 / 2
+void Character::draw_thigh(/*, GLfloat theta */)
 {
     glColor3f(228.0 / 255, 170.0 / 255, 141.0 / 255); // rgb(228, 170, 141)
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-this->radius / 4, 0);
-        glVertex2f(this->radius / 4, 0);
-        glVertex2f(this->radius / 4, this->height / 2);
-        glVertex2f(-this->radius / 4, this->height / 2);
+        glVertex2f(0, 0);
+        glVertex2f(this->trunkWidth / 1.5, 0);
+        glVertex2f(this->trunkWidth / 1.5, -this->height / 8 * 1.5);
+        glVertex2f(0, -this->height / 8 * 1.5);
     // clang-format on
     glEnd();
 }
 
-void Character::draw_foot(/*, GLfloat theta */)
+// 4/8 / 2
+void Character::draw_leg(/*, GLfloat theta */)
 {
     glColor3f(121.0 / 255, 200.0 / 255, 226.0 / 255); // rgb(121, 200, 255)
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-this->radius / 4, 0);
-        glVertex2f(this->radius / 4, 0);
-        glVertex2f(this->radius / 4, this->height / 2);
-        glVertex2f(-this->radius / 4, this->height / 2);
+        glVertex2f(0, 0);
+        glVertex2f(this->trunkWidth / 1.5, 0);
+        glVertex2f(this->trunkWidth / 1.5, -this->height / 8 * 1.5);
+        glVertex2f(0, -this->height / 8 * 1.5);
     // clang-format on
     glEnd();
 }
@@ -65,10 +86,10 @@ void Character::draw_arm(/*, GLfloat theta */)
 
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(-this->radius / 6, 0);
-        glVertex2f(this->radius / 6, 0);
-        glVertex2f(this->radius / 6, this->height / 2);
-        glVertex2f(-this->radius / 6, this->height / 2);
+        glVertex2f(0, 0);
+        glVertex2f(this->trunkWidth / 2, 0);
+        glVertex2f(this->trunkWidth / 2, -this->height / 8 * 1.5);
+        glVertex2f(0, -this->height / 8 * 1.5);
     // clang-format on
     glEnd();
 }
@@ -76,31 +97,100 @@ void Character::draw_arm(/*, GLfloat theta */)
 // Draw a character
 void Character::draw_character()
 {
-    glPushMatrix();
+    // glPushMatrix();
 
+    // glTranslatef(this->center.x, -this->center.y, 0);
+
+    // glPushMatrix();
+    // // glTranslatef(0, 5, 0);
+    // this->draw_leg(/*, theta */);
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(0, this->height / 8 * 1.5, 0);
+    // this->draw_thigh(/*, theta */);
+    // glPopMatrix();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // // glTranslatef(this->center.x, -this->center.y, 0);
+    // glTranslatef(this->center.x + this->trunkWidth / 3 * 3, -this->center.y, 0);
+    // glPushMatrix();
+    // // glTranslatef(0, 5, 0);
+    // this->draw_leg(/*, theta */);
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(0, this->height / 8 * 1.5, 0);
+    // this->draw_thigh(/*, theta */);
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(0, this->height / 8 * 3, 0);
+    // // this->draw_arm(/*, theta */);
+    // // glPopMatrix();
+
+    // this->draw_body();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(0, this->height, 0);
+    // this->draw_head();
+    // glPopMatrix();
+
+    // glPopMatrix();
+
+    // Draw a circle of radius this->radius
+    glPushMatrix();
     glTranslatef(this->center.x, -this->center.y, 0);
-    // glRotatef(theta, 0, 0, 1);
-
-    glPushMatrix();
-    glTranslatef(0, this->height / 2, 0);
-    this->draw_leg(/*, theta */);
+    glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
+    glBegin(GL_POLYGON);
+    // clang-format off
+        for (size_t i = 0; i < 360; i += 5)
+        {
+            glVertex2f(this->radius * cos(i * M_PI / 180), this->radius * sin(i * M_PI / 180));
+        }
+    // clang-format on
+    glEnd();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(0, this->height / 2, 0);
-    this->draw_foot(/*, theta */);
-    glPopMatrix();
+    if (game->get_debug_options().drawObjectCenter)
+    {
+        glPushMatrix();
+        glTranslatef(this->center.x, -this->center.y, 0);
+        glPointSize(4);
+        glColor3f(0.0, 0.0, 0.0);
+        glBegin(GL_POINTS);
+        glVertex2f(0, 0);
+        glEnd();
+        glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(0, this->height / 2, 0);
-    this->draw_arm(/*, theta */);
-    glPopMatrix();
+        // Also draw height
+        glPushMatrix();
+        glTranslatef(this->center.x, -this->center.y - this->radius, 0);
+        glTranslatef(0, this->height, 0);
+        glPointSize(4);
+        glColor3f(1.0, 1.0, 1.0);
+        glBegin(GL_POINTS);
+        glVertex2f(0, 0);
+        glEnd();
+        glPopMatrix();
+    }
 
-    this->draw_body();
-
-    this->draw_head();
-
-    glPopMatrix();
+    if (game->get_debug_options().drawCharacterHitbox)
+    {
+        glPushMatrix();
+        glTranslatef(this->center.x, -this->center.y - this->radius, 0);
+        glColor3f(1.0, 0.0, 0.0);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(0, 0);
+        glVertex2f(-this->trunkWidth / 2, 0);
+        glVertex2f(-this->trunkWidth / 2, this->height);
+        glVertex2f(this->trunkWidth / 2, this->height);
+        glVertex2f(this->trunkWidth / 2, 0);
+        glEnd();
+        glPopMatrix();
+    }
 }
 
 void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
@@ -152,7 +242,7 @@ bool Character::is_inside_another_character(Character *character)
 }
 
 // Funcao auxiliar de rotacao
-// void RotatePoint(Point position, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
+// void RotatePoint(Point center, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
 // {
 // }
 

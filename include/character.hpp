@@ -80,15 +80,18 @@ public:
     void move_character(GLfloat dx, GLfloat dy);
     void jump(GLfloat clock);
 
-    void draw_foot(/*, GLfloat theta */);
+    void determine_animation_direction();
+
     void draw_leg(/*, GLfloat theta */);
+    void draw_thigh(/*, GLfloat theta */);
     void draw_body();
     void draw_arm(/*, GLfloat theta */);
     void draw_head(/* GLint radius */);
+    void toggle_animate_head();
 
     void rotate_arm(GLfloat inc);
+    void rotate_thigh(GLfloat inc);
     void rotate_leg(GLfloat inc);
-    void rotate_foot(GLfloat inc);
 };
 
 #endif /* CHARACTER_H */
