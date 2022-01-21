@@ -57,7 +57,7 @@ public:
     void reset_game();
 
     bool is_character_inside_any_other_character(Character *character);
-    bool is_inside_arena(Character *character);
+    bool is_outside_arena(Character *character);
     bool is_character_inside_any_terrain(Character *character);
     bool is_player_inside_any_enemy();
     bool is_player_inside_any_terrain();

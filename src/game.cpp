@@ -11,7 +11,7 @@ void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy)
 
 bool Game::check_collision(Character *character)
 {
-    if (!this->is_inside_arena(character) || this->is_character_inside_any_terrain(character))
+    if (this->is_outside_arena(character) || this->is_character_inside_any_terrain(character))
     {
         return true;
     }
@@ -146,9 +146,32 @@ void Game::reset_game()
     parseSVGFile(this->arenaSVGFilename, this);
 }
 
-bool Game::is_inside_arena(Character *character)
+bool Game::is_outside_arena(Character *character)
 {
-    return character->is_inside_terrain(this->background);
+    Terrain *terrain = this->background;
+    Point terrainPos = this->background->get_center();
+
+    // if (character == this->player)
+    // {
+    //     cout << terrainPos.y + terrain->get_height() << endl;
+    //     cout << character->get_center().y << " | " << character->get_radius() << endl;
+    //     cout << (character->get_center().x - character->get_radius() > terrainPos.x || character->get_center().x + character->get_radius() >= terrainPos.x + terrain->get_width()) << endl;
+    // }
+
+    // Replace radius with height
+    if (character->get_center().y - character->get_radius() < terrainPos.y ||
+        character->get_center().y + character->get_radius() > terrainPos.y + terrain->get_height())
+    {
+        return true;
+    }
+
+    // Replace radius with trunkWidth
+    if (character->get_center().x - character->get_radius() < terrainPos.x || character->get_center().x + character->get_radius() > terrainPos.x + terrain->get_width())
+    {
+        return true;
+    }
+
+    return false;
 }
 
 bool Game::is_character_inside_any_other_character(Character *character)
