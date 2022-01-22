@@ -30,7 +30,6 @@ protected:
     GLfloat gThetaArm;
     GLfloat gThetaArmMAX;
     GLfloat gThetaArmMIN;
-    bool animateHead;
 
     GLfloat direction;
     GLfloat speed;
@@ -45,8 +44,7 @@ public:
         this->set_id(id);
         this->set_terrain_below(NULL);
         this->trunkWidth = radius;
-        this->animateHead = true;
-        this->gThetaArm = 80;
+        this->gThetaArm = 0.0 + 2;
     };
 
     virtual void f() = 0;
@@ -91,7 +89,6 @@ public:
     void draw_body();
     void draw_arm();
     void draw_head();
-    void toggle_animate_head();
 
     void rotate_arm(GLfloat inc);
     void rotate_thigh(GLfloat inc);

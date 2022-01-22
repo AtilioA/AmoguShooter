@@ -7,10 +7,6 @@
 #include "../include/game.hpp"
 extern Game *game;
 
-void Character::toggle_animate_head()
-{
-    this->animateHead = !this->animateHead;
-}
 
 void Character::draw_head()
 {
