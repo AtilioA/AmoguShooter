@@ -5,6 +5,12 @@
 #include "utils.hpp"
 #include "terrain.hpp"
 
+enum Direction : GLint
+{
+    LEFT = -1,
+    RIGHT = 1
+};
+
 class Character // abstract class
 {
 protected:
@@ -16,6 +22,7 @@ protected:
     GLfloat trunkWidth;
     Terrain *terrainBelow;
 
+    GLint facingDirection;
     bool isWalking;
     bool isAnimationObverse;
 
@@ -44,6 +51,7 @@ public:
         this->set_id(id);
         this->set_terrain_below(NULL);
         this->trunkWidth = radius;
+        this->facingDirection = Direction::RIGHT;
         this->gThetaArm = 0.0 + 2;
     };
 
@@ -70,6 +78,9 @@ public:
     void set_terrain_below(Terrain *terrain);
     Terrain *get_terrain_below();
 
+    void set_facing_direction(GLint facingDirection);
+    GLint get_facing_direction();
+
     // Gunshot *Shoot();
 
     void draw_character(/*, GLfloat thetaLeg,
@@ -83,6 +94,8 @@ public:
     void jump(GLfloat clock);
 
     void determine_animation_direction();
+
+    void moveArmMouseHelper(GLfloat dy, GLfloat dx);
 
     void draw_leg();
     void draw_thigh();

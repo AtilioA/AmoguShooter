@@ -7,6 +7,17 @@
 #include "../include/game.hpp"
 extern Game *game;
 
+void Character::moveArmMouseHelper(GLfloat dx, GLfloat dy)
+{
+    GLfloat x = dx - this->center.x;
+    GLfloat y = dy - this->center.y;
+
+    GLfloat theta = atan(y / x) * 180 / M_PI;
+    if (theta < 45 && theta > -45)
+    {
+        this->gThetaArm = theta * -this->facingDirection;
+    }
+}
 
 void Character::draw_head()
 {
@@ -178,21 +189,26 @@ void Character::draw_character()
     }
 
     // Arm
-    // glPushMatrix();
-    // glTranslatef(this->center.x, -this->center.y, 0);
-
-    // glTranslatef(this->trunkWidth / 4, this->height / 8 * 3 / 2, 0);
-    // this->draw_arm();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(this->center.x, -this->center.y, 0);
+    glTranslatef(this->trunkWidth / 4, this->height / 8 * 2 / 2, 0);
+    this->draw_arm();
+    glPopMatrix();
 }
 
 void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
 {
-    // Placeholder
-    // GLdouble deltaTime = 1;
+    if (dx < 0)
+    {
+        this->facingDirection = Direction::LEFT;
+    }
+    else if (dx > 0)
+    {
+        this->facingDirection = Direction::RIGHT;
+    }
 
-    Character::center.x += dx /** deltaTime*/;
-    Character::center.y += dy /** deltaTime*/;
+    this->center.x += dx /** deltaTime*/;
+    this->center.y += dy /** deltaTime*/;
 }
 
 bool Character::is_inside_terrain(Terrain *terrain)
@@ -242,6 +258,16 @@ bool Character::is_inside_another_character(Character *character)
 // Gunshot *Character::Shoot()
 // {
 // }
+
+void Character::set_facing_direction(GLint facingDirection)
+{
+    this->facingDirection = facingDirection;
+}
+
+GLint Character::get_facing_direction()
+{
+    return this->facingDirection;
+}
 
 void Character::set_terrain_below(Terrain *terrain)
 {

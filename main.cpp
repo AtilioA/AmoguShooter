@@ -231,6 +231,13 @@ void idle(void)
     glutPostRedisplay();
 }
 
+void aim_with_mouse(int x, int y)
+{
+    // x = ViewingHeight - x;
+    y = ViewingHeight - y;
+    game->get_player()->moveArmMouseHelper(x, y);
+}
+
 int main(int argc, char *argv[])
 {
     // Initialize openGL with Double buffer and RGB color without transparency.
@@ -270,6 +277,7 @@ int main(int argc, char *argv[])
     glutKeyboardFunc(keyPress);
     glutIdleFunc(idle);
     glutKeyboardUpFunc(keyup);
+    glutPassiveMotionFunc(aim_with_mouse);
 
     init(game);
 
