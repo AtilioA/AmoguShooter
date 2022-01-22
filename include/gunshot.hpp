@@ -3,7 +3,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#define radiusGunshot 5
+#define radiusGunshot 1
 
 class Gunshot
 {
@@ -26,19 +26,16 @@ public:
         gX = x;
         gY = y;
         gDirectionAng = directionAng;
-        gVel = 0.1;
+        gVel = 2;
     };
+
     void draw()
     {
         draw_gunshot(gX, gY);
     };
-    void move();
+
+    void move(GLdouble deltaTime);
     bool is_valid();
-    // void get_center(GLfloat &xOut, GLfloat &yOut)
-    // {
-    //     xOut = gX;
-    //     yOut = gY;
-    // };
 };
 
 #endif /* GUNSHOT_H */

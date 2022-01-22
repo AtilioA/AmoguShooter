@@ -81,8 +81,6 @@ public:
     void set_facing_direction(GLint facingDirection);
     GLint get_facing_direction();
 
-    // Gunshot *Shoot();
-
     void draw_character(/*, GLfloat thetaLeg,
                         GLfloat thetaThigh, GLfloat thetaArm*/
     );

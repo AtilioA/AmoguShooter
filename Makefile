@@ -7,7 +7,7 @@ EXE 	 := trabalhocg
 PROJETO  := main
 
 # Cria objetos de todos os arquivos de código-fonte para então linká-los no programa final
-all: clean $(OBJ)/$(PROJETO).o $(OBJ)/game.o $(OBJ)/character.o $(OBJ)/terrain.o $(OBJ)/svg_reader.o $(OBJ)/utils.o $(OBJ)/player.o $(OBJ)/enemy.o $(OBJ)/tinyxml2.o
+all: clean $(OBJ)/gunshot.o $(OBJ)/$(PROJETO).o $(OBJ)/game.o $(OBJ)/character.o $(OBJ)/terrain.o $(OBJ)/svg_reader.o $(OBJ)/utils.o $(OBJ)/player.o $(OBJ)/enemy.o $(OBJ)/tinyxml2.o
 	$(CC) $(OBJ)/*.o -o $(EXE) $(CFLAGS)
 
 $(OBJ)/$(PROJETO).o: $(PROJETO).cpp
@@ -15,6 +15,9 @@ $(OBJ)/$(PROJETO).o: $(PROJETO).cpp
 
 $(OBJ)/game.o: $(SRC)/game.cpp $(INC)/game.hpp
 	$(CC) -c $(CFLAGS) "$(SRC)/game.cpp" -o "$(OBJ)/game.o"
+
+$(OBJ)/gunshot.o: $(SRC)/gunshot.cpp $(INC)/gunshot.hpp
+	$(CC) -c $(CFLAGS) "$(SRC)/gunshot.cpp" -o "$(OBJ)/gunshot.o"
 
 $(OBJ)/character.o: $(SRC)/character.cpp $(INC)/character.hpp
 	$(CC) -c $(CFLAGS) "$(SRC)/character.cpp" -o "$(OBJ)/character.o"
