@@ -21,7 +21,6 @@ void Character::moveArmMouseHelper(GLfloat dx, GLfloat dy)
 
 void Character::draw_head()
 {
-    // glColor3f(200.0 / 255, 66.0 / 255, 85.0 / 255); // rgb(200,66,85)
     glColor3f(255.0 / 255, 255.0 / 255, 255.0 / 255);
 
     glBegin(GL_POLYGON);
@@ -78,16 +77,17 @@ void Character::draw_leg()
 
 void Character::draw_arm()
 {
-    glColor3f(200.0 / 255, 180.0 / 255, 255.0 / 255); // rgb(200, 180, 255)
+    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
     glRotatef(this->gThetaArm, 0, 0, 1);
+    glRotatef(90 * -this->facingDirection, 0, 0, 1);
 
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
         glVertex2f(this->trunkWidth / 4, 0);
-        glVertex2f(this->trunkWidth / 4, -this->height / 8 * 2);
-        glVertex2f(0, -this->height / 8 * 4);
+        glVertex2f(this->trunkWidth / 4, -this->height / 8 * 2.5);
+        glVertex2f(0, -this->height / 8 * 2.5);
     // clang-format on
     glEnd();
 }
@@ -133,23 +133,9 @@ void Character::draw_character()
     glTranslatef(0, this->height / 8 * 3, 0);
     this->draw_head();
     glPopMatrix();
-
-    // Draw a circle of radius this->radius
-    // glPushMatrix();
-    // glTranslatef(this->center.x, -this->center.y, 0);
-    // glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
-    // glBegin(GL_POLYGON);
-    // // clang-format off
-    //     for (size_t i = 0; i < 360; i += 5)
-    //     {
-    //         glVertex2f(this->radius * cos(i * M_PI / 180), this->radius * sin(i * M_PI / 180));
-    //     }
-    // // clang-format on
-    // glEnd();
-    // glPopMatrix();
-
     glPopMatrix();
 
+    // Visual debug options
     if (game->get_debug_options().drawObjectCenter)
     {
         glPushMatrix();
