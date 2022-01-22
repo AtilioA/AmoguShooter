@@ -52,6 +52,10 @@ void renderScene()
     // cout << "Drawing enemies..." << endl;
     game->draw_enemies();
     // cout << "Finished drawing game elements." << endl;
+    if (game->get_player()->get_gunshot() != NULL)
+    {
+        game->get_player()->get_gunshot()->draw();
+    }
 
     // glBegin(GL_QUADS);
     // glVertex2f(0, 0);
@@ -98,11 +102,9 @@ void keyPress(unsigned char key, int x, int y)
     case 'R':
         keyStatus[(int)('r')] = 1; // Using keyStatus trick
         break;
-    case ' ':
-        // if (!gunshot)
-        // {
-        //     // gunshot = robo.Atira();
-        // }
+    case 'f':
+    case 'F':
+        game->get_player()->shoot();
         break;
     case 27:
         exit(0);
@@ -178,25 +180,21 @@ void idle(void)
     // Treat keyPress
     if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
     {
-        // cout << "d" << endl;
         dx += inc;
         game->move_a_character(player, dx, dy);
     }
     if (keyStatus['a'] == 1 || keyStatus['A'] == 1)
     {
-        // cout << "a" << endl;
         dx -= inc;
         game->move_a_character(player, dx, dy);
     }
     if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
     {
-        // cout << "w" << endl;
         dy -= inc;
         game->move_a_character(player, dx, dy);
     }
     if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
     {
-        // cout << "s" << endl;
         dy += inc;
         game->move_a_character(player, dx, dy);
     }
@@ -205,22 +203,27 @@ void idle(void)
 
     // Handle gunshot (only allows one gunshot at a time)
     // Could use a list to handle multiple gunshots
-    // if (gunshot)
-    // {
-    //     gunshot->move();
+    Gunshot *playerGunshot = player->get_gunshot();
+    if (playerGunshot != NULL)
+    {
+        // cout << "Moving gunshot..." << endl;
+        playerGunshot->move(framerate);
 
-    //     // Trata colisao
-    //     if (alvo.Atingido(gunshot))
-    //     {
-    //         alvo.Recria(rand() % 500 - 250, 200);
-    //     }
+        // // Trata colisao
+        // if (alvo.Atingido(playerGunshot))
+        // {
+        //     alvo.Recria(rand() % 500 - 250, 200);
+        // }
 
-    //     if (!gunshot->is_valid())
-    //     {
-    //         delete gunshot;
-    //         gunshot = NULL;
-    //     }
-    // }
+        if (!playerGunshot->is_valid())
+        {
+            player->delete_gunshot();
+        }
+    }
+    else
+    {
+        // cout << "playerGunshot is NULL" << endl;
+    }
 
     if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
     {
