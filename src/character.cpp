@@ -15,7 +15,7 @@ void Character::moveArmMouseHelper(GLfloat dx, GLfloat dy)
     GLfloat theta = atan(y / x) * 180 / M_PI;
     if (theta < 45 && theta > -45)
     {
-        this->gThetaArm = theta * -this->facingDirection;
+        this->gThetaArm = theta * 1.2 * this->facingDirection;
     }
 }
 
@@ -36,7 +36,7 @@ void Character::draw_head()
 // Draw a sequence of points representing the wheel of the character
 void Character::draw_body()
 {
-    glColor3f(this->colors.upperBody.r, this->colors.upperBody.g, this->colors.upperBody.b); // rgb(56,76,92)
+    glColor3f(this->colors.upperBody.r, this->colors.upperBody.g, this->colors.upperBody.b);
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(-this->trunkWidth / 2, 0);
@@ -50,7 +50,7 @@ void Character::draw_body()
 // 4/8 / 2
 void Character::draw_thigh()
 {
-    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b); // rgb(228, 170, 141)
+    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
@@ -64,7 +64,7 @@ void Character::draw_thigh()
 // 4/8 / 2
 void Character::draw_leg()
 {
-    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b); // rgb(121, 200, 255)
+    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
@@ -77,11 +77,10 @@ void Character::draw_leg()
 
 void Character::draw_arm()
 {
-    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
+    glColor3f(this->colors.lowerBody.r * 0.5, this->colors.lowerBody.g * 0.5, this->colors.lowerBody.b * 0.5);
 
     glRotatef(this->gThetaArm, 0, 0, 1);
-    glRotatef(90 * -this->facingDirection, 0, 0, 1);
-
+    glRotatef(90 * this->facingDirection, 0, 0, 1);
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
