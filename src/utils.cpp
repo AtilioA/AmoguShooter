@@ -36,20 +36,20 @@ vector<string> ENEMY_COLORS = {
 };
 
 map<string, CrewmateColors> colorMap = {
-    {"RED", CrewmateColors({tColor({194.0, 20.0, 15.0}), tColor({120.0, 10.0, 57.0})})},
-    {"PURPLE", CrewmateColors({tColor({81.0, 238.0, 59.0}), tColor({22.0, 167.0, 66.0})})},
-    {"GREEN", CrewmateColors({tColor({104.0, 47.0, 186.0}), tColor({63.0, 70.0, 78.0})})},
-    {"YELLOW", CrewmateColors({tColor({238.0, 82.0, 186.0}), tColor({170.0, 44.0, 172.0})})},
-    {"ORANGE", CrewmateColors({tColor({242.0, 242.0, 84.0}), tColor({197.0, 136.0, 37.0})})},
-    {"BROWN", CrewmateColors({tColor({240.0, 125.0, 16.0}), tColor({179.0, 60.0, 21.0})})},
-    {"LIME", CrewmateColors({tColor({14.0, 127.0, 42.0}), tColor({12.0, 75.0, 44.0})})},
-    {"BLUE", CrewmateColors({tColor({112.0, 72.0, 31.0}), tColor({95.0, 36.0, 19.0})})},
-    {"CYAN", CrewmateColors({tColor({57.0, 254.0, 218.0}), tColor({35.0, 169.0, 190.0})})},
-    {"MAGENTA", CrewmateColors({tColor({18.0, 46.0, 208.0}), tColor({9.0, 22.0, 142.0})})},
-    {"WHITE", CrewmateColors({tColor({214.0, 224.0, 240.0}), tColor({130.0, 149.0, 192.0})})},
-    {"BLACK", CrewmateColors({tColor({63.0, 70.0, 78.0}), tColor({31.0, 31.0, 38.0})})}};
+    {"RED", CrewmateColors({tColor({194.0 / 255.0, 20.0 / 255.0, 15.0 / 255.0}), tColor({120.0 / 255.0, 10.0 / 255.0, 57.0 / 255.0})})},
+    {"PURPLE", CrewmateColors({tColor({81.0 / 255.0, 238.0 / 255.0, 59.0 / 255.0}), tColor({22.0 / 255.0, 167.0 / 255.0, 66.0 / 255.0})})},
+    {"GREEN", CrewmateColors({tColor({104.0 / 255.0, 47.0 / 255.0, 186.0 / 255.0}), tColor({63.0 / 255.0, 70.0 / 255.0, 78.0 / 255.0})})},
+    {"YELLOW", CrewmateColors({tColor({238.0 / 255.0, 82.0 / 255.0, 186.0 / 255.0}), tColor({170.0 / 255.0, 44.0 / 255.0, 172.0 / 255.0})})},
+    {"ORANGE", CrewmateColors({tColor({242.0 / 255.0, 242.0 / 255.0, 84.0 / 255.0}), tColor({197.0 / 255.0, 136.0 / 255.0, 37.0 / 255.0})})},
+    {"BROWN", CrewmateColors({tColor({240.0 / 255.0, 125.0 / 255.0, 16.0 / 255.0}), tColor({179.0 / 255.0, 60.0 / 255.0, 21.0 / 255.0})})},
+    {"LIME", CrewmateColors({tColor({14.0 / 255.0, 127.0 / 255.0, 42.0 / 255.0}), tColor({12.0 / 255.0, 75.0 / 255.0, 44.0 / 255.0})})},
+    {"BLUE", CrewmateColors({tColor({112.0 / 255.0, 72.0 / 255.0, 31.0 / 255.0}), tColor({95.0 / 255.0, 36.0 / 255.0, 19.0 / 255.0})})},
+    {"CYAN", CrewmateColors({tColor({57.0 / 255.0, 254.0 / 255.0, 218.0 / 255.0}), tColor({35.0 / 255.0, 169.0 / 255.0, 190.0 / 255.0})})},
+    {"MAGENTA", CrewmateColors({tColor({18.0 / 255.0, 46.0 / 255.0, 208.0 / 255.0}), tColor({9.0 / 255.0, 22.0 / 255.0, 142.0 / 255.0})})},
+    {"WHITE", CrewmateColors({tColor({214.0 / 255.0, 224.0 / 255.0, 240.0 / 255.0}), tColor({130.0 / 255.0, 149.0 / 255.0, 192.0 / 255.0})})},
+    {"BLACK", CrewmateColors({tColor({63.0 / 255.0, 70.0 / 255.0, 78.0}), tColor({31.0, 31.0, 38.0})})}};
 
-CrewmateColors get_random_enemy_color()
+CrewmateColors get_random_enemy_colors()
 {
     int randomIndex = rand() % ENEMY_COLORS.size();
     string *randomColor = &ENEMY_COLORS[randomIndex];
@@ -64,7 +64,7 @@ CrewmateColors get_random_enemy_color()
     }
 }
 
-CrewmateColors get_player_color()
+CrewmateColors get_player_colors()
 {
     if (colorMap.find("RED") != colorMap.end())
     {
@@ -72,7 +72,7 @@ CrewmateColors get_player_color()
     }
     else
     {
-        return get_random_enemy_color();
+        return get_random_enemy_colors();
     }
 }
 

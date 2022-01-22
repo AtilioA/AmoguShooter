@@ -30,7 +30,7 @@ void Character::draw_head()
 // Draw a sequence of points representing the wheel of the character
 void Character::draw_body()
 {
-    glColor3f(this->color.r, this->color.g, this->color.b); // rgb(56,76,92)
+    glColor3f(this->colors.upperBody.r, this->colors.upperBody.g, this->colors.upperBody.b); // rgb(56,76,92)
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(-this->trunkWidth / 2, 0);
@@ -44,7 +44,7 @@ void Character::draw_body()
 // 4/8 / 2
 void Character::draw_thigh()
 {
-    glColor3f(228.0 / 255, 170.0 / 255, 141.0 / 255); // rgb(228, 170, 141)
+    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b); // rgb(228, 170, 141)
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
@@ -58,7 +58,7 @@ void Character::draw_thigh()
 // 4/8 / 2
 void Character::draw_leg()
 {
-    glColor3f(121.0 / 255, 200.0 / 255, 226.0 / 255); // rgb(121, 200, 255)
+    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b); // rgb(121, 200, 255)
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
@@ -182,12 +182,12 @@ void Character::draw_character()
     }
 
     // Arm
-    glPushMatrix();
-    glTranslatef(this->center.x, -this->center.y, 0);
+    // glPushMatrix();
+    // glTranslatef(this->center.x, -this->center.y, 0);
 
-    glTranslatef(this->trunkWidth / 4, this->height / 8 * 3 / 2, 0);
-    this->draw_arm();
-    glPopMatrix();
+    // glTranslatef(this->trunkWidth / 4, this->height / 8 * 3 / 2, 0);
+    // this->draw_arm();
+    // glPopMatrix();
 }
 
 void Character::move_character(GLfloat dx, GLfloat dy /*, GLfloat deltaTime*/)
@@ -256,14 +256,17 @@ void Character::set_center(Point p)
 {
     this->center = p;
 }
-void Character::set_color(Color c)
+
+void Character::set_crewmate_colors(CrewmateColors c)
 {
-    this->color = c;
+    this->colors = c;
 }
+
 void Character::set_radius(GLfloat r)
 {
     this->radius = r;
 }
+
 void Character::set_height(GLfloat h)
 {
     this->height = h;
@@ -284,9 +287,9 @@ Point Character::get_center()
     return this->center;
 }
 
-Color Character::get_color()
+CrewmateColors Character::get_crewmate_colors()
 {
-    return this->color;
+    return this->colors;
 }
 
 GLfloat Character::get_radius()

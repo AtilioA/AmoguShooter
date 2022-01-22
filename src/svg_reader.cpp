@@ -3,6 +3,7 @@
 
 #include "../include/character.hpp"
 #include "../include/player.hpp"
+#include "../include/utils.hpp"
 #include "../include/enemy.hpp"
 #include "../include/game.hpp"
 #include "../include/terrain.hpp"
@@ -14,7 +15,7 @@ using namespace std;
 void parseCircle(XMLElement *circ, Game *game)
 {
     GLfloat cx, cy, r;
-    Color color;
+    CrewmateColors colors;
 
     circ->QueryFloatAttribute("cx", &cx);
     circ->QueryFloatAttribute("cy", &cy);
@@ -28,15 +29,15 @@ void parseCircle(XMLElement *circ, Game *game)
     if (circFill == "red")
     {
         cout << "-- ENEMY --" << endl;
-        color = {1.0, 0.0, 0.0};
-        Enemy *enemy = new Enemy(center, r, color, game->get_n_characters());
+        colors = get_random_enemy_colors();
+        Enemy *enemy = new Enemy(center, r, colors, game->get_n_characters());
         game->add_enemy(enemy);
     }
     else if (circFill == "green")
     {
         cout << "-- PLAYER --" << endl;
-        color = {0.0, 1.0, 0.0};
-        Player *player = new Player(center, r, color, game->get_n_characters());
+        colors = get_player_colors();
+        Player *player = new Player(center, r, colors, game->get_n_characters());
         game->add_player(player);
     }
 }

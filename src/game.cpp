@@ -90,12 +90,22 @@ void Game::move_enemy_randomly(Enemy *enemy, float deltaTime)
         {
             move_a_character(enemy, -dx, 0);
         }
+        // else
+        // {
+        //     cout << enemy->get_id() << ": "
+        //          << "would fall" << endl;
+        // }
         break;
     case 2:
         if (!will_enemy_fall(enemy, dx))
         {
             move_a_character(enemy, dx, 0);
         }
+        // else
+        // {
+        //     cout << enemy->get_id() << ": "
+        //          << "would fall" << endl;
+        // }
         break;
     default:
         break;
@@ -216,7 +226,7 @@ bool Game::is_character_inside_any_terrain(Character *character)
         {
             if (this->debugOptions.highlightCollision)
             {
-                terrain->set_color(character->get_color());
+                terrain->set_color(character->get_crewmate_colors().upperBody);
             }
 
             return true;

@@ -29,8 +29,8 @@ typedef struct tCrewmateColors
     tColor lowerBody;
 } CrewmateColors;
 
-CrewmateColors get_player_color();
-CrewmateColors get_random_enemy_color();
+CrewmateColors get_player_colors();
+CrewmateColors get_random_enemy_colors();
 GLfloat smallest_dimension(Dimensions dimensions);
 
 #endif /* UTILS_H */

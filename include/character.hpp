@@ -10,7 +10,7 @@ class Character // abstract class
 protected:
     GLint id;
     Point center;
-    Color color;
+    CrewmateColors colors;
     GLfloat radius;
     GLfloat height;
     GLfloat trunkWidth;
@@ -36,11 +36,11 @@ protected:
     GLfloat speed;
 
 public:
-    Character(Point center, GLfloat radius, Color color, GLint id)
+    Character(Point center, GLfloat radius, CrewmateColors colors, GLint id)
     {
         this->set_center(center);
         this->set_radius(radius);
-        this->set_color(color);
+        this->set_crewmate_colors(colors);
         this->set_height(radius * 2);
         this->set_id(id);
         this->set_terrain_below(NULL);
@@ -57,8 +57,8 @@ public:
     void set_center(Point p);
     Point get_center();
 
-    void set_color(Color c);
-    Color get_color();
+    void set_crewmate_colors(CrewmateColors c);
+    CrewmateColors get_crewmate_colors();
 
     void set_radius(GLfloat r);
     GLfloat get_radius();
