@@ -2,10 +2,33 @@
 #include <GL/glut.h>
 
 #include "../include/character.hpp"
+#include "../include/gunshot.hpp"
 
 // Import game to check debug options
 #include "../include/game.hpp"
 extern Game *game;
+
+void Character::delete_gunshot()
+{
+    if (this->gunshot != NULL)
+    {
+        delete this->gunshot;
+        this->gunshot = NULL;
+    }
+}
+
+Gunshot *Character::get_gunshot()
+{
+    return this->gunshot;
+}
+
+void Character::shoot()
+{
+    if (this->gunshot == NULL)
+    {
+        this->gunshot = new Gunshot(this->center.x, this->center.y, this->gThetaArm);
+    }
+}
 
 void Character::moveArmMouseHelper(GLfloat dx, GLfloat dy)
 {

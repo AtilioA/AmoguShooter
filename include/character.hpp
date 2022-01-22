@@ -1,7 +1,10 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
+
 #include <GL/gl.h>
 #include <GL/glu.h>
+
+#include "gunshot.hpp"
 #include "utils.hpp"
 #include "terrain.hpp"
 
@@ -21,6 +24,8 @@ protected:
     GLfloat height;
     GLfloat trunkWidth;
     Terrain *terrainBelow;
+
+    Gunshot *gunshot;
 
     GLint facingDirection;
     bool isWalking;
@@ -50,12 +55,17 @@ public:
         this->set_height(radius * 2);
         this->set_id(id);
         this->set_terrain_below(NULL);
+        this->gunshot = NULL;
         this->trunkWidth = radius;
         this->facingDirection = Direction::RIGHT;
         this->gThetaArm = 0.0 + 2;
     };
 
     virtual void f() = 0;
+
+    void delete_gunshot();
+    Gunshot *get_gunshot();
+    void shoot();
 
     void set_id(GLint id);
     GLint get_id();
