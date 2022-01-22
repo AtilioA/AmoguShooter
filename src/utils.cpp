@@ -1,4 +1,80 @@
+#include <map>
+#include <string>
+#include <bits/stdc++.h>
 #include "../include/utils.hpp"
+
+using namespace std;
+
+/*  CREWMATE COLORS:
+    rgb(194,20,15)    rgb(81, 238, 59)
+    rgb(120,10,57)    rgb(22,167,66)
+    rgb(104,47,186)   rgb(63,70,78)
+    rgb(238,82,186)   rgb(170,44,172)
+    rgb(242,242,84)   rgb(197,136,37)
+    rgb(240,125,16)   rgb(179,60,21)
+    rgb(14,127,42)    rgb(12,75,44)
+    rgb(112,72,31)    rgb(95,36,19)
+    rgb(57,254,218)   rgb(35,169,190)
+    rgb(18,46,208)    rgb(9,22,142)
+    rgb(214,224,240)  rgb(130,149,192)
+    rgb(63,70,78)     rgb(31,31,38)
+*/
+
+vector<string> PLAYER_COLORS = {"RED"};
+vector<string> ENEMY_COLORS = {
+    "PURPLE",
+    "GREEN",
+    "YELLOW",
+    "ORANGE",
+    "BROWN",
+    "LIME",
+    "BLUE",
+    "CYAN",
+    "MAGENTA",
+    "WHITE",
+    "BLACK",
+};
+
+map<string, CrewmateColors> colorMap = {
+    {"RED", CrewmateColors({tColor({194.0, 20.0, 15.0}), tColor({120.0, 10.0, 57.0})})},
+    {"PURPLE", CrewmateColors({tColor({81.0, 238.0, 59.0}), tColor({22.0, 167.0, 66.0})})},
+    {"GREEN", CrewmateColors({tColor({104.0, 47.0, 186.0}), tColor({63.0, 70.0, 78.0})})},
+    {"YELLOW", CrewmateColors({tColor({238.0, 82.0, 186.0}), tColor({170.0, 44.0, 172.0})})},
+    {"ORANGE", CrewmateColors({tColor({242.0, 242.0, 84.0}), tColor({197.0, 136.0, 37.0})})},
+    {"BROWN", CrewmateColors({tColor({240.0, 125.0, 16.0}), tColor({179.0, 60.0, 21.0})})},
+    {"LIME", CrewmateColors({tColor({14.0, 127.0, 42.0}), tColor({12.0, 75.0, 44.0})})},
+    {"BLUE", CrewmateColors({tColor({112.0, 72.0, 31.0}), tColor({95.0, 36.0, 19.0})})},
+    {"CYAN", CrewmateColors({tColor({57.0, 254.0, 218.0}), tColor({35.0, 169.0, 190.0})})},
+    {"MAGENTA", CrewmateColors({tColor({18.0, 46.0, 208.0}), tColor({9.0, 22.0, 142.0})})},
+    {"WHITE", CrewmateColors({tColor({214.0, 224.0, 240.0}), tColor({130.0, 149.0, 192.0})})},
+    {"BLACK", CrewmateColors({tColor({63.0, 70.0, 78.0}), tColor({31.0, 31.0, 38.0})})}};
+
+CrewmateColors get_random_enemy_color()
+{
+    int randomIndex = rand() % ENEMY_COLORS.size();
+    string *randomColor = &ENEMY_COLORS[randomIndex];
+
+    if (colorMap.find(*randomColor) != colorMap.end())
+    {
+        return colorMap[*randomColor];
+    }
+    else
+    {
+        return colorMap["BLACK"];
+    }
+}
+
+CrewmateColors get_player_color()
+{
+    if (colorMap.find("RED") != colorMap.end())
+    {
+        return colorMap["RED"];
+    }
+    else
+    {
+        return get_random_enemy_color();
+    }
+}
 
 GLfloat smallest_dimension(Dimensions dimensions)
 {
