@@ -3,6 +3,23 @@
 
 using namespace std;
 
+bool Game::has_player_reached_arena_end()
+{
+    return this->player->get_center().x + this->player->get_trunk_width() / 2 >= this->background->get_center().x + this->background->get_width();
+}
+
+bool Game::has_game_reached_end_state()
+{
+    if (this->player->is_alive() && this->has_player_reached_arena_end())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy)
 {
     character->move_character(dx, dy);
@@ -144,7 +161,7 @@ void Game::free()
 {
     // delete this->player;
 
-    // this->enemies.clear();
+    this->enemies.clear();
     this->terrains.clear();
 
     delete this->background;
@@ -156,27 +173,19 @@ void Game::reset_game()
     parseSVGFile(this->arenaSVGFilename, this);
 }
 
+// TODO: tweak to enable player to reach the end of the arena
 bool Game::is_outside_arena(Character *character)
 {
-    Terrain *terrain = this->background;
-    Point terrainPos = this->background->get_center();
+    Terrain *arenaTerrain = this->background;
+    Point arenaPos = this->background->get_center();
 
-    // if (character == this->player)
-    // {
-    //     cout << terrainPos.y + terrain->get_height() << endl;
-    //     cout << character->get_center().y << " | " << character->get_radius() << endl;
-    //     cout << (character->get_center().x - character->get_radius() > terrainPos.x || character->get_center().x + character->get_radius() >= terrainPos.x + terrain->get_width()) << endl;
-    // }
-
-    // Replace radius with height
-    if (character->get_center().y - character->get_radius() < terrainPos.y ||
-        character->get_center().y + character->get_radius() > terrainPos.y + terrain->get_height())
+    if (character->get_center().y - character->get_radius() < arenaPos.y ||
+        character->get_center().y + character->get_radius() > arenaPos.y + arenaTerrain->get_height())
     {
         return true;
     }
 
-    // Replace radius with trunkWidth
-    if (character->get_center().x - character->get_trunk_width() / 2 < terrainPos.x || character->get_center().x + character->get_trunk_width() / 2 > terrainPos.x + terrain->get_width())
+    if (character->get_center().x - character->get_trunk_width() / 2 < arenaPos.x || character->get_center().x + character->get_trunk_width() / 2 > arenaPos.x + arenaTerrain->get_width())
     {
         return true;
     }

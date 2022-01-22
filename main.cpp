@@ -231,6 +231,22 @@ void idle(void)
         game->reset_game();
     }
 
+    if (game->has_game_reached_end_state())
+    {
+        cout << "Game ended!" << endl;
+
+        if (!player->is_alive())
+        {
+            cout << "Player is dead!" << endl;
+        }
+        else
+        {
+            cout << "Player won!" << endl;
+        }
+        
+        game->reset_game();
+    }
+
     glutPostRedisplay();
 }
 

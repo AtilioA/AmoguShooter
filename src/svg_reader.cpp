@@ -68,7 +68,7 @@ void parseRect(XMLElement *rect, Game *game)
     else if (rectFill == "blue")
     {
         cout << "-- BACKGROUND --" << endl;
-        color = {0.0, 0.0, 1.0};
+        color = {0.0, 0.0, 0.75};
 
         Terrain *background = new Terrain(center, width, height, color);
         game->set_arena_background(background);

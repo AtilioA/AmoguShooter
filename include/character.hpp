@@ -28,6 +28,7 @@ protected:
     Gunshot *gunshot;
 
     GLint facingDirection;
+    bool isAlive;
     bool isWalking;
     bool isAnimationObverse;
 
@@ -59,9 +60,13 @@ public:
         this->trunkWidth = radius;
         this->facingDirection = Direction::RIGHT;
         this->gThetaArm = 0.0 + 2;
+        this->isAlive = true;
     };
 
     virtual void f() = 0;
+
+    bool is_alive();
+    void set_alive(bool alive);
 
     void delete_gunshot();
     Gunshot *get_gunshot();

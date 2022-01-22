@@ -8,6 +8,16 @@
 #include "../include/game.hpp"
 extern Game *game;
 
+bool Character::is_alive()
+{
+    return this->isAlive;
+}
+
+void Character::set_alive(bool alive)
+{
+    this->isAlive = alive;
+}
+
 void Character::delete_gunshot()
 {
     if (this->gunshot != NULL)

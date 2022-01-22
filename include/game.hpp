@@ -43,6 +43,9 @@ public:
         this->debugOptions = {false, false, false, false, false};
     };
 
+    bool has_player_reached_arena_end();
+    bool has_game_reached_end_state();
+
     void move_a_character(Character *character, GLfloat dx, GLfloat dy);
     bool check_collision(Character *character);
     void handle_collision(Character *character, GLfloat dx, GLfloat dy);
