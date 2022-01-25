@@ -23,6 +23,117 @@ bool Game::has_game_reached_end_state()
     }
 }
 
+void Game::move_a_gunshot(Character *shooter, GLfloat deltaTime)
+{
+    if (shooter->get_gunshot() != nullptr)
+    {
+        shooter->get_gunshot()->move(deltaTime);
+        this->handle_collision_gunshot(shooter);
+    }
+}
+
+void Game::remove_character(Character *character)
+{
+    if (character == this->player)
+    {
+        this->player = nullptr;
+    }
+    else
+    {
+        for (int i = 0; i < this->enemies.size(); i++)
+        {
+            if (this->enemies[i] == character)
+            {
+                this->enemies.erase(this->enemies.begin() + i);
+                break;
+            }
+        }
+    }
+}
+
+void Game::handle_collision_gunshot(Character *shooter)
+{
+    if (this->check_collision_gunshot_non_character(shooter->get_gunshot()))
+    {
+        shooter->delete_gunshot();
+    }
+    else
+    {
+        Character *hitCharacter = this->check_collision_gunshot_any_character(shooter->get_gunshot());
+
+        if (hitCharacter != NULL)
+        {
+            shooter->delete_gunshot();
+            cout << "Hit character " << hitCharacter->get_id() << endl;
+            remove_character(hitCharacter);
+        }
+    }
+}
+
+Character *Game::check_collision_gunshot_any_character(Gunshot *gunshot)
+{
+    if (gunshot->is_inside_character(this->player))
+    {
+        return this->player;
+    }
+    else
+    {
+        for (Enemy *enemy : this->enemies)
+        {
+            if (gunshot->is_inside_character(enemy))
+            {
+                return enemy;
+            }
+        }
+    }
+
+    return NULL;
+}
+
+bool Game::check_collision_gunshot_non_character(Gunshot *gunshot)
+{
+    if (this->is_gunshot_outside_arena(gunshot) || this->is_gunshot_inside_any_terrain(gunshot))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Game::is_gunshot_outside_arena(Gunshot *gunshot)
+{
+    Terrain *arenaTerrain = this->background;
+    Point arenaPos = this->background->get_center();
+
+    if (gunshot->get_center().y - gunshot->get_radius() < arenaPos.y ||
+        gunshot->get_center().y + gunshot->get_radius() > arenaPos.y + arenaTerrain->get_height())
+    {
+        return true;
+    }
+
+    if (gunshot->get_center().x - gunshot->get_radius() / 2 < arenaPos.x || gunshot->get_center().x + gunshot->get_radius() / 2 > arenaPos.x + arenaTerrain->get_width())
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool Game::is_gunshot_inside_any_terrain(Gunshot *gunshot)
+{
+    for (Terrain *terrain : this->terrains)
+    {
+        if (gunshot->is_inside_terrain(terrain))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy)
 {
     character->move_character(dx, dy);
@@ -176,7 +287,6 @@ void Game::reset_game()
     parseSVGFile(this->arenaSVGFilename, this);
 }
 
-// TODO: tweak to enable player to reach the end of the arena
 bool Game::is_outside_arena(Character *character)
 {
     Terrain *arenaTerrain = this->background;

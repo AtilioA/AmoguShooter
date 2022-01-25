@@ -207,7 +207,7 @@ void idle(void)
     if (playerGunshot != NULL)
     {
         // cout << "Moving gunshot..." << endl;
-        playerGunshot->move(framerate);
+        game->move_a_gunshot(player, framerate);
 
         // // Trata colisao
         // if (alvo.Atingido(playerGunshot))
@@ -243,7 +243,7 @@ void idle(void)
         {
             cout << "Player won!" << endl;
         }
-        
+
         game->reset_game();
     }
 

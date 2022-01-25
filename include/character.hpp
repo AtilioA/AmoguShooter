@@ -8,12 +8,14 @@
 #include "utils.hpp"
 #include "terrain.hpp"
 
+
 enum Direction : GLint
 {
     LEFT = -1,
     RIGHT = 1
 };
 
+class Gunshot;
 class Character // abstract class
 {
 protected:

@@ -46,6 +46,15 @@ public:
     bool has_player_reached_arena_end();
     bool has_game_reached_end_state();
 
+    void move_a_gunshot(Character *shooter, GLfloat deltaTime);
+
+    void handle_collision_gunshot(Character *shooter);
+    bool check_collision_gunshot_non_character(Gunshot *gunshot);
+    bool is_gunshot_outside_arena(Gunshot *gunshot);
+    bool is_gunshot_inside_any_terrain(Gunshot *gunshot);
+    Character *check_collision_gunshot_any_character(Gunshot *gunshot);
+    void remove_character(Character *character);
+
     void move_a_character(Character *character, GLfloat dx, GLfloat dy);
     bool check_collision(Character *character);
     void handle_collision(Character *character, GLfloat dx, GLfloat dy);
