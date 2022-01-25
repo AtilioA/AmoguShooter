@@ -36,7 +36,7 @@ void Character::shoot()
 {
     if (this->gunshot == NULL)
     {
-        this->gunshot = new Gunshot(this->center.x, this->center.y, this->gThetaArm);
+        this->gunshot = new Gunshot(this->center.x, this->center.y, this->trunkWidth / 4 + (this->facingDirection * this->height / 8 * 2.5), this->facingDirection * this->height / 8 * 2 / 2, this->gThetaArm + (90 * this->facingDirection));
     }
 }
 
