@@ -19,12 +19,12 @@ private:
     void draw_gunshot(GLfloat x, GLfloat y);
 
 public:
-    Gunshot(GLfloat x, GLfloat y, GLfloat directionAng)
+    Gunshot(GLfloat x, GLfloat y, GLfloat deltaX, GLfloat deltaY, GLfloat directionAng)
     {
         gXInit = x;
         gYInit = y;
-        gX = x;
-        gY = y;
+        gX = x + deltaX;
+        gY = y + deltaY;
         gDirectionAng = directionAng;
         gVel = 2;
     };

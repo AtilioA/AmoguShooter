@@ -273,10 +273,6 @@ bool Character::is_inside_another_character(Character *character)
 // {
 // }
 
-// Gunshot *Character::Shoot()
-// {
-// }
-
 void Character::set_facing_direction(GLint facingDirection)
 {
     this->facingDirection = facingDirection;
