@@ -1,11 +1,14 @@
 #include "../include/game.hpp"
 #include "../include/svg_reader.hpp"
 
+#define INC_KEY 1
+#define INC_KEYIDLE 1
+
 using namespace std;
 
 bool Game::has_player_reached_arena_end()
 {
-    return this->player->get_center().x + this->player->get_trunk_width() / 2 >= this->background->get_center().x + this->background->get_width();
+    return this->player->get_center().x + this->player->get_trunk_width() / 2 + INC_KEYIDLE >= this->background->get_center().x + this->background->get_width();
 }
 
 bool Game::has_game_reached_end_state()
