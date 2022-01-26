@@ -35,7 +35,8 @@ Game *game = new Game();
 void RenderString(float x, float y)
 {
     glColor3f(1.0f, 1.0f, 1.0f);
-    glRasterPos2f(0, 0);
+    glRasterPos2f(game->get_player()->get_center().x, -game->get_arena_background()->get_center().y - game->get_arena_background()->get_height() / 2);
+
     if (game->has_player_won())
     {
         sprintf(str, "VITORIA!");
@@ -60,11 +61,6 @@ void renderScene()
     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
 
-    if (game->has_game_reached_end_state())
-    {
-        cout << "Game has reached end state!" << endl;
-        RenderString(0, 0);
-    }
     // cout << "\nDrawing game elements:" << endl;
     // cout << "Drawing background... ";
     game->get_arena_background()->draw_terrain();
@@ -85,6 +81,12 @@ void renderScene()
         {
             game->get_enemies()[i]->get_gunshot()->draw();
         }
+    }
+
+    if (game->has_game_reached_end_state())
+    {
+        cout << "Game has reached end state!" << endl;
+        RenderString(0, 0);
     }
 
     glutSwapBuffers(); // Draw the new frame of the game.
@@ -200,13 +202,13 @@ void idle(void)
 
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
     glLoadIdentity();
-    glOrtho(-game->get_arena_background()->get_height() / 2 + player->get_center().x,                  // X coordinate of left edge
-            game->get_arena_background()->get_height() / 2 + player->get_center().x,                   // X coordinate of right edge
+    glOrtho(-game->get_arena_background()->get_height() / 2 + player->get_center().x,                     // X coordinate of left edge
+            game->get_arena_background()->get_height() / 2 + player->get_center().x,                      // X coordinate of right edge
             (-game->get_arena_background()->get_center().y - game->get_arena_background()->get_height()), // Y coordinate of bottom edge
-            -game->get_arena_background()->get_center().y,                                              // Y coordinate of top edge
-            -1,                                                                                        // Z coordinate of the “near” plane
-            1);                                                                                        // Z coordinate of the “far” plane
-    glMatrixMode(GL_MODELVIEW);                                                                        // Select the projection matrix
+            -game->get_arena_background()->get_center().y,                                                // Y coordinate of top edge
+            -1,                                                                                           // Z coordinate of the “near” plane
+            1);                                                                                           // Z coordinate of the “far” plane
+    glMatrixMode(GL_MODELVIEW);                                                                           // Select the projection matrix
 
     if (game->has_game_reached_end_state())
     {
