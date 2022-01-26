@@ -194,7 +194,7 @@ void Game::apply_gravity(GLfloat deltaTime)
     // cout << "gravityVelocity: " << gravityVelocity << endl;
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
-    GLfloat gravityVelocity = 0.33;
+    GLfloat gravityVelocity = 0.5;
 
     // Apply gravity to player
     this->move_a_character(this->player, 0, gravityVelocity);

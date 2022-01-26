@@ -262,12 +262,12 @@ void idle(void)
         if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
         {
             dy -= inc;
-            game->move_a_character(player, dx, dy);
+            game->move_a_character(player, dx, dy * 2);
         }
         if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
         {
             dy += inc;
-            game->move_a_character(player, dx, dy);
+            game->move_a_character(player, dx, dy * 2);
         }
 
         game->apply_gravity(deltaTime);
