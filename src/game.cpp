@@ -291,7 +291,7 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
         if (enemy->get_gunshot() == NULL)
         {
             GLfloat randomNumber = rand() % (int)deltaTime;
-            if (randomNumber < deltaTime * 0.025)
+            if (randomNumber < deltaTime * 0.02)
             {
                 cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
                 enemy->shoot();
