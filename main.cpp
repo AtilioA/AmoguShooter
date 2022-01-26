@@ -17,6 +17,8 @@ using namespace std;
 // Key status
 int keyStatus[256];
 
+static char str[999];
+
 // Window dimensions
 // "será exibida em uma janela de 500x500 pixel do sistema operacional"
 const GLint Width = 500;
@@ -37,11 +39,39 @@ static bool shouldPreserveFramerateSpeed = true;
 static GLdouble framerate = 0;
 Game *game = new Game();
 
+void RenderString(float x, float y)
+{
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glRasterPos2f(0, 0);
+    if (game->has_player_won())
+    {
+        sprintf(str, "VITÓRIA!");
+        cout << "VITÓRIA" << endl;
+    }
+    else
+    {
+        sprintf(str, "GAME OVER!");
+        cout << "GAME OVER" << endl;
+    }
+    char *text;
+    text = str;
+    while (*text)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *text);
+        text++;
+    }
+}
+
 void renderScene()
 {
     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
 
+    if (game->has_game_reached_end_state())
+    {
+        cout << "Game has reached end state!" << endl;
+        RenderString(0, 0);
+    }
     // cout << "\nDrawing game elements:" << endl;
     // cout << "Drawing background... ";
     game->get_arena_background()->draw_terrain();
@@ -64,21 +94,8 @@ void renderScene()
         }
     }
 
-    // glBegin(GL_QUADS);
-    // glVertex2f(0, 0);
-    // glVertex2f(200, 0);
-    // glVertex2f(200, 50);
-    // glVertex2f(0, 50);
-    // glEnd();
-
-    // robo.Draw();
-
-    // if (gunshot)
-    // {
-    //     gunshot->draw();
-    // }
-
     glutSwapBuffers(); // Draw the new frame of the game.
+    glutPostRedisplay();
 }
 
 void keyPress(unsigned char key, int x, int y)
@@ -114,8 +131,6 @@ void keyPress(unsigned char key, int x, int y)
         game->get_player()->shoot();
         break;
     case '2':
-        game->set_debug_options(false);
-    case '3':
         game->get_debug_options().drawCharacterHitbox ? game->set_debug_options(false) : game->set_debug_options(true);
         break;
     case 27:
@@ -177,65 +192,18 @@ void idle(void)
     // cout << "Framerate: " << (int)framerate << endl;
     // cout << "deltaTime: " << deltaTime << endl;
 
+    if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
+    {
+        // cout << "Parsing " << game->get_arena_svg_filename() << endl;
+        game->reset_game();
+    }
+
     if (!shouldPreserveFramerateSpeed)
     {
         deltaTime = 1;
     }
 
     Player *player = game->get_player();
-
-    game->move_enemies_randomly(deltaTime);
-    game->enemies_shoot_at_player(deltaTime);
-
-    double inc = INC_KEYIDLE;
-    GLfloat dx = 0, dy = 0;
-
-    // Treat keyPress
-    if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
-    {
-        dx += inc;
-        game->move_a_character(player, dx, dy);
-    }
-    if (keyStatus['a'] == 1 || keyStatus['A'] == 1)
-    {
-        dx -= inc;
-        game->move_a_character(player, dx, dy);
-    }
-    if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
-    {
-        dy -= inc;
-        game->move_a_character(player, dx, dy);
-    }
-    if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
-    {
-        dy += inc;
-        game->move_a_character(player, dx, dy);
-    }
-
-    game->apply_gravity(deltaTime);
-
-    // Handle gunshot (only allows one gunshot at a time)
-    // Could use a list to handle multiple gunshots
-    Gunshot *playerGunshot = player->get_gunshot();
-    if (playerGunshot != NULL)
-    {
-        // cout << "Moving gunshot..." << endl;
-        game->move_a_gunshot(player, framerate);
-    }
-
-    for (auto &enemy : game->get_enemies())
-    {
-        if (enemy->get_gunshot() != NULL)
-        {
-            game->move_a_gunshot(enemy, framerate);
-        }
-    }
-
-    if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
-    {
-        // cout << "Parsing " << game->get_arena_svg_filename() << endl;
-        game->reset_game();
-    }
 
     if (game->has_game_reached_end_state())
     {
@@ -249,10 +217,56 @@ void idle(void)
         {
             cout << "Player won!" << endl;
         }
-
-        game->reset_game();
     }
+    else
+    {
+        game->move_enemies_randomly(framerate);
+        game->enemies_shoot_at_player(framerate);
 
+        double inc = INC_KEYIDLE;
+        GLfloat dx = 0, dy = 0;
+
+        // Treat keyPress
+        if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
+        {
+            dx += inc;
+            game->move_a_character(player, dx, dy);
+        }
+        if (keyStatus['a'] == 1 || keyStatus['A'] == 1)
+        {
+            dx -= inc;
+            game->move_a_character(player, dx, dy);
+        }
+        if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
+        {
+            dy -= inc;
+            game->move_a_character(player, dx, dy);
+        }
+        if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
+        {
+            dy += inc;
+            game->move_a_character(player, dx, dy);
+        }
+
+        game->apply_gravity(deltaTime);
+
+        // Handle gunshot (only allows one gunshot at a time)
+        // Could use a list to handle multiple gunshots
+        Gunshot *playerGunshot = player->get_gunshot();
+        if (playerGunshot != NULL)
+        {
+            // cout << "Moving gunshot..." << endl;
+            game->move_a_gunshot(player, framerate);
+        }
+
+        for (auto &enemy : game->get_enemies())
+        {
+            if (enemy->get_gunshot() != NULL)
+            {
+                game->move_a_gunshot(enemy, framerate);
+            }
+        }
+    }
     glutPostRedisplay();
 }
 

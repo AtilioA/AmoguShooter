@@ -8,9 +8,30 @@ bool Game::has_player_reached_arena_end()
     return this->player->get_center().x + this->player->get_trunk_width() / 2 + INC_KEYIDLE >= this->background->get_center().x + this->background->get_width();
 }
 
+bool Game::has_player_won()
+{
+    if (this->has_game_reached_end_state())
+    {
+        if (!this->player->is_alive())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool Game::has_game_reached_end_state()
 {
     if (this->player->is_alive() && this->has_player_reached_arena_end())
+    {
+        return true;
+    }
+    if (!this->player->is_alive())
     {
         return true;
     }
@@ -62,11 +83,10 @@ void Game::handle_collision_gunshot(Character *shooter)
         {
             shooter->delete_gunshot();
             cout << "Hit character " << hitCharacter->get_id() << endl;
+            hitCharacter->set_alive(false);
             if (hitCharacter == this->player)
             {
                 cout << "Player hit by a gunshot" << endl;
-                this->player->set_alive(false);
-                this->reset_game();
                 return;
             }
 

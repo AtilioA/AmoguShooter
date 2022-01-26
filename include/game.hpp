@@ -42,6 +42,7 @@ public:
         this->debugOptions = {false, false, false, false};
     };
 
+    bool has_player_won();
     bool has_player_reached_arena_end();
     bool has_game_reached_end_state();
 
