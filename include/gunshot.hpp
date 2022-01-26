@@ -33,7 +33,7 @@ public:
         gX = x + deltaX;
         gY = y + deltaY;
         gDirectionAng = directionAng;
-        gVel = 2;
+        gVel = INC_KEYIDLE * 2;
         gRadiusGunshot = 1;
     };
 

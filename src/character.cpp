@@ -36,7 +36,7 @@ void Character::shoot()
 {
     if (this->gunshot == NULL)
     {
-        this->gunshot = new Gunshot(this->center.x, this->center.y, this->trunkWidth / 4 + (this->facingDirection * this->height / 8 * 2.5), this->facingDirection * this->height / 8 * 2 / 2, this->gThetaArm + (90 * this->facingDirection));
+        this->gunshot = new Gunshot(this->center.x, this->center.y, (this->facingDirection * this->height / 8 * 2.5), this->facingDirection * this->height / 8 * 2 / 2, this->gThetaArm + (90 * this->facingDirection));
     }
 }
 
@@ -66,7 +66,6 @@ void Character::draw_head()
     glEnd();
 }
 
-// Draw a sequence of points representing the wheel of the character
 void Character::draw_body()
 {
     glColor3f(this->colors.upperBody.r, this->colors.upperBody.g, this->colors.upperBody.b);
@@ -112,8 +111,10 @@ void Character::draw_arm()
 {
     glColor3f(this->colors.lowerBody.r * 0.5, this->colors.lowerBody.g * 0.5, this->colors.lowerBody.b * 0.5);
 
+    glTranslatef(this->center.x, -this->center.y, 0);
     glRotatef(this->gThetaArm, 0, 0, 1);
     glRotatef(90 * this->facingDirection, 0, 0, 1);
+
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
@@ -208,8 +209,6 @@ void Character::draw_character()
 
     // Arm
     glPushMatrix();
-    glTranslatef(this->center.x, -this->center.y, 0);
-    glTranslatef(this->trunkWidth / 4, this->height / 8 * 2 / 2, 0);
     this->draw_arm();
     glPopMatrix();
 }

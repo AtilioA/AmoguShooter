@@ -1,6 +1,9 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#define INC_KEY 1
+#define INC_KEYIDLE 1
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 
@@ -61,7 +64,7 @@ public:
         this->gunshot = NULL;
         this->trunkWidth = radius;
         this->facingDirection = Direction::RIGHT;
-        this->gThetaArm = 0.0 + 2;
+        this->gThetaArm = 0;
         this->isAlive = true;
     };
 
