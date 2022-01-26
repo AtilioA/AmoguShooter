@@ -361,7 +361,7 @@ bool Game::is_outside_arena(Character *character)
     Point arenaPos = this->background->get_center();
 
     if (character->get_center().y - character->get_radius() < arenaPos.y ||
-        character->get_center().y + character->get_radius() > arenaPos.y + arenaTerrain->get_height())
+        character->get_center().y + character->get_radius() * 0.98 > arenaPos.y + arenaTerrain->get_height())
     {
         return true;
     }
