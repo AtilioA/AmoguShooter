@@ -15,6 +15,7 @@ typedef struct tDebug
     bool pacificEnemies;
     bool drawObjectCenter;
     bool drawCharacterHitbox;
+    bool globalCamera;
 } Debug;
 
 class Game
@@ -39,7 +40,7 @@ public:
         this->nCharacters = 0;
         this->arenaSVGFilename = "";
         this->arenaDimensions = {0, 0};
-        this->debugOptions = {false, false, false, false};
+        this->debugOptions = {false, false, false, false, false};
     };
 
     bool has_player_won();

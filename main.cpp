@@ -200,15 +200,32 @@ void idle(void)
 
     Player *player = game->get_player();
 
-    glMatrixMode(GL_PROJECTION); // Select the projection matrix
-    glLoadIdentity();
-    glOrtho(-game->get_arena_background()->get_height() / 2 + player->get_center().x,                     // X coordinate of left edge
-            game->get_arena_background()->get_height() / 2 + player->get_center().x,                      // X coordinate of right edge
-            (-game->get_arena_background()->get_center().y - game->get_arena_background()->get_height()), // Y coordinate of bottom edge
-            -game->get_arena_background()->get_center().y,                                                // Y coordinate of top edge
-            -1,                                                                                           // Z coordinate of the “near” plane
-            1);                                                                                           // Z coordinate of the “far” plane
-    glMatrixMode(GL_MODELVIEW);                                                                           // Select the projection matrix
+    if (!game->get_debug_options().globalCamera)
+    {
+        glMatrixMode(GL_PROJECTION); // Select the projection matrix
+        glLoadIdentity();
+        glOrtho(-game->get_arena_background()->get_height() / 2 + player->get_center().x,                     // X coordinate of left edge
+                game->get_arena_background()->get_height() / 2 + player->get_center().x,                      // X coordinate of right edge
+                (-game->get_arena_background()->get_center().y - game->get_arena_background()->get_height()), // Y coordinate of bottom edge
+                -game->get_arena_background()->get_center().y,                                                // Y coordinate of top edge
+                -1,                                                                                           // Z coordinate of the “near” plane
+                1);                                                                                           // Z coordinate of the “far” plane
+        glMatrixMode(GL_MODELVIEW);                                                                           // Select the projection matrix
+    }
+    else
+    {
+        glMatrixMode(GL_PROJECTION); // Select the projection matrix
+        glLoadIdentity();
+        glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
+                (ViewingWidth / 2),   // X coordinate of right edge
+                -(ViewingHeight / 2), // Y coordinate of bottom edge
+                (ViewingHeight / 2),  // Y coordinate of top edge
+                -100,                 // Z coordinate of the “near” plane
+                100);                 // Z coordinate of the “far” plane
+
+        glMatrixMode(GL_MODELVIEW); // Select the projection matrix
+        glLoadIdentity();
+    }
 
     if (game->has_game_reached_end_state())
     {

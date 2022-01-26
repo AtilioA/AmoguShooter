@@ -535,6 +535,7 @@ void Game::set_debug_options(bool debug)
     this->debugOptions.pacificEnemies = debug;
     this->debugOptions.drawObjectCenter = debug;
     this->debugOptions.drawCharacterHitbox = debug;
+    this->debugOptions.globalCamera = debug;
 }
 
 Debug Game::get_debug_options()
