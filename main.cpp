@@ -113,6 +113,11 @@ void keyPress(unsigned char key, int x, int y)
     case 'F':
         game->get_player()->shoot();
         break;
+    case '2':
+        game->set_debug_options(false);
+    case '3':
+        game->get_debug_options().drawCharacterHitbox ? game->set_debug_options(false) : game->set_debug_options(true);
+        break;
     case 27:
         exit(0);
     }

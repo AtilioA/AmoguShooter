@@ -282,9 +282,12 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
 
 void Game::enemies_shoot_at_player(GLfloat deltaTime)
 {
-    for (size_t i = 0; i < this->enemies.size(); i++)
+    if (!this->debugOptions.pacificEnemies)
     {
-        this->enemy_shoot_at_player(this->enemies[i], deltaTime);
+        for (size_t i = 0; i < this->enemies.size(); i++)
+        {
+            this->enemy_shoot_at_player(this->enemies[i], deltaTime);
+        }
     }
 }
 
@@ -391,7 +394,7 @@ bool Game::is_character_inside_any_terrain(Character *character)
         Terrain *terrain = this->terrains[i];
         if (character->is_inside_terrain(terrain))
         {
-            if (this->debugOptions.highlightCollision)
+            if (this->debugOptions.highlightTerrain)
             {
                 terrain->set_color(character->get_crewmate_colors().upperBody);
             }
@@ -400,7 +403,7 @@ bool Game::is_character_inside_any_terrain(Character *character)
         }
         else
         {
-            // if (this->debugOptions.highlightCollision)
+            // if (this->debugOptions.highlightTerrain)
             // {
             //     terrain->set_color({0, 0, 0});
             // }
@@ -506,12 +509,10 @@ Dimensions Game::get_arena_dimensions()
     return this->arenaDimensions;
 }
 
-// If debug is true, make Debug struct have all elements as true. If false, make Debug struct have all elements as false (default)
 void Game::set_debug_options(bool debug)
 {
-    this->debugOptions.highlightCollision = debug;
+    this->debugOptions.highlightTerrain = debug;
     this->debugOptions.pacificEnemies = debug;
-    this->debugOptions.invinciblePlayer = debug;
     this->debugOptions.drawObjectCenter = debug;
     this->debugOptions.drawCharacterHitbox = debug;
 }

@@ -11,8 +11,7 @@ using namespace std;
 
 typedef struct tDebug
 {
-    bool highlightCollision;
-    bool invinciblePlayer;
+    bool highlightTerrain;
     bool pacificEnemies;
     bool drawObjectCenter;
     bool drawCharacterHitbox;
@@ -40,7 +39,7 @@ public:
         this->nCharacters = 0;
         this->arenaSVGFilename = "";
         this->arenaDimensions = {0, 0};
-        this->debugOptions = {false, false, false, false, false};
+        this->debugOptions = {false, false, false, false};
     };
 
     bool has_player_reached_arena_end();
