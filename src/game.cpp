@@ -1,9 +1,6 @@
 #include "../include/game.hpp"
 #include "../include/svg_reader.hpp"
 
-#define INC_KEY 1
-#define INC_KEYIDLE 1
-
 using namespace std;
 
 bool Game::has_player_reached_arena_end()
@@ -25,7 +22,7 @@ bool Game::has_game_reached_end_state()
 
 void Game::move_a_gunshot(Character *shooter, GLfloat deltaTime)
 {
-    if (shooter->get_gunshot() != nullptr)
+    if (shooter->get_gunshot() != NULL)
     {
         shooter->get_gunshot()->move(deltaTime);
         this->handle_collision_gunshot(shooter);
@@ -40,7 +37,7 @@ void Game::remove_character(Character *character)
     }
     else
     {
-        for (int i = 0; i < this->enemies.size(); i++)
+        for (size_t i = 0; i < this->enemies.size(); i++)
         {
             if (this->enemies[i] == character)
             {
@@ -61,10 +58,18 @@ void Game::handle_collision_gunshot(Character *shooter)
     {
         Character *hitCharacter = this->check_collision_gunshot_any_character(shooter->get_gunshot());
 
-        if (hitCharacter != NULL)
+        if (hitCharacter != NULL && hitCharacter != shooter)
         {
             shooter->delete_gunshot();
             cout << "Hit character " << hitCharacter->get_id() << endl;
+            if (hitCharacter == this->player)
+            {
+                cout << "Player hit by a gunshot" << endl;
+                this->player->set_alive(false);
+                this->reset_game();
+                return;
+            }
+
             remove_character(hitCharacter);
         }
     }
@@ -206,7 +211,7 @@ bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx)
     return false;
 }
 
-void Game::move_enemy_randomly(Enemy *enemy, float deltaTime)
+void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
 {
     int integerDeltaTime = (int)deltaTime;
 
@@ -243,7 +248,47 @@ void Game::move_enemy_randomly(Enemy *enemy, float deltaTime)
     }
 }
 
-void Game::move_enemies_randomly(float deltaTime)
+void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
+{
+    GLfloat enemyViewDistance = 15 * enemy->get_trunk_width();
+
+    if (enemy->get_center().x - enemyViewDistance < this->player->get_center().x &&
+        enemy->get_center().x + enemyViewDistance > this->player->get_center().x)
+    {
+        cout << "Player is in view of enemy ID " << enemy->get_id() << endl;
+
+        // Set enemy facing direction to player direction
+        if (enemy->get_center().x < this->player->get_center().x)
+        {
+            enemy->set_facing_direction(Direction::RIGHT);
+        }
+        else
+        {
+            enemy->set_facing_direction(Direction::LEFT);
+        }
+
+        // Shoot at player at random intervals
+        if (enemy->get_gunshot() == NULL)
+        {
+            GLfloat randomNumber = rand() % (int)deltaTime;
+            if (randomNumber < deltaTime * 0.025)
+            {
+                cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
+                enemy->shoot();
+            }
+        }
+    }
+}
+
+void Game::enemies_shoot_at_player(GLfloat deltaTime)
+{
+    for (size_t i = 0; i < this->enemies.size(); i++)
+    {
+        this->enemy_shoot_at_player(this->enemies[i], deltaTime);
+    }
+}
+
+void Game::move_enemies_randomly(GLfloat deltaTime)
 {
     for (size_t i = 0; i < this->enemies.size(); i++)
     {

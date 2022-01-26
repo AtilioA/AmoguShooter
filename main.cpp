@@ -56,6 +56,13 @@ void renderScene()
     {
         game->get_player()->get_gunshot()->draw();
     }
+    for (size_t i = 0; i < game->get_enemies().size(); i++)
+    {
+        if (game->get_enemies()[i]->get_gunshot() != NULL)
+        {
+            game->get_enemies()[i]->get_gunshot()->draw();
+        }
+    }
 
     // glBegin(GL_QUADS);
     // glVertex2f(0, 0);
@@ -172,7 +179,8 @@ void idle(void)
 
     Player *player = game->get_player();
 
-    game->move_enemies_randomly(framerate);
+    game->move_enemies_randomly(deltaTime);
+    game->enemies_shoot_at_player(deltaTime);
 
     double inc = INC_KEYIDLE;
     GLfloat dx = 0, dy = 0;
@@ -208,21 +216,14 @@ void idle(void)
     {
         // cout << "Moving gunshot..." << endl;
         game->move_a_gunshot(player, framerate);
-
-        // // Trata colisao
-        // if (alvo.Atingido(playerGunshot))
-        // {
-        //     alvo.Recria(rand() % 500 - 250, 200);
-        // }
-
-        if (!playerGunshot->is_valid())
-        {
-            player->delete_gunshot();
-        }
     }
-    else
+
+    for (auto &enemy : game->get_enemies())
     {
-        // cout << "playerGunshot is NULL" << endl;
+        if (enemy->get_gunshot() != NULL)
+        {
+            game->move_a_gunshot(enemy, framerate);
+        }
     }
 
     if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
