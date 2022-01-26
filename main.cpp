@@ -11,8 +11,8 @@
 
 using namespace std;
 
-#define INC_KEY 1
-#define INC_KEYIDLE 1
+#define INC_KEY 0.5
+#define INC_KEYIDLE 0.5
 
 // Key status
 int keyStatus[256];
@@ -28,13 +28,6 @@ const GLint Height = 500;
 const GLint ViewingWidth = 500;
 const GLint ViewingHeight = 500;
 
-// Controla a animacao do robo
-// int animate = 0;
-
-// Componentes do mundo virtual sendo modelado
-// Gunshot *gunshot = NULL; // One gunshot at a time
-// Alvo alvo(0, 200); // Um alvo por vez
-
 static bool shouldPreserveFramerateSpeed = true;
 static GLdouble framerate = 0;
 Game *game = new Game();
@@ -45,7 +38,7 @@ void RenderString(float x, float y)
     glRasterPos2f(0, 0);
     if (game->has_player_won())
     {
-        sprintf(str, "VITÓRIA!");
+        sprintf(str, "VITORIA!");
         cout << "VITÓRIA" << endl;
     }
     else
@@ -204,6 +197,16 @@ void idle(void)
     }
 
     Player *player = game->get_player();
+
+    glMatrixMode(GL_PROJECTION); // Select the projection matrix
+    glLoadIdentity();
+    glOrtho(-game->get_arena_background()->get_height() / 2 + player->get_center().x,                  // X coordinate of left edge
+            game->get_arena_background()->get_height() / 2 + player->get_center().x,                   // X coordinate of right edge
+            (-game->get_arena_background()->get_center().y - game->get_arena_background()->get_height()), // Y coordinate of bottom edge
+            -game->get_arena_background()->get_center().y,                                              // Y coordinate of top edge
+            -1,                                                                                        // Z coordinate of the “near” plane
+            1);                                                                                        // Z coordinate of the “far” plane
+    glMatrixMode(GL_MODELVIEW);                                                                        // Select the projection matrix
 
     if (game->has_game_reached_end_state())
     {

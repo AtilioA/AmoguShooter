@@ -1,8 +1,8 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#define INC_KEY 1
-#define INC_KEYIDLE 1
+#define INC_KEY 0.5
+#define INC_KEYIDLE 0.5
 
 #include <GL/gl.h>
 #include <GL/glu.h>
