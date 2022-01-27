@@ -240,7 +240,6 @@ bool Character::is_inside_terrain(Terrain *terrain)
         {
             if (terrain->get_color().b != 1.0 && this->center.y < terrainPos.y)
             {
-                cout << this->center.y << " " << terrainPos.y << endl;
                 this->terrainBelow = terrain;
             }
             return true;
@@ -257,16 +256,10 @@ bool Character::is_inside_terrain(Terrain *terrain)
 
 bool Character::is_inside_another_character(Character *character)
 {
-    if (this->center.x + this->trunkWidth / 2 > character->center.x - character->trunkWidth / 2 &&
-        this->center.x - this->trunkWidth / 2 < character->center.x + character->trunkWidth / 2 && this->center.y + this->radius > character->center.y - character->radius &&
-        this->center.y - this->radius < character->center.y + character->radius)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    // Check if characters are overlapping, considering both of their trunk widths
+    return this->center.x + this->trunkWidth / 2 > character->center.x - character->trunkWidth / 2 &&
+           this->center.x - this->trunkWidth / 2 < character->center.x + character->trunkWidth / 2 && this->center.y + this->radius > character->center.y - character->radius &&
+           this->center.y - this->radius < character->center.y + character->radius;
 }
 
 // Funcao auxiliar de rotacao
@@ -354,7 +347,6 @@ Terrain *Character::get_terrain_below()
     return this->terrainBelow;
 }
 
-// Make character jump for 4 seconds. The maximum height will be equal to 3 times the character's height and shall be reached in 2 seconds.
 void Character::jump(GLfloat clock)
 {
     if (clock <= 0)

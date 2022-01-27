@@ -1,11 +1,14 @@
+// Library for representing enemies
+
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include <iostream>
 #include <GL/gl.h>
 #include <GL/glu.h>
+
 #include "character.hpp"
 
+// Represents an enemy in the game. It is merely a Character object with another name.
 class Enemy : public Character
 {
 
@@ -14,7 +17,7 @@ public:
 
     virtual void f()
     {
-        std::cout << "";
+        return;
     };
 };
 
