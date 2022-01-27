@@ -1,13 +1,9 @@
-
-#include <iostream>
-
-#include "../include/character.hpp"
-#include "../include/player.hpp"
-#include "../include/utils.hpp"
-#include "../include/enemy.hpp"
-#include "../include/game.hpp"
-#include "../include/terrain.hpp"
 #include "../include/tinyxml2.hpp"
+#include "../include/game.hpp"
+#include "../include/player.hpp"
+#include "../include/enemy.hpp"
+#include "../include/terrain.hpp"
+#include "../include/utils.hpp"
 
 using namespace tinyxml2;
 using namespace std;

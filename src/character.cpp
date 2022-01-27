@@ -1,8 +1,4 @@
-#include <math.h>
-#include <GL/glut.h>
-
 #include "../include/character.hpp"
-#include "../include/gunshot.hpp"
 
 // Import game to check debug options
 #include "../include/game.hpp"

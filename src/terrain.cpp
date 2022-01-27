@@ -1,8 +1,5 @@
 #include "../include/terrain.hpp"
 
-// #include <iostream>
-// using namespace std;
-
 // Import game to check debug options
 #include "../include/game.hpp"
 extern Game *game;

@@ -8,6 +8,10 @@
 #define INC_KEY 0.03
 #define INC_KEYIDLE 0.03
 
+#include <map>
+#include <string>
+#include <bits/stdc++.h>
+
 #include <GL/glut.h>
 
 // Stores the size of a 2D window

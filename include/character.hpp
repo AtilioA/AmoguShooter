@@ -1,8 +1,10 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include <math.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
 
 #include "gunshot.hpp"
 #include "utils.hpp"
