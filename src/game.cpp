@@ -235,7 +235,8 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
 {
     int integerDeltaTime = (int)deltaTime;
 
-    int randomNumber = rand() % integerDeltaTime * 2;
+    int randomNumber = rand() % (integerDeltaTime * 2);
+
     switch (randomNumber)
     {
     case 1:
@@ -243,22 +244,24 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
         {
             move_a_character(enemy, -INC_KEY, 0, deltaTime);
         }
-        // else
-        // {
-        //     cout << enemy->get_id() << ": "
-        //          << "would fall" << endl;
-        // }
+        else
+        {
+            // move_a_character(enemy, INC_KEY, 0, deltaTime);
+            cout << enemy->get_id() << ": "
+                 << "would fall" << endl;
+        }
         break;
     case 2:
         if (!will_enemy_fall(enemy, INC_KEY))
         {
-            move_a_character(enemy, INC_KEY, 0, deltaTime);
+            // move_a_character(enemy, INC_KEY, 0, deltaTime);
         }
-        // else
-        // {
-        //     cout << enemy->get_id() << ": "
-        //          << "would fall" << endl;
-        // }
+        else
+        {
+            // move_a_character(enemy, -INC_KEY, 0, deltaTime);
+            cout << enemy->get_id() << ": "
+                 << "would fall" << endl;
+        }
         break;
     default:
         break;
@@ -268,7 +271,7 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
 void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
 {
     GLfloat enemyViewDistance = this->get_arena_background()->get_height() / 2 * 0.9;
-    GLfloat nearHeight = enemy->get_height() * 2;
+    GLfloat nearHeight = enemy->get_height() * 3;
 
     if (enemy->get_center().x - enemyViewDistance < this->player->get_center().x &&
         enemy->get_center().x + enemyViewDistance > this->player->get_center().x)
@@ -296,7 +299,7 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
             if (enemy->get_gunshot() == NULL)
             {
                 GLfloat randomNumber = rand() % (int)deltaTime;
-                if (randomNumber < deltaTime * 0.02)
+                if (randomNumber < deltaTime * 0.01)
                 {
                     cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
                     enemy->shoot();
