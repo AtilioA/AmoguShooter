@@ -255,8 +255,12 @@ void idle(void)
     }
     else
     {
-        game->move_enemies_randomly(framerate);
-        game->enemies_shoot_at_player(framerate);
+        if (deltaTime > 0)
+        {
+            game->move_enemies_randomly(deltaTime);
+        }
+
+        game->enemies_shoot_at_player(deltaTime);
 
         double inc = INC_KEYIDLE;
         GLfloat dx = 0, dy = 0;
