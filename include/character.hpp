@@ -73,7 +73,7 @@ public:
         this->isJumping = false;
         this->isFalling = true;
         this->jumpTime = 0;
-        this->height / 3;
+        this->jumpSpeed = this->height / 3;
     };
 
     virtual void f() = 0;
