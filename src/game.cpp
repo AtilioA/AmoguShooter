@@ -270,7 +270,7 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
 
 void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
 {
-    GLfloat enemyViewDistance = 15 * enemy->get_trunk_width();
+    GLfloat enemyViewDistance = this->get_arena_background()->get_height() / 2 * 0.9;
 
     if (enemy->get_center().x - enemyViewDistance < this->player->get_center().x &&
         enemy->get_center().x + enemyViewDistance > this->player->get_center().x)
