@@ -11,8 +11,8 @@
 
 using namespace std;
 
-#define INC_KEY 0.5
-#define INC_KEYIDLE 0.5
+#define INC_KEY 0.4
+#define INC_KEYIDLE 0.4
 
 // Key status
 int keyStatus[256];
@@ -39,12 +39,12 @@ void RenderString(float x, float y)
 
     if (game->has_player_won())
     {
-        sprintf(str, "VITORIA!");
+        sprintf(str, "VITORIA! Aperte R para reiniciar");
         cout << "VITÓRIA" << endl;
     }
     else
     {
-        sprintf(str, "GAME OVER!");
+        sprintf(str, "GAME OVER! Aperte R para reiniciar");
         cout << "GAME OVER" << endl;
     }
     char *text;
