@@ -26,6 +26,7 @@ const GLint Height = 500;
 const GLint ViewingWidth = 500;
 const GLint ViewingHeight = 500;
 
+bool pressingRightClick = false;
 static bool shouldPreserveFramerateSpeed = true;
 static GLdouble framerate = 0;
 Game *game = new Game();
@@ -157,7 +158,11 @@ void mouseClick(int button, int state, int mousex, int mousey)
     // Player jump
     if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
     {
-        game->move_a_character(game->get_player(), 0, -INC_KEYIDLE * 2);
+        pressingRightClick = true;
+    }
+    else
+    {
+        pressingRightClick = false;
     }
 
     glutPostRedisplay();
@@ -276,7 +281,7 @@ void idle(void)
             dx -= inc;
             game->move_a_character(player, dx, dy, deltaTime);
         }
-        if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
+        if (keyStatus['w'] == 1 || keyStatus['W'] == 1 || pressingRightClick)
         {
             dy -= inc;
             game->move_a_character(player, dx, dy * 2, deltaTime);
@@ -290,7 +295,6 @@ void idle(void)
         game->apply_gravity(deltaTime);
 
         // Handle gunshot (only allows one gunshot at a time)
-        // Could use a list to handle multiple gunshots
         Gunshot *playerGunshot = player->get_gunshot();
         if (playerGunshot != NULL)
         {
