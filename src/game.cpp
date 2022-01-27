@@ -350,7 +350,7 @@ void Game::free_enemies()
 // WIP
 void Game::free()
 {
-    // delete this->player;
+    delete this->player;
 
     this->enemies.clear();
     this->terrains.clear();

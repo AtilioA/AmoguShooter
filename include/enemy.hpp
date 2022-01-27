@@ -14,11 +14,6 @@ class Enemy : public Character
 
 public:
     using Character::Character;
-
-    virtual void f()
-    {
-        return;
-    };
 };
 
 #endif /* ENEMY_H */

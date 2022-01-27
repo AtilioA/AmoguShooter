@@ -14,11 +14,6 @@ class Player : public Character
 
 public:
     using Character::Character;
-
-    virtual void f()
-    {
-        return;
-    };
 };
 
 #endif /* PLAYER_H */

@@ -75,8 +75,10 @@ public:
         this->jumpTime = 0;
         this->jumpSpeed = this->height / 3;
     };
-
-    virtual void f() = 0;
+    virtual ~Character()
+    {
+        this->delete_gunshot();
+    };
 
     GLfloat get_jump_speed();
 
