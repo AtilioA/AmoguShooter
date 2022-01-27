@@ -121,10 +121,6 @@ void keyPress(unsigned char key, int x, int y)
     case 'R':
         keyStatus[(int)('r')] = 1; // Using keyStatus trick
         break;
-    case 'f':
-    case 'F':
-        game->get_player()->shoot();
-        break;
     case '2':
         game->get_debug_options().drawCharacterHitbox ? game->set_debug_options(false) : game->set_debug_options(true);
         break;
@@ -149,6 +145,24 @@ void ResetKeyStatus()
     {
         keyStatus[i] = 0;
     }
+}
+
+// Function works on mouse click
+void mouse(int button, int state, int mousex, int mousey)
+{
+    // Player shoot
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+    {
+        game->get_player()->shoot();
+    }
+
+    // Player jump
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+    {
+        game->move_a_character(game->get_player(), 0, -INC_KEYIDLE * 2);
+    }
+
+    glutPostRedisplay();
 }
 
 void init(Game *game)
@@ -212,6 +226,7 @@ void idle(void)
                 1);                                                                                           // Z coordinate of the “far” plane
         glMatrixMode(GL_MODELVIEW);                                                                           // Select the projection matrix
     }
+
     else
     {
         glMatrixMode(GL_PROJECTION); // Select the projection matrix
@@ -338,6 +353,10 @@ int main(int argc, char *argv[])
     glutKeyboardFunc(keyPress);
     glutIdleFunc(idle);
     glutKeyboardUpFunc(keyup);
+
+    // Mouse event handler
+    glutMouseFunc(mouse);
+
     glutPassiveMotionFunc(aim_with_mouse);
 
     init(game);
