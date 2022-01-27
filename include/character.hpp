@@ -40,6 +40,7 @@ protected:
     bool isJumping;
     bool canJump;
     GLfloat jumpTime;
+    GLfloat jumpSpeed;
 
     // Angle of each joint
     GLfloat gThetaThigh;
@@ -50,8 +51,6 @@ protected:
     GLfloat gThetaArmMAX;
     GLfloat gThetaArmMIN;
 
-    GLfloat speed;
-
 public:
     Character(Point center, GLfloat radius, CrewmateColors colors, GLint id)
     {
@@ -61,26 +60,37 @@ public:
         this->set_height(radius * 2);
         this->set_id(id);
         this->set_terrain_below(NULL);
-        this->gunshot = NULL;
+
         this->trunkWidth = radius;
-        this->facingDirection = Direction::RIGHT;
+
         this->gThetaArm = 0;
+        this->facingDirection = Direction::RIGHT;
+
+        this->gunshot = NULL;
         this->isAlive = true;
+
+        this->canJump = false;
+        this->isJumping = false;
+        this->isFalling = true;
+        this->jumpTime = 0;
+        this->height / 3;
     };
 
     virtual void f() = 0;
 
-    void set_isFalling(bool isFalling);
-    bool get_isFalling();
+    GLfloat get_jump_speed();
 
-    void set_isJumping(bool isJumping);
-    bool get_isJumping();
+    void set_is_falling(bool isFalling);
+    bool get_is_falling();
 
-    void set_canJump(bool canJump);
-    bool get_canJump();
+    void set_is_jumping(bool isJumping);
+    bool get_is_jumping();
 
-    void set_jumpTime(GLfloat jumpTime);
-    GLfloat get_jumpTime();
+    void set_can_jump(bool canJump);
+    bool get_can_jump();
+
+    void set_jump_time(GLfloat jumpTime);
+    GLfloat get_jump_time();
 
     bool is_alive();
     void set_alive(bool alive);

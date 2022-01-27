@@ -258,43 +258,43 @@ bool Character::is_inside_another_character(Character *character)
            this->center.y - this->radius < character->center.y + character->radius;
 }
 
-// Funcao auxiliar de rotacao
-// void RotatePoint(Point center, GLfloat angle, GLfloat &xOut, GLfloat &yOut)
-// {
-// }
+GLfloat Character::get_jump_speed()
+{
+    return this->jumpSpeed;
+}
 
-void Character::set_isFalling(bool isFalling)
+void Character::set_is_falling(bool isFalling)
 {
     this->isFalling = isFalling;
 }
-bool Character::get_isFalling()
+bool Character::get_is_falling()
 {
     return this->isFalling;
 }
 
-void Character::set_isJumping(bool isJumping)
+void Character::set_is_jumping(bool isJumping)
 {
     this->isJumping = isJumping;
 }
-bool Character::get_isJumping()
+bool Character::get_is_jumping()
 {
     return this->isJumping;
 }
 
-void Character::set_canJump(bool canJump)
+void Character::set_can_jump(bool canJump)
 {
     this->canJump = canJump;
 }
-bool Character::get_canJump()
+bool Character::get_can_jump()
 {
     return this->canJump;
 }
 
-void Character::set_jumpTime(GLfloat jumpTime)
+void Character::set_jump_time(GLfloat jumpTime)
 {
     this->jumpTime = jumpTime;
 }
-GLfloat Character::get_jumpTime()
+GLfloat Character::get_jump_time()
 {
     return this->jumpTime;
 }
