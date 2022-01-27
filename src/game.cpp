@@ -268,6 +268,7 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
 void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
 {
     GLfloat enemyViewDistance = this->get_arena_background()->get_height() / 2 * 0.9;
+    GLfloat nearHeight = enemy->get_height() * 2;
 
     if (enemy->get_center().x - enemyViewDistance < this->player->get_center().x &&
         enemy->get_center().x + enemyViewDistance > this->player->get_center().x)
@@ -284,14 +285,22 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
             enemy->set_facing_direction(Direction::LEFT);
         }
 
-        // Shoot at player at random intervals
-        if (enemy->get_gunshot() == NULL)
+        cout << "Player y: " << this->player->get_center().y << "nearHeight: " << nearHeight << endl;
+        cout << "Enemy y: " << enemy->get_center().y << endl;
+
+        if (this->player->get_center().y + nearHeight >= enemy->get_center().y && this->player->get_center().y - nearHeight <= enemy->get_center().y)
         {
-            GLfloat randomNumber = rand() % (int)deltaTime;
-            if (randomNumber < deltaTime * 0.02)
+            cout << "Player is close to enemy ID " << enemy->get_id() << endl;
+
+            // Shoot at player at random intervals
+            if (enemy->get_gunshot() == NULL)
             {
-                cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
-                enemy->shoot();
+                GLfloat randomNumber = rand() % (int)deltaTime;
+                if (randomNumber < deltaTime * 0.02)
+                {
+                    cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
+                    enemy->shoot();
+                }
             }
         }
     }
