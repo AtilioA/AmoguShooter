@@ -11,12 +11,10 @@
 
 using namespace std;
 
-#define INC_KEY 0.4
-#define INC_KEYIDLE 0.4
-
 // Key status
 int keyStatus[256];
 
+// Char vector for endgame messages
 static char str[999];
 
 // Window dimensions
@@ -148,7 +146,7 @@ void ResetKeyStatus()
 }
 
 // Function works on mouse click
-void mouse(int button, int state, int mousex, int mousey)
+void mouseClick(int button, int state, int mousex, int mousey)
 {
     // Player shoot
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
@@ -267,22 +265,22 @@ void idle(void)
         if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
         {
             dx += inc;
-            game->move_a_character(player, dx, dy);
+            game->move_a_character(player, dx, dy, deltaTime);
         }
         if (keyStatus['a'] == 1 || keyStatus['A'] == 1)
         {
             dx -= inc;
-            game->move_a_character(player, dx, dy);
+            game->move_a_character(player, dx, dy, deltaTime);
         }
         if (keyStatus['w'] == 1 || keyStatus['W'] == 1)
         {
             dy -= inc;
-            game->move_a_character(player, dx, dy * 2);
+            game->move_a_character(player, dx, dy * 2, deltaTime);
         }
         if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
         {
             dy += inc;
-            game->move_a_character(player, dx, dy * 2);
+            game->move_a_character(player, dx, dy * 2, deltaTime);
         }
 
         game->apply_gravity(deltaTime);
@@ -293,14 +291,14 @@ void idle(void)
         if (playerGunshot != NULL)
         {
             // cout << "Moving gunshot..." << endl;
-            game->move_a_gunshot(player, framerate);
+            game->move_a_gunshot(player, deltaTime);
         }
 
         for (auto &enemy : game->get_enemies())
         {
             if (enemy->get_gunshot() != NULL)
             {
-                game->move_a_gunshot(enemy, framerate);
+                game->move_a_gunshot(enemy, deltaTime);
             }
         }
     }
@@ -355,7 +353,7 @@ int main(int argc, char *argv[])
     glutKeyboardUpFunc(keyup);
 
     // Mouse event handler
-    glutMouseFunc(mouse);
+    glutMouseFunc(mouseClick);
 
     glutPassiveMotionFunc(aim_with_mouse);
 

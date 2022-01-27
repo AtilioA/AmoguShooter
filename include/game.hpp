@@ -56,9 +56,9 @@ public:
     Character *check_collision_gunshot_any_character(Gunshot *gunshot);
     void remove_character(Character *character);
 
-    void move_a_character(Character *character, GLfloat dx, GLfloat dy);
+    void move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime);
     bool check_collision(Character *character);
-    void handle_collision(Character *character, GLfloat dx, GLfloat dy);
+    void handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime);
 
     void add_enemy(Enemy *enemy);
     std::vector<Enemy *> get_enemies();

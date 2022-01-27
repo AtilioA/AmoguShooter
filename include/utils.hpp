@@ -5,6 +5,9 @@
 
 #define M_PI 3.14159265358979323846
 
+#define INC_KEY 0.03
+#define INC_KEYIDLE 0.03
+
 #include <GL/glut.h>
 
 // Stores the size of a 2D window

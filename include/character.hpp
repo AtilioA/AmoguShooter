@@ -1,8 +1,6 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#define INC_KEY 0.4
-#define INC_KEYIDLE 0.4
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -101,14 +99,12 @@ public:
     void set_facing_direction(GLint facingDirection);
     GLint get_facing_direction();
 
-    void draw_character(/*, GLfloat thetaLeg,
-                        GLfloat thetaThigh, GLfloat thetaArm*/
-    );
+    void draw_character();
 
     bool is_inside_another_character(Character *character);
     bool is_inside_terrain(Terrain *terrain);
 
-    void move_character(GLfloat dx, GLfloat dy);
+    void move_character(GLfloat dx, GLfloat dy, GLfloat deltaTime);
     void jump(GLfloat clock);
 
     void determine_animation_direction();

@@ -21,8 +21,8 @@ void Gunshot::draw_gunshot(GLfloat x, GLfloat y)
 
 void Gunshot::move(GLdouble deltaTime)
 {
-    this->gX += this->gVel * sin(this->gDirectionAng * M_PI / 180) * 3;
-    this->gY += this->gVel * cos(this->gDirectionAng * M_PI / 180) * 3;
+    this->gX += this->gVel * sin(this->gDirectionAng * M_PI / 180) * deltaTime;
+    this->gY += this->gVel * cos(this->gDirectionAng * M_PI / 180) * deltaTime;
 }
 
 bool Gunshot::is_valid()

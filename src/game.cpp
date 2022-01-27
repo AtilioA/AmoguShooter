@@ -159,10 +159,10 @@ bool Game::is_gunshot_inside_any_terrain(Gunshot *gunshot)
     return false;
 }
 
-void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy)
+void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime)
 {
-    character->move_character(dx, dy);
-    this->handle_collision(character, dx, dy);
+    character->move_character(dx, dy, deltaTime);
+    this->handle_collision(character, dx, dy, deltaTime);
 }
 
 bool Game::check_collision(Character *character)
@@ -177,11 +177,11 @@ bool Game::check_collision(Character *character)
     }
 }
 
-void Game::handle_collision(Character *character, GLfloat dx, GLfloat dy)
+void Game::handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime)
 {
     if (this->check_collision(character))
     {
-        character->move_character(-dx, -dy);
+        character->move_character(-dx, -dy, deltaTime);
     }
 }
 
@@ -194,17 +194,17 @@ void Game::apply_gravity(GLfloat deltaTime)
     // cout << "gravityVelocity: " << gravityVelocity << endl;
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
-    GLfloat gravityVelocity = 0.5;
+    GLfloat gravityVelocity = INC_KEY / 4;
 
     // Apply gravity to player
-    this->move_a_character(this->player, 0, gravityVelocity);
+    this->move_a_character(this->player, 0, gravityVelocity, deltaTime);
 
     // Apply gravity to enemies
     Enemy *currentEnemy = NULL;
     for (size_t i = 0; i < this->enemies.size(); i++)
     {
         currentEnemy = this->enemies[i];
-        this->move_a_character(currentEnemy, 0, gravityVelocity);
+        this->move_a_character(currentEnemy, 0, gravityVelocity, deltaTime);
     }
 }
 
@@ -235,16 +235,13 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
 {
     int integerDeltaTime = (int)deltaTime;
 
-    // Placeholder
-    GLfloat dx = 1.0;
-
-    int randomNumber = rand() % integerDeltaTime;
+    int randomNumber = rand() % integerDeltaTime * 2;
     switch (randomNumber)
     {
     case 1:
-        if (!will_enemy_fall(enemy, -dx))
+        if (!will_enemy_fall(enemy, -INC_KEY))
         {
-            move_a_character(enemy, -dx, 0);
+            move_a_character(enemy, -INC_KEY, 0, deltaTime);
         }
         // else
         // {
@@ -253,9 +250,9 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
         // }
         break;
     case 2:
-        if (!will_enemy_fall(enemy, dx))
+        if (!will_enemy_fall(enemy, INC_KEY))
         {
-            move_a_character(enemy, dx, 0);
+            move_a_character(enemy, INC_KEY, 0, deltaTime);
         }
         // else
         // {
