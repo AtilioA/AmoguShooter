@@ -77,7 +77,7 @@ public:
 
     void apply_gravity(GLfloat deltaTime);
 
-    bool will_enemy_fall(Enemy *enemy, GLfloat dx);
+    bool will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat deltaTime);
     void enemies_shoot_at_player(GLfloat deltaTime);
     void enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime);
     void move_enemy_randomly(Enemy *enemy, GLfloat deltaTime);

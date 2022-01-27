@@ -208,7 +208,7 @@ void Game::apply_gravity(GLfloat deltaTime)
     }
 }
 
-bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx)
+bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat deltaTime)
 {
     Terrain *terrainBelowEnemy = enemy->get_terrain_below();
     if (terrainBelowEnemy == NULL)
@@ -220,7 +220,7 @@ bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx)
         // Add character trunk width / 2 later
         // cout << "new: " << enemy->get_center().x + dx << endl;
         // cout << "terrain: " << terrainBelowEnemy->get_center().x << " + " << terrainBelowEnemy->get_width() << "(" << terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width() << ")" << endl;
-        GLfloat newX = enemy->get_center().x + dx;
+        GLfloat newX = enemy->get_center().x + (dx * deltaTime);
         if (newX <= terrainBelowEnemy->get_center().x ||
             newX >= terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width())
         {
@@ -240,7 +240,7 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
     switch (randomNumber)
     {
     case 1:
-        if (!will_enemy_fall(enemy, -INC_KEY))
+        if (!will_enemy_fall(enemy, -INC_KEY, deltaTime))
         {
             move_a_character(enemy, -INC_KEY, 0, deltaTime);
         }
@@ -252,9 +252,9 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
         }
         break;
     case 2:
-        if (!will_enemy_fall(enemy, INC_KEY))
+        if (!will_enemy_fall(enemy, INC_KEY, deltaTime))
         {
-            // move_a_character(enemy, INC_KEY, 0, deltaTime);
+            move_a_character(enemy, INC_KEY, 0, deltaTime);
         }
         else
         {
