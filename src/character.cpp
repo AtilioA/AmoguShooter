@@ -238,15 +238,16 @@ bool Character::is_inside_terrain(Terrain *terrain)
     {
         if (this->center.x + this->trunkWidth / 2 >= terrainPos.x && this->center.x - this->trunkWidth / 2 <= terrainPos.x + terrain->get_width())
         {
-            if (terrain->get_color().b != 1)
+            if (terrain->get_color().b != 1.0 && this->center.y < terrainPos.y)
             {
+                cout << this->center.y << " " << terrainPos.y << endl;
                 this->terrainBelow = terrain;
             }
             return true;
         }
     }
 
-    if (terrain->get_color().b == 1)
+    if (terrain->get_color().b == 1.0)
     {
         this->terrainBelow = NULL;
     }
