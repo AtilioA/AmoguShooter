@@ -1,14 +1,12 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 
 #include "gunshot.hpp"
 #include "utils.hpp"
 #include "terrain.hpp"
-
 
 enum Direction : GLint
 {
@@ -30,12 +28,15 @@ protected:
 
     Gunshot *gunshot;
 
-    GLint facingDirection;
     bool isAlive;
+
+    GLint facingDirection;
     bool isWalking;
     bool isAnimationObverse;
 
+    bool isFalling;
     bool isJumping;
+    bool canJump;
     GLfloat jumpTime;
 
     // Angle of each joint
@@ -47,7 +48,6 @@ protected:
     GLfloat gThetaArmMAX;
     GLfloat gThetaArmMIN;
 
-    GLfloat direction;
     GLfloat speed;
 
 public:
@@ -67,6 +67,18 @@ public:
     };
 
     virtual void f() = 0;
+
+    void set_isFalling(bool isFalling);
+    bool get_isFalling();
+
+    void set_isJumping(bool isJumping);
+    bool get_isJumping();
+
+    void set_canJump(bool canJump);
+    bool get_canJump();
+
+    void set_jumpTime(GLfloat jumpTime);
+    GLfloat get_jumpTime();
 
     bool is_alive();
     void set_alive(bool alive);

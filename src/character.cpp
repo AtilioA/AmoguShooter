@@ -267,6 +267,42 @@ bool Character::is_inside_another_character(Character *character)
 // {
 // }
 
+void Character::set_isFalling(bool isFalling)
+{
+    this->isFalling = isFalling;
+}
+bool Character::get_isFalling()
+{
+    return this->isFalling;
+}
+
+void Character::set_isJumping(bool isJumping)
+{
+    this->isJumping = isJumping;
+}
+bool Character::get_isJumping()
+{
+    return this->isJumping;
+}
+
+void Character::set_canJump(bool canJump)
+{
+    this->canJump = canJump;
+}
+bool Character::get_canJump()
+{
+    return this->canJump;
+}
+
+void Character::set_jumpTime(GLfloat jumpTime)
+{
+    this->jumpTime = jumpTime;
+}
+GLfloat Character::get_jumpTime()
+{
+    return this->jumpTime;
+}
+
 void Character::set_facing_direction(GLint facingDirection)
 {
     this->facingDirection = facingDirection;
