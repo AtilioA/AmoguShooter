@@ -5,7 +5,10 @@
 
 using namespace std;
 
+// Available colors for Player objects
 vector<string> PLAYER_COLORS = {"RED"};
+
+// Available colors for Enemy objects
 vector<string> ENEMY_COLORS = {
     "PURPLE",
     "GREEN",
@@ -35,6 +38,7 @@ vector<string> ENEMY_COLORS = {
     rgb(63,70,78)    rgb(31,31,38)
 */
 
+// Maps strings to their respective RGB values within CrewmateColors struct, which stores instances of struct Color
 map<string, CrewmateColors> colorMap = {
     {"RED", CrewmateColors({tColor({194.0 / 255.0, 20.0 / 255.0, 15.0 / 255.0}), tColor({120.0 / 255.0, 10.0 / 255.0, 57.0 / 255.0})})},
     {"GREEN", CrewmateColors({tColor({81.0 / 255.0, 238.0 / 255.0, 59.0 / 255.0}), tColor({22.0 / 255.0, 167.0 / 255.0, 66.0 / 255.0})})},
