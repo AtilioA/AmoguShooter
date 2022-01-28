@@ -84,3 +84,8 @@ GLfloat smallest_dimension(Dimensions dimensions)
     else
         return dimensions.height;
 }
+
+GLfloat rad_to_degrees(GLfloat rad)
+{
+    return rad * 180.0 / M_PI;
+}

@@ -36,15 +36,18 @@ void Character::shoot()
     }
 }
 
-void Character::moveArmMouseHelper(GLfloat dx, GLfloat dy)
+void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat oldY)
 {
-    GLfloat x = dx - this->center.x;
-    GLfloat y = dy - this->center.y;
+    // Normalize x
+    GLfloat x = (oldX / 16) - this->center.x;
+    GLfloat y = oldY - this->center.y;
 
-    GLfloat theta = atan(y / x) * 180 / M_PI;
-    if (theta < 45 && theta > -45)
+    // Calculate the angle of the arm
+    GLfloat angle = rad_to_degrees(atan(y / x)) * 0.75;
+
+    if (angle < this->gThetaArmMAX && angle > this->gThetaArmMIN)
     {
-        this->gThetaArm = theta * 1.2 * this->facingDirection;
+        this->gThetaArm = angle * this->facingDirection;
     }
 }
 
@@ -322,6 +325,16 @@ void Character::set_center(Point p)
 void Character::set_crewmate_colors(CrewmateColors c)
 {
     this->colors = c;
+}
+
+void Character::set_theta_arm(GLfloat theta)
+{
+    this->gThetaArm = theta;
+}
+
+GLfloat Character::get_theta_arm()
+{
+    return this->gThetaArm;
 }
 
 void Character::set_radius(GLfloat r)

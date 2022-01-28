@@ -52,4 +52,6 @@ CrewmateColors get_random_enemy_colors();
 // Determine the smallest dimension of a Dimensions instance
 GLfloat smallest_dimension(Dimensions dimensions);
 
+GLfloat rad_to_degrees(GLfloat rad);
+
 #endif /* UTILS_H */

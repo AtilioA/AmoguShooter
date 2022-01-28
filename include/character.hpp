@@ -64,6 +64,9 @@ public:
         this->trunkWidth = radius;
 
         this->gThetaArm = 0;
+        this->gThetaArmMIN = -45;
+        this->gThetaArmMAX = 45;
+
         this->facingDirection = Direction::RIGHT;
 
         this->gunshot = NULL;
@@ -110,6 +113,9 @@ public:
     void set_crewmate_colors(CrewmateColors c);
     CrewmateColors get_crewmate_colors();
 
+    void set_theta_arm(GLfloat theta);
+    GLfloat get_theta_arm();
+
     void set_radius(GLfloat r);
     GLfloat get_radius();
 
@@ -135,7 +141,7 @@ public:
 
     void determine_animation_direction();
 
-    void moveArmMouseHelper(GLfloat dy, GLfloat dx);
+    void move_arm_mouse_helper(GLfloat oldY, GLfloat oldX);
 
     void draw_leg();
     void draw_thigh();
