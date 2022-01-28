@@ -23,7 +23,7 @@ class Gunshot
 
 private:
     void draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B);
-    void draw_gunshot(GLfloat x, GLfloat y);
+    void draw_gunshot(GLfloat x, GLfloat y, Color crewmateUpperBodyColor);
 
 public:
     Gunshot(GLfloat x, GLfloat y, GLfloat deltaX, GLfloat deltaY, GLfloat directionAng)
@@ -37,9 +37,9 @@ public:
         gRadiusGunshot = 1;
     };
 
-    void draw()
+    void draw(Color crewmateUpperBodyColor)
     {
-        draw_gunshot(gX, gY);
+        draw_gunshot(this->gX, this->gY, crewmateUpperBodyColor);
     };
 
     bool is_inside_character(Character *character);

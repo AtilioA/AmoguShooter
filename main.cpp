@@ -70,15 +70,21 @@ void renderScene()
     // cout << "Drawing enemies..." << endl;
     game->draw_enemies();
     // cout << "Finished drawing game elements." << endl;
-    if (game->get_player()->get_gunshot() != NULL)
+
+    Player *player = game->get_player();
+    Gunshot *playerGunshot = player->get_gunshot();
+
+    if (playerGunshot != NULL)
     {
-        game->get_player()->get_gunshot()->draw();
+        playerGunshot->draw(player->get_crewmate_colors().upperBody);
     }
     for (size_t i = 0; i < game->get_enemies().size(); i++)
     {
-        if (game->get_enemies()[i]->get_gunshot() != NULL)
+        Enemy *currentEnemy = game->get_enemies()[i];
+        Gunshot *currentEnemyGunshot = currentEnemy->get_gunshot();
+        if (currentEnemyGunshot != NULL)
         {
-            game->get_enemies()[i]->get_gunshot()->draw();
+            currentEnemyGunshot->draw(currentEnemy->get_crewmate_colors().upperBody);
         }
     }
 

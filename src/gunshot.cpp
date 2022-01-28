@@ -2,20 +2,20 @@
 
 void Gunshot::draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B)
 {
-    glColor3f(R, G, B);
+    glColor3f(R * 1.3, G * 1.3, B * 1.3);
     glBegin(GL_POLYGON);
-    for (int i = 0; i < 360; i += 20)
+    for (int i = 0; i < 360; i += 10)
     {
-        glVertex2f(radius * cos(i * M_PI / 180), radius * sin(i * M_PI / 180));
+        glVertex2f(radius * 1 * cos(i * M_PI / 180), radius * 1 * sin(i * M_PI / 180));
     }
     glEnd();
 }
 
-void Gunshot::draw_gunshot(GLfloat x, GLfloat y)
+void Gunshot::draw_gunshot(GLfloat x, GLfloat y, Color crewmateUpperBodyColor)
 {
     glPushMatrix();
     glTranslatef(x, -y, 0);
-    draw_circ(this->gRadiusGunshot, 1, 1, 1);
+    draw_circ(this->gRadiusGunshot, crewmateUpperBodyColor.r, crewmateUpperBodyColor.g, crewmateUpperBodyColor.b);
     glPopMatrix();
 }
 
