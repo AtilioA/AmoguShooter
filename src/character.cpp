@@ -111,15 +111,16 @@ void Character::draw_arm()
     glColor3f(this->colors.lowerBody.r * 0.5, this->colors.lowerBody.g * 0.5, this->colors.lowerBody.b * 0.5);
 
     glTranslatef(this->center.x, -this->center.y, 0);
+
     glRotatef(this->gThetaArm, 0, 0, 1);
     glRotatef(90 * this->facingDirection, 0, 0, 1);
 
     glBegin(GL_POLYGON);
     // clang-format off
-        glVertex2f(0, 0);
-        glVertex2f(this->trunkWidth / 4, 0);
-        glVertex2f(this->trunkWidth / 4, -this->height / 8 * 2.5);
-        glVertex2f(0, -this->height / 8 * 2.5);
+        glVertex2f(- this->trunkWidth / 8, 0);
+        glVertex2f( this->trunkWidth / 8, 0);
+        glVertex2f(this->trunkWidth / 8, -this->height / 8 * 2.5);
+        glVertex2f(-this->trunkWidth / 8, -this->height / 8 * 2.5);
     // clang-format on
     glEnd();
 }
