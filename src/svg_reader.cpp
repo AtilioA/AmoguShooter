@@ -76,21 +76,22 @@ void parseRect(XMLElement *rect, Game *game)
 
 void parseSVGFile(string filepath, Game *game)
 {
-    XMLDocument gameSVGfile;
+    XMLDocument *gameSVGfile = new XMLDocument();
 
     game->set_arena_svg_filename(filepath);
 
     cout << "Parsing " << game->get_arena_svg_filename() << endl;
 
-    gameSVGfile.LoadFile(filepath.c_str());
+    gameSVGfile->LoadFile(filepath.c_str());
 
-    if (gameSVGfile.ErrorID() != 0)
+    if (gameSVGfile->ErrorID() != 0)
     {
-        cout << "Erro ao ler arquivo de entrada " << filepath << endl;
+        cout << "Couldn't open file '" << filepath << "'." << endl;
+        exit(EXIT_FAILURE);
     }
     else
     {
-        XMLElement *svgHeader = gameSVGfile.FirstChildElement("svg");
+        XMLElement *svgHeader = gameSVGfile->FirstChildElement("svg");
         XMLElement *svgBody = svgHeader->FirstChildElement();
 
         while (svgBody != NULL)
