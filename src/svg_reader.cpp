@@ -80,7 +80,7 @@ void parseSVGFile(string filepath, Game *game)
 
     game->set_arena_svg_filename(filepath);
 
-    cout << "Parsing " << game->get_arena_svg_filename() << endl;
+    cout << "Parsing '" << game->get_arena_svg_filename() << "'." << endl;
 
     gameSVGfile->LoadFile(filepath.c_str());
 

@@ -5,7 +5,7 @@ using namespace std;
 
 bool Game::has_player_reached_arena_end()
 {
-    return this->player->get_center().x + (this->player->get_trunk_width() * 1.15) / 2 >= this->background->get_center().x + this->background->get_width();
+    return this->player->get_center().x + (this->player->get_trunk_width() * 1.2) / 2 >= this->background->get_center().x + this->background->get_width();
 }
 
 bool Game::has_player_won()
