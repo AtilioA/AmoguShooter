@@ -214,7 +214,7 @@ void Character::draw_character()
     glPopMatrix();
 }
 
-void Character::move_character(GLfloat dx, GLfloat dy, GLfloat deltaTime)
+void Character::move_character(GLfloat dx, GLfloat dy, GLfloat frameTime)
 {
     if (dx < 0)
     {
@@ -225,8 +225,8 @@ void Character::move_character(GLfloat dx, GLfloat dy, GLfloat deltaTime)
         this->facingDirection = Direction::RIGHT;
     }
 
-    this->center.x += dx * deltaTime;
-    this->center.y += dy * deltaTime;
+    this->center.x += dx * frameTime;
+    this->center.y += dy * frameTime;
 }
 
 bool Character::is_inside_terrain(Terrain *terrain)

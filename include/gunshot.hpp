@@ -50,7 +50,7 @@ public:
     GLfloat get_radius();
     Point get_center();
 
-    void move(GLdouble deltaTime);
+    void move(GLdouble frameTime);
     bool is_valid();
 };
 

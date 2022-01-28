@@ -47,7 +47,7 @@ public:
     bool has_player_reached_arena_end();
     bool has_game_reached_end_state();
 
-    void move_a_gunshot(Character *shooter, GLfloat deltaTime);
+    void move_a_gunshot(Character *shooter, GLfloat frameTime);
 
     void handle_collision_gunshot(Character *shooter);
     bool check_collision_gunshot_non_character(Gunshot *gunshot);
@@ -56,9 +56,9 @@ public:
     Character *check_collision_gunshot_any_character(Gunshot *gunshot);
     void remove_character(Character *character);
 
-    void move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime);
+    void move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime);
     bool check_collision(Character *character);
-    void handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime);
+    void handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime);
 
     void add_enemy(Enemy *enemy);
     std::vector<Enemy *> get_enemies();
@@ -75,13 +75,13 @@ public:
     bool is_player_inside_any_enemy();
     bool is_player_inside_any_terrain();
 
-    void apply_gravity(GLfloat deltaTime);
+    void apply_gravity(GLfloat frameTime);
 
-    bool will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat deltaTime);
-    void enemies_shoot_at_player(GLfloat deltaTime);
-    void enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime);
-    void move_enemy_randomly(Enemy *enemy, GLfloat deltaTime);
-    void move_enemies_randomly(GLfloat deltaTime);
+    bool will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat frameTime);
+    void enemies_shoot_at_player(GLfloat frameTime);
+    void enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime);
+    void move_enemy_randomly(Enemy *enemy, GLfloat frameTime);
+    void move_enemies_randomly(GLfloat frameTime);
 
     void add_player(Player *player);
     Player *get_player();

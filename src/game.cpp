@@ -41,11 +41,11 @@ bool Game::has_game_reached_end_state()
     }
 }
 
-void Game::move_a_gunshot(Character *shooter, GLfloat deltaTime)
+void Game::move_a_gunshot(Character *shooter, GLfloat frameTime)
 {
     if (shooter->get_gunshot() != NULL)
     {
-        shooter->get_gunshot()->move(deltaTime);
+        shooter->get_gunshot()->move(frameTime);
         this->handle_collision_gunshot(shooter);
     }
 }
@@ -159,10 +159,10 @@ bool Game::is_gunshot_inside_any_terrain(Gunshot *gunshot)
     return false;
 }
 
-void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime)
+void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime)
 {
-    character->move_character(dx, dy, deltaTime);
-    this->handle_collision(character, dx, dy, deltaTime);
+    character->move_character(dx, dy, frameTime);
+    this->handle_collision(character, dx, dy, frameTime);
 }
 
 bool Game::check_collision(Character *character)
@@ -177,38 +177,38 @@ bool Game::check_collision(Character *character)
     }
 }
 
-void Game::handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat deltaTime)
+void Game::handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime)
 {
     if (this->check_collision(character))
     {
-        character->move_character(-dx, -dy, deltaTime);
+        character->move_character(-dx, -dy, frameTime);
     }
 }
 
-void Game::apply_gravity(GLfloat deltaTime)
+void Game::apply_gravity(GLfloat frameTime)
 {
     // Player should be affected by gravity in a way that they reach the ground in 2 seconds after when standing 3 times their own height from the ground.
     // GLint MAX_JUMP_HEIGHT = this->player->get_height() * 3;
     // GLint MAX_JUMP_TIME = 2;
-    // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / deltaTime / MAX_JUMP_TIME;
+    // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / frameTime / MAX_JUMP_TIME;
     // cout << "gravityVelocity: " << gravityVelocity << endl;
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
-    GLfloat gravityVelocity = INC_KEY / 4;
+    GLfloat gravityVelocity = INC_KEY;
 
     // Apply gravity to player
-    this->move_a_character(this->player, 0, gravityVelocity, deltaTime);
+    this->move_a_character(this->player, 0, gravityVelocity, frameTime);
 
     // Apply gravity to enemies
     Enemy *currentEnemy = NULL;
     for (size_t i = 0; i < this->enemies.size(); i++)
     {
         currentEnemy = this->enemies[i];
-        this->move_a_character(currentEnemy, 0, gravityVelocity, deltaTime);
+        this->move_a_character(currentEnemy, 0, gravityVelocity, frameTime);
     }
 }
 
-bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat deltaTime)
+bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat frameTime)
 {
     Terrain *terrainBelowEnemy = enemy->get_terrain_below();
     if (terrainBelowEnemy == NULL)
@@ -220,7 +220,7 @@ bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat deltaTime)
         // Add character trunk width / 2 later
         // cout << "new: " << enemy->get_center().x + dx << endl;
         // cout << "terrain: " << terrainBelowEnemy->get_center().x << " + " << terrainBelowEnemy->get_width() << "(" << terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width() << ")" << endl;
-        GLfloat newX = enemy->get_center().x + (dx * deltaTime);
+        GLfloat newX = enemy->get_center().x + (dx * frameTime);
         if (newX <= terrainBelowEnemy->get_center().x ||
             newX >= terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width())
         {
@@ -231,34 +231,34 @@ bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat deltaTime)
     return false;
 }
 
-void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
+void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
 {
-    int integerDeltaTime = (int)deltaTime;
+    int integerFrameTime = (int)frameTime;
 
-    int randomNumber = rand() % (integerDeltaTime * 2);
+    int randomNumber = rand() % (integerFrameTime * 2);
 
     switch (randomNumber)
     {
     case 1:
-        if (!will_enemy_fall(enemy, -INC_KEY, deltaTime))
+        if (!will_enemy_fall(enemy, -INC_KEY, frameTime))
         {
-            move_a_character(enemy, -INC_KEY, 0, deltaTime);
+            move_a_character(enemy, -INC_KEY, 0, frameTime);
         }
         else
         {
-            // move_a_character(enemy, INC_KEY, 0, deltaTime);
+            // move_a_character(enemy, INC_KEY, 0, frameTime);
             cout << enemy->get_id() << ": "
                  << "would fall" << endl;
         }
         break;
     case 2:
-        if (!will_enemy_fall(enemy, INC_KEY, deltaTime))
+        if (!will_enemy_fall(enemy, INC_KEY, frameTime))
         {
-            move_a_character(enemy, INC_KEY, 0, deltaTime);
+            move_a_character(enemy, INC_KEY, 0, frameTime);
         }
         else
         {
-            // move_a_character(enemy, -INC_KEY, 0, deltaTime);
+            // move_a_character(enemy, -INC_KEY, 0, frameTime);
             cout << enemy->get_id() << ": "
                  << "would fall" << endl;
         }
@@ -268,7 +268,7 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat deltaTime)
     }
 }
 
-void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
+void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
 {
     GLfloat enemyViewDistance = this->get_arena_background()->get_height() / 2 * 0.9;
     GLfloat nearHeight = enemy->get_height() * 3;
@@ -276,7 +276,7 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
     if (enemy->get_center().x - enemyViewDistance < this->player->get_center().x &&
         enemy->get_center().x + enemyViewDistance > this->player->get_center().x)
     {
-        cout << "Player is in view of enemy ID " << enemy->get_id() << endl;
+        // cout << "Player is in view of enemy ID " << enemy->get_id() << endl;
 
         // Set enemy facing direction to player direction
         if (enemy->get_center().x < this->player->get_center().x)
@@ -288,18 +288,18 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
             enemy->set_facing_direction(Direction::LEFT);
         }
 
-        cout << "Player y: " << this->player->get_center().y << "nearHeight: " << nearHeight << endl;
-        cout << "Enemy y: " << enemy->get_center().y << endl;
+        // cout << "Player y: " << this->player->get_center().y << "nearHeight: " << nearHeight << endl;
+        // cout << "Enemy y: " << enemy->get_center().y << endl;
 
         if (this->player->get_center().y + nearHeight >= enemy->get_center().y && this->player->get_center().y - nearHeight <= enemy->get_center().y)
         {
-            cout << "Player is close to enemy ID " << enemy->get_id() << endl;
+            // cout << "Player is close to enemy ID " << enemy->get_id() << endl;
 
             // Shoot at player at random intervals
             if (enemy->get_gunshot() == NULL)
             {
-                GLfloat randomNumber = rand() % (int)deltaTime;
-                if (randomNumber < deltaTime * 0.01)
+                GLfloat randomNumber = rand() % (int)frameTime;
+                if (randomNumber < frameTime * 0.01)
                 {
                     cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
                     enemy->shoot();
@@ -309,22 +309,22 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat deltaTime)
     }
 }
 
-void Game::enemies_shoot_at_player(GLfloat deltaTime)
+void Game::enemies_shoot_at_player(GLfloat frameTime)
 {
     if (!this->debugOptions.pacificEnemies)
     {
         for (size_t i = 0; i < this->enemies.size(); i++)
         {
-            this->enemy_shoot_at_player(this->enemies[i], deltaTime);
+            this->enemy_shoot_at_player(this->enemies[i], frameTime);
         }
     }
 }
 
-void Game::move_enemies_randomly(GLfloat deltaTime)
+void Game::move_enemies_randomly(GLfloat frameTime)
 {
     for (size_t i = 0; i < this->enemies.size(); i++)
     {
-        this->move_enemy_randomly(this->enemies[i], deltaTime);
+        this->move_enemy_randomly(this->enemies[i], frameTime);
     }
 }
 

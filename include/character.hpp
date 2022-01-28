@@ -136,7 +136,7 @@ public:
     bool is_inside_another_character(Character *character);
     bool is_inside_terrain(Terrain *terrain);
 
-    void move_character(GLfloat dx, GLfloat dy, GLfloat deltaTime);
+    void move_character(GLfloat dx, GLfloat dy, GLfloat frameTime);
     void jump(GLfloat clock);
 
     void determine_animation_direction();

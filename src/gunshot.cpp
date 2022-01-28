@@ -19,10 +19,10 @@ void Gunshot::draw_gunshot(GLfloat x, GLfloat y, Color crewmateUpperBodyColor)
     glPopMatrix();
 }
 
-void Gunshot::move(GLdouble deltaTime)
+void Gunshot::move(GLdouble frameTime)
 {
-    this->gX += this->gVel * sin(this->gDirectionAng * M_PI / 180) * deltaTime;
-    this->gY += this->gVel * cos(this->gDirectionAng * M_PI / 180) * deltaTime;
+    this->gX += this->gVel * sin(this->gDirectionAng * M_PI / 180) * frameTime;
+    this->gY += this->gVel * cos(this->gDirectionAng * M_PI / 180) * frameTime;
 }
 
 bool Gunshot::is_valid()

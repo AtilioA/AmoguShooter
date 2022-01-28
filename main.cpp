@@ -201,14 +201,14 @@ void init(Game *game)
 void idle(void)
 {
     static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
-    GLdouble curTime, deltaTime;
+    GLdouble curTime, frameTime;
     curTime = glutGet(GLUT_ELAPSED_TIME);
-    deltaTime = curTime - prevTime;
+    frameTime = curTime - prevTime;
     prevTime = curTime;
-    framerate = 1.0 / deltaTime * 1000;
+    framerate = 1.0 / frameTime * 1000;
 
     // cout << "Framerate: " << (int)framerate << endl;
-    // cout << "deltaTime: " << deltaTime << endl;
+    // cout << "frameTime: " << frameTime << endl;
 
     if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
     {
@@ -218,7 +218,7 @@ void idle(void)
 
     if (!shouldPreserveFramerateSpeed)
     {
-        deltaTime = 1;
+        frameTime = 1;
     }
 
     Player *player = game->get_player();
@@ -266,12 +266,12 @@ void idle(void)
     }
     else
     {
-        if (deltaTime > 0)
+        if (frameTime > 0)
         {
-            game->move_enemies_randomly(deltaTime);
+            game->move_enemies_randomly(frameTime);
         }
 
-        game->enemies_shoot_at_player(deltaTime);
+        game->enemies_shoot_at_player(frameTime);
 
         double inc = INC_KEYIDLE;
         GLfloat dx = 0, dy = 0;
@@ -280,39 +280,29 @@ void idle(void)
         if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
         {
             dx += inc;
-            game->move_a_character(player, dx, dy, deltaTime);
+            game->move_a_character(player, dx, dy, frameTime);
         }
         if (keyStatus['a'] == 1 || keyStatus['A'] == 1)
         {
             dx -= inc;
-            game->move_a_character(player, dx, dy, deltaTime);
-        }
-        if (keyStatus['w'] == 1 || keyStatus['W'] == 1 || pressingRightClick)
-        {
-            dy -= inc;
-            game->move_a_character(player, dx, dy * 2, deltaTime);
-        }
-        if (keyStatus['s'] == 1 || keyStatus['S'] == 1)
-        {
-            dy += inc;
-            game->move_a_character(player, dx, dy * 2, deltaTime);
+            game->move_a_character(player, dx, dy, frameTime);
         }
 
-        game->apply_gravity(deltaTime);
+        game->apply_gravity(frameTime);
 
         // Handle gunshot (only allows one gunshot at a time)
         Gunshot *playerGunshot = player->get_gunshot();
         if (playerGunshot != NULL)
         {
             // cout << "Moving gunshot..." << endl;
-            game->move_a_gunshot(player, deltaTime);
+            game->move_a_gunshot(player, frameTime);
         }
 
         for (auto &enemy : game->get_enemies())
         {
             if (enemy->get_gunshot() != NULL)
             {
-                game->move_a_gunshot(enemy, deltaTime);
+                game->move_a_gunshot(enemy, frameTime);
             }
         }
     }
