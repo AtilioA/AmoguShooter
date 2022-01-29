@@ -217,11 +217,11 @@ void init(Game *game)
 
 void idle(void)
 {
-    static GLdouble prevTime = glutGet(GLUT_ELAPSED_TIME);
-    GLdouble curTime, frameTime;
-    curTime = glutGet(GLUT_ELAPSED_TIME);
-    frameTime = curTime - prevTime;
-    prevTime = curTime;
+    static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
+    GLdouble currentTime, frameTime;
+    currentTime = glutGet(GLUT_ELAPSED_TIME);
+    frameTime = currentTime - previousTime;
+    previousTime = currentTime;
     framerate = 1.0 / frameTime * 1000;
 
     // cout << "Framerate: " << (int)framerate << endl;

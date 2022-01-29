@@ -306,11 +306,11 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
 
 void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
 {
-    GLfloat enemyViewDistance = this->get_arena_background()->get_height() / 2 * 0.9;
-    GLfloat nearHeight = enemy->get_height() * 3;
+    GLfloat enemyXViewDistance = this->get_arena_background()->get_height() * 0.4;
+    GLfloat enemyYViewDistance = enemy->get_height() * 3;
 
-    if (enemy->get_center().x - enemyViewDistance < this->player->get_center().x &&
-        enemy->get_center().x + enemyViewDistance > this->player->get_center().x)
+    if (enemy->get_center().x - enemyXViewDistance < this->player->get_center().x &&
+        enemy->get_center().x + enemyXViewDistance > this->player->get_center().x)
     {
         // cout << "Player is in view of enemy ID " << enemy->get_id() << endl;
 
@@ -324,16 +324,16 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
             enemy->set_facing_direction(Direction::LEFT);
         }
 
-        // cout << "Player y: " << this->player->get_center().y << "nearHeight: " << nearHeight << endl;
+        // cout << "Player y: " << this->player->get_center().y << "enemyYViewDistance: " << enemyYViewDistance << endl;
         // cout << "Enemy y: " << enemy->get_center().y << endl;
 
-        if (this->player->get_center().y + nearHeight >= enemy->get_center().y && this->player->get_center().y - nearHeight <= enemy->get_center().y)
+        if (this->player->get_center().y + enemyYViewDistance >= enemy->get_center().y && this->player->get_center().y - enemyYViewDistance <= enemy->get_center().y)
         {
             // cout << "Player is close to enemy ID " << enemy->get_id() << endl;
 
             // Shoot at player at random intervals
             GLfloat randomNumber = rand() % (int)frameTime;
-            if (randomNumber < frameTime * 0.01)
+            if (randomNumber < frameTime * 0.005)
             {
                 cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
                 enemy->shoot();

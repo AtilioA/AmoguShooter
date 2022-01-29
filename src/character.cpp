@@ -14,6 +14,24 @@ void Character::set_alive(bool alive)
     this->isAlive = alive;
 }
 
+void Character::set_last_time_fired(GLdouble lastTimeFired)
+{
+    this->lastTimeFired = lastTimeFired;
+}
+GLdouble Character::get_last_time_fired()
+{
+    return this->lastTimeFired;
+}
+
+void Character::set_reload_time(GLdouble reloadTime)
+{
+    this->reloadTime = reloadTime;
+}
+GLdouble Character::get_reload_time()
+{
+    return this->reloadTime;
+}
+
 void Character::delete_gunshots()
 {
     for (std::vector<Gunshot *>::iterator it = this->gunshots.begin(); it != this->gunshots.end(); ++it)
@@ -43,8 +61,12 @@ vector<Gunshot *> Character::get_gunshots()
 
 void Character::shoot()
 {
-    Gunshot *newGunshot = new Gunshot(this->center.x, this->center.y, 0, 0, this->gThetaArm + (90 * this->facingDirection), this->facingDirection);
-    this->gunshots.push_back(newGunshot);
+    if (glutGet(GLUT_ELAPSED_TIME) - this->get_last_time_fired() >= this->get_reload_time())
+    {
+        Gunshot *newGunshot = new Gunshot(this->center.x, this->center.y, 0, 0, this->gThetaArm + (90 * this->facingDirection), this->facingDirection);
+        this->gunshots.push_back(newGunshot);
+        this->set_last_time_fired(glutGet(GLUT_ELAPSED_TIME));
+    }
 }
 
 void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat oldY)

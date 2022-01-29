@@ -20,17 +20,25 @@ class Gunshot;
 class Character // abstract class
 {
 protected:
+    // Position
     GLint id;
     Point center;
-    CrewmateColors colors;
+    Terrain *terrainBelow;
+
+    // Geometry
     GLfloat radius;
     GLfloat height;
     GLfloat trunkWidth;
-    Terrain *terrainBelow;
+
+    // Style
+    Color visorColor;
+    CrewmateColors colors;
 
     // Combat
     std::vector<Gunshot *> gunshots;
     bool isAlive;
+    GLdouble lastTimeFired;
+    GLdouble reloadTime;
 
     // Walking
     GLint facingDirection;
@@ -80,6 +88,8 @@ public:
 
         this->gunshots = std::vector<Gunshot *>();
         this->isAlive = true;
+        this->lastTimeFired = 0;
+        this->reloadTime = (rand() % 1000) + 100; // milliseconds
 
         this->canJump = true;
         this->isJumping = false;
@@ -112,11 +122,14 @@ public:
 
     bool is_alive();
     void set_alive(bool alive);
-
     void delete_gunshots();
     void remove_gunshot(Gunshot *gunshot);
     std::vector<Gunshot *> get_gunshots();
     void shoot();
+    GLdouble get_last_time_fired();
+    GLdouble get_reload_time();
+    void set_last_time_fired(GLdouble lastTimeFired);
+    void set_reload_time(GLdouble reloadTime);
 
     void set_id(GLint id);
     GLint get_id();
@@ -150,12 +163,9 @@ public:
     bool is_inside_another_character(Character *character);
     bool is_inside_terrain(Terrain *terrain);
 
+    void determine_animation_direction();
     void move_character(GLfloat dx, GLfloat dy, GLfloat frameTime);
     void jump(GLfloat clock);
-
-    void determine_animation_direction();
-
-    void move_arm_mouse_helper(GLfloat oldY, GLfloat oldX);
 
     void draw_left_thigh();
     void draw_left_leg();
@@ -165,6 +175,7 @@ public:
     void draw_arm();
     void draw_head();
 
+    void move_arm_mouse_helper(GLfloat oldY, GLfloat oldX);
     void rotate_arm(GLfloat inc);
     void rotate_thigh(GLfloat inc);
     void rotate_leg(GLfloat inc);
