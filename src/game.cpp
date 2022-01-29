@@ -67,12 +67,22 @@ bool Game::has_game_reached_end_state()
     }
 }
 
-void Game::move_a_gunshot(Character *shooter, GLfloat frameTime)
+void Game::move_gunshots_character(Character *character, GLfloat frameTime)
 {
-    if (shooter->get_gunshot() != NULL)
+    vector<Gunshot *> gunshots = character->get_gunshots();
+    for (vector<Gunshot *>::iterator it = gunshots.begin(); it != gunshots.end(); ++it)
     {
-        shooter->get_gunshot()->move(frameTime);
-        this->handle_collision_gunshot(shooter);
+        Gunshot *gunshot = *it;
+        this->move_a_gunshot(character, gunshot, frameTime);
+    }
+}
+
+void Game::move_a_gunshot(Character *shooter, Gunshot *gunshot, GLfloat frameTime)
+{
+    if (gunshot != NULL)
+    {
+        gunshot->move(frameTime);
+        this->handle_collision_gunshot(shooter, gunshot);
     }
 }
 
@@ -95,19 +105,19 @@ void Game::remove_character(Character *character)
     }
 }
 
-void Game::handle_collision_gunshot(Character *shooter)
+void Game::handle_collision_gunshot(Character *shooter, Gunshot *gunshot)
 {
-    if (this->check_collision_gunshot_non_character(shooter->get_gunshot()))
+    if (this->check_collision_gunshot_non_character(gunshot))
     {
-        shooter->delete_gunshot();
+        shooter->remove_gunshot(gunshot);
     }
     else
     {
-        Character *hitCharacter = this->check_collision_gunshot_any_character(shooter->get_gunshot());
+        Character *hitCharacter = this->check_collision_gunshot_any_character(gunshot);
 
         if (hitCharacter != NULL && hitCharacter != shooter)
         {
-            shooter->delete_gunshot();
+            shooter->remove_gunshot(gunshot);
             cout << "Hit character " << hitCharacter->get_id() << endl;
             hitCharacter->set_alive(false);
             if (hitCharacter == this->player)
@@ -322,14 +332,11 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
             // cout << "Player is close to enemy ID " << enemy->get_id() << endl;
 
             // Shoot at player at random intervals
-            if (enemy->get_gunshot() == NULL)
+            GLfloat randomNumber = rand() % (int)frameTime;
+            if (randomNumber < frameTime * 0.01)
             {
-                GLfloat randomNumber = rand() % (int)frameTime;
-                if (randomNumber < frameTime * 0.01)
-                {
-                    cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
-                    enemy->shoot();
-                }
+                cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
+                enemy->shoot();
             }
         }
     }

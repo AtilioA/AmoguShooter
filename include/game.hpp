@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #include <bits/stdc++.h>
+#include "gunshot.hpp"
 #include "utils.hpp"
 #include "player.hpp"
 #include "enemy.hpp"
@@ -51,9 +52,10 @@ public:
 
     void make_a_character_jump(Character *character, GLfloat frameTime);
 
-    void move_a_gunshot(Character *shooter, GLfloat frameTime);
+    void move_gunshots_character(Character *character, GLfloat frameTime);
+    void move_a_gunshot(Character *shooter, Gunshot *gunshot, GLfloat frameTime);
 
-    void handle_collision_gunshot(Character *shooter);
+    void handle_collision_gunshot(Character *shooter, Gunshot *gunshot);
     bool check_collision_gunshot_non_character(Gunshot *gunshot);
     bool is_gunshot_outside_arena(Gunshot *gunshot);
     bool is_gunshot_inside_any_terrain(Gunshot *gunshot);

@@ -29,7 +29,7 @@ protected:
     Terrain *terrainBelow;
 
     // Combat
-    Gunshot *gunshot;
+    std::vector<Gunshot *> gunshots;
     bool isAlive;
 
     // Walking
@@ -78,7 +78,7 @@ public:
 
         this->facingDirection = Direction::RIGHT;
 
-        this->gunshot = NULL;
+        this->gunshots = std::vector<Gunshot *>();
         this->isAlive = true;
 
         this->canJump = true;
@@ -90,7 +90,7 @@ public:
     };
     virtual ~Character()
     {
-        this->delete_gunshot();
+        this->delete_gunshots();
     };
 
     GLfloat get_jump_speed();
@@ -113,8 +113,9 @@ public:
     bool is_alive();
     void set_alive(bool alive);
 
-    void delete_gunshot();
-    Gunshot *get_gunshot();
+    void delete_gunshots();
+    void remove_gunshot(Gunshot *gunshot);
+    std::vector<Gunshot *> get_gunshots();
     void shoot();
 
     void set_id(GLint id);

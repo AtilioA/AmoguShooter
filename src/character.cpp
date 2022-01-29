@@ -14,26 +14,37 @@ void Character::set_alive(bool alive)
     this->isAlive = alive;
 }
 
-void Character::delete_gunshot()
+void Character::delete_gunshots()
 {
-    if (this->gunshot != NULL)
+    for (std::vector<Gunshot *>::iterator it = this->gunshots.begin(); it != this->gunshots.end(); ++it)
     {
-        delete this->gunshot;
-        this->gunshot = NULL;
+        delete *it;
+    }
+
+    this->gunshots.clear();
+}
+
+void Character::remove_gunshot(Gunshot *gunshot)
+{
+    for (size_t i = 0; i < this->gunshots.size(); i++)
+    {
+        if (this->gunshots[i] == gunshot)
+        {
+            this->gunshots.erase(this->gunshots.begin() + i);
+            break;
+        }
     }
 }
 
-Gunshot *Character::get_gunshot()
+vector<Gunshot *> Character::get_gunshots()
 {
-    return this->gunshot;
+    return this->gunshots;
 }
 
 void Character::shoot()
 {
-    if (this->gunshot == NULL)
-    {
-        this->gunshot = new Gunshot(this->center.x, this->center.y, 0, 0, this->gThetaArm + (90 * this->facingDirection), this->facingDirection);
-    }
+    Gunshot *newGunshot = new Gunshot(this->center.x, this->center.y, 0, 0, this->gThetaArm + (90 * this->facingDirection), this->facingDirection);
+    this->gunshots.push_back(newGunshot);
 }
 
 void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat oldY)

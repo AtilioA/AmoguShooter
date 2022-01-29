@@ -72,17 +72,18 @@ void renderScene()
     // cout << "Finished drawing game elements." << endl;
 
     Player *player = game->get_player();
-    Gunshot *playerGunshot = player->get_gunshot();
+    vector<Gunshot *> playerGunshots = player->get_gunshots();
 
-    if (playerGunshot != NULL)
+    for (auto &playerGunshot : playerGunshots)
     {
         playerGunshot->draw(player->get_crewmate_colors().upperBody);
     }
     for (size_t i = 0; i < game->get_enemies().size(); i++)
     {
         Enemy *currentEnemy = game->get_enemies()[i];
-        Gunshot *currentEnemyGunshot = currentEnemy->get_gunshot();
-        if (currentEnemyGunshot != NULL)
+
+        vector<Gunshot *> currentEnemyGunshots = currentEnemy->get_gunshots();
+        for (auto &currentEnemyGunshot : currentEnemyGunshots)
         {
             currentEnemyGunshot->draw(currentEnemy->get_crewmate_colors().upperBody);
         }
@@ -312,20 +313,10 @@ void idle(void)
 
         game->apply_gravity(frameTime);
 
-        // Handle gunshot (only allows one gunshot at a time)
-        Gunshot *playerGunshot = player->get_gunshot();
-        if (playerGunshot != NULL)
-        {
-            // cout << "Moving gunshot..." << endl;
-            game->move_a_gunshot(player, frameTime);
-        }
-
+        game->move_gunshots_character(player, frameTime);
         for (auto &enemy : game->get_enemies())
         {
-            if (enemy->get_gunshot() != NULL)
-            {
-                game->move_a_gunshot(enemy, frameTime);
-            }
+            game->move_gunshots_character(enemy, frameTime);
         }
     }
     glutPostRedisplay();
