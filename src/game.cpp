@@ -3,6 +3,32 @@
 
 using namespace std;
 
+void Game::make_a_character_jump(Character *character, GLfloat frameTime)
+{
+    // cout << "is_jumping: " << character->get_is_jumping() << endl;
+    // cout << "initial y: " << character->get_jump_initial_y() - character->get_height() * 3 << endl;
+    // cout << "y: " << character->get_center().y << endl;
+
+    character->set_can_jump(false);
+
+    if (character->get_is_jumping() && (character->get_jump_initial_y() - character->get_height() * 3) < character->get_center().y)
+    {
+        character->set_is_jumping(true);
+        character->set_is_falling(false);
+        character->set_terrain_below(NULL);
+
+        // cout << -character->get_jump_speed() << endl;
+        // cout << frameTime << endl;
+        this->move_a_character(character, 0, -character->get_jump_speed(), frameTime);
+    }
+    else
+    {
+        character->set_is_jumping(false);
+        character->set_can_jump(true);
+        character->set_is_falling(true);
+    }
+}
+
 bool Game::has_player_reached_arena_end()
 {
     return this->player->get_center().x + (this->player->get_trunk_width() * 1.2) / 2 >= this->background->get_center().x + this->background->get_width();
@@ -194,7 +220,7 @@ void Game::apply_gravity(GLfloat frameTime)
     // cout << "gravityVelocity: " << gravityVelocity << endl;
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
-    GLfloat gravityVelocity = INC_KEY;
+    GLfloat gravityVelocity = this->player->get_radius() * 0.3 * INC_KEYIDLE;
 
     // Apply gravity to player
     this->move_a_character(this->player, 0, gravityVelocity, frameTime);
@@ -247,8 +273,8 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
         else
         {
             // move_a_character(enemy, INC_KEY, 0, frameTime);
-            cout << enemy->get_id() << ": "
-                 << "would fall" << endl;
+            // cout << enemy->get_id() << ": "
+            //  << "would fall" << endl;
         }
         break;
     case 2:
@@ -259,8 +285,8 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
         else
         {
             // move_a_character(enemy, -INC_KEY, 0, frameTime);
-            cout << enemy->get_id() << ": "
-                 << "would fall" << endl;
+            // cout << enemy->get_id() << ": "
+            //  << "would fall" << endl;
         }
         break;
     default:
@@ -372,7 +398,27 @@ bool Game::is_outside_arena(Character *character)
     if (character->get_center().y - character->get_radius() < arenaPos.y ||
         character->get_center().y + character->get_radius() * 0.98 > arenaPos.y + arenaTerrain->get_height())
     {
+        if (character->get_center().y >= arenaPos.y)
+        {
+            cout << "collided with bottom of arena" << endl;
+            character->set_is_falling(false);
+            character->set_is_jumping(false);
+            character->set_can_jump(true);
+        }
+
+        if (character->get_center().y <= arenaPos.y)
+        {
+            cout << "collided with top of arena" << endl;
+            character->set_is_falling(true);
+            character->set_is_jumping(false);
+            character->set_can_jump(false);
+        }
         return true;
+    }
+
+    if (character->get_center().y + character->get_radius() > arenaPos.y + arenaTerrain->get_height())
+    {
+        character->set_terrain_below(this->get_arena_background());
     }
 
     if (character->get_center().x - character->get_trunk_width() / 2 < arenaPos.x || character->get_center().x + character->get_trunk_width() / 2 > arenaPos.x + arenaTerrain->get_width())

@@ -41,6 +41,7 @@ protected:
     bool canJump;
     GLfloat jumpTime;
     GLfloat jumpSpeed;
+    GLfloat jumpInitialY;
 
     // Angle of each joint
     GLfloat gThetaThigh;
@@ -72,11 +73,12 @@ public:
         this->gunshot = NULL;
         this->isAlive = true;
 
-        this->canJump = false;
+        this->canJump = true;
         this->isJumping = false;
-        this->isFalling = true;
+        this->isFalling = false;
         this->jumpTime = 0;
-        this->jumpSpeed = this->height / 3;
+        this->jumpSpeed = this->radius * 2 * 0.3 * INC_KEYIDLE;
+        this->jumpInitialY = center.y;
     };
     virtual ~Character()
     {
@@ -96,6 +98,9 @@ public:
 
     void set_jump_time(GLfloat jumpTime);
     GLfloat get_jump_time();
+
+    void set_jump_initial_y(GLfloat y);
+    GLfloat get_jump_initial_y();
 
     bool is_alive();
     void set_alive(bool alive);

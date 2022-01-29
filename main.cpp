@@ -162,13 +162,22 @@ void mouseClick(int button, int state, int mousex, int mousey)
     }
 
     // Player jump
-    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+    Player *player = game->get_player();
+    if (button == GLUT_RIGHT_BUTTON)
     {
-        pressingRightClick = true;
-    }
-    else
-    {
-        pressingRightClick = false;
+        if (state == GLUT_DOWN)
+        {
+            if (player->get_can_jump() || player->get_is_jumping())
+            {
+                player->set_jump_initial_y(player->get_center().y);
+                player->set_is_jumping(true);
+            }
+        }
+        else
+        {
+            player->set_is_jumping(false);
+            player->set_is_falling(true);
+        }
     }
 
     glutPostRedisplay();
@@ -275,6 +284,12 @@ void idle(void)
 
         double inc = INC_KEYIDLE;
         GLfloat dx = 0, dy = 0;
+
+        // cout << player->get_is_jumping() << endl;
+        if (player->get_is_jumping() && !player->get_is_falling())
+        {
+            game->make_a_character_jump(player, frameTime);
+        }
 
         // Treat keyPress
         if (keyStatus['d'] == 1 || keyStatus['D'] == 1)

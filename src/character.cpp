@@ -238,10 +238,36 @@ bool Character::is_inside_terrain(Terrain *terrain)
     {
         if (this->center.x + this->trunkWidth / 2 >= terrainPos.x && this->center.x - this->trunkWidth / 2 <= terrainPos.x + terrain->get_width())
         {
-            if (terrain->get_color().b != 1.0 && this->center.y < terrainPos.y)
+            if (terrain->get_color().b != 1.0 && this->center.y <= terrainPos.y)
             {
+                cout << "collided from above terrain" << endl;
+                this->isFalling = false;
+                this->isJumping = false;
+                this->canJump = true;
                 this->terrainBelow = terrain;
             }
+
+            // cout << "Player y: " << this->center.y << " Player radius: " << this->radius << endl;
+            // cout << "Terrain y: " << terrainPos.y << " Terrain height: " << terrain->get_height() << endl;
+
+            // if (this->center.y <= terrainPos.y)
+            // {
+            //     cout << "collided from above" << endl;
+
+            //     this->isFalling = false;
+            //     this->isJumping = false;
+            //     this->canJump = true;
+            // }
+
+            if (this->center.y >= terrainPos.y + terrain->get_height())
+            {
+                cout << "collided from below terrain" << endl;
+
+                this->isFalling = true;
+                this->isJumping = false;
+                this->canJump = false;
+            }
+
             return true;
         }
     }
@@ -249,6 +275,7 @@ bool Character::is_inside_terrain(Terrain *terrain)
     if (terrain->get_color().b == 1.0)
     {
         this->terrainBelow = NULL;
+        this->canJump = true;
     }
 
     return false;
@@ -265,6 +292,16 @@ bool Character::is_inside_another_character(Character *character)
 GLfloat Character::get_jump_speed()
 {
     return this->jumpSpeed;
+}
+
+GLfloat Character::get_jump_initial_y()
+{
+    return this->jumpInitialY;
+}
+
+void Character::set_jump_initial_y(GLfloat y)
+{
+    this->jumpInitialY = y;
 }
 
 void Character::set_is_falling(bool isFalling)

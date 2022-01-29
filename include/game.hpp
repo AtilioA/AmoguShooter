@@ -47,6 +47,8 @@ public:
     bool has_player_reached_arena_end();
     bool has_game_reached_end_state();
 
+    void make_a_character_jump(Character *character, GLfloat frameTime);
+
     void move_a_gunshot(Character *shooter, GLfloat frameTime);
 
     void handle_collision_gunshot(Character *shooter);
