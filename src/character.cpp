@@ -79,9 +79,21 @@ void Character::draw_body()
 }
 
 // 4/8 / 2
-void Character::draw_thigh()
+void Character::draw_left_thigh()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
+
+    if (facingDirection == Direction::LEFT)
+    {
+        glRotatef(-this->gThetaLeg / 2, 0, 0, 1);
+    }
+    else
+    {
+        glRotatef(this->gThetaLeg / 2, 0, 0, 1);
+    }
+
+    glRotatef(this->gThetaLeg, 0, 0, 1);
+
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
@@ -93,9 +105,69 @@ void Character::draw_thigh()
 }
 
 // 4/8 / 2
-void Character::draw_leg()
+void Character::draw_left_leg()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
+
+    if (facingDirection == Direction::LEFT)
+    {
+        glRotatef(this->gThetaLeg * 2, 0, 0, 1);
+    }
+    else
+    {
+        glRotatef(-this->gThetaLeg * 2, 0, 0, 1);
+    }
+
+    glBegin(GL_POLYGON);
+    // clang-format off
+        glVertex2f(0, 0);
+        glVertex2f(this->trunkWidth / 3, 0);
+        glVertex2f(this->trunkWidth / 3, -this->height / 8 * 1.5);
+        glVertex2f(0, -this->height / 8 * 1.5);
+    // clang-format on
+    glEnd();
+}
+
+// 4/8 / 2
+void Character::draw_right_thigh()
+{
+    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
+
+    if (facingDirection == Direction::RIGHT)
+    {
+        glRotatef(-this->gThetaLeg / 2, 0, 0, 1);
+    }
+    else
+    {
+        glRotatef(this->gThetaLeg / 2, 0, 0, 1);
+    }
+
+    glRotatef(this->gThetaLeg, 0, 0, 1);
+
+    glBegin(GL_POLYGON);
+    // clang-format off
+        glVertex2f(0, 0);
+        glVertex2f(this->trunkWidth / 3, 0);
+        glVertex2f(this->trunkWidth / 3, -this->height / 8 * 1.5);
+        glVertex2f(0, -this->height / 8 * 1.5);
+    // clang-format on
+    glEnd();
+}
+
+// 4/8 / 2
+void Character::draw_right_leg()
+{
+    glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
+
+    if (facingDirection == Direction::RIGHT)
+    {
+        glRotatef(this->gThetaLeg * 2, 0, 0, 1);
+    }
+    else
+    {
+        glRotatef(-this->gThetaLeg * 2, 0, 0, 1);
+    }
+
     glBegin(GL_POLYGON);
     // clang-format off
         glVertex2f(0, 0);
@@ -135,25 +207,25 @@ void Character::draw_character()
     // Left leg
     glPushMatrix();
     glTranslatef(-this->trunkWidth / 2, -this->radius + this->height / 8 * 1.5, 0);
-    this->draw_leg(/*, theta */);
+    this->draw_left_leg();
     glPopMatrix();
 
     // Right leg
     glPushMatrix();
     glTranslatef(this->trunkWidth / 3 / 2, -this->radius + this->height / 8 * 1.5, 0);
-    this->draw_leg(/*, theta */);
+    this->draw_right_leg();
     glPopMatrix();
 
     // Left thigh
     glPushMatrix();
     glTranslatef(-this->trunkWidth / 2, -this->radius + this->height / 8 * 3, 0);
-    this->draw_thigh(/*, theta */);
+    this->draw_left_thigh();
     glPopMatrix();
 
     // Right thigh
     glPushMatrix();
     glTranslatef(this->trunkWidth / 3 / 2, -this->radius + this->height / 8 * 3, 0);
-    this->draw_thigh(/*, theta */);
+    this->draw_right_thigh();
     glPopMatrix();
 
     // Body
@@ -227,6 +299,28 @@ void Character::move_character(GLfloat dx, GLfloat dy, GLfloat frameTime)
 
     this->center.x += dx * frameTime;
     this->center.y += dy * frameTime;
+
+    if (!this->isJumping)
+    {
+        // cout << "Not jumping" << endl;
+        // cout << "gThetaLeg: " << this->gThetaLeg << endl;
+        cout << abs(dx * frameTime * 3) << endl;
+        // cout << "gThetaLegMAX: " << this->gThetaLegMAX << endl;
+        {
+            if (abs(gThetaLeg + abs(dx * frameTime * 3)) > 30)
+                thetaLegIncreasing = !thetaLegIncreasing;
+            if (thetaLegIncreasing)
+            {
+                // cout << "Increasing" << endl;
+                gThetaLeg += abs(dx * frameTime * 3);
+            }
+            else
+            {
+                // cout << "Decreasing" << endl;
+                gThetaLeg -= abs(dx * frameTime * 3);
+            }
+        }
+    }
 }
 
 bool Character::is_inside_terrain(Terrain *terrain)

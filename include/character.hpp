@@ -46,8 +46,10 @@ protected:
     // Angle of each joint
     GLfloat gThetaThigh;
     GLfloat gThetaLeg;
+    GLfloat thetaLegIncreasing;
     GLfloat gThetaLegMAX;
     GLfloat gThetaLegMIN;
+
     GLfloat gThetaArm;
     GLfloat gThetaArmMAX;
     GLfloat gThetaArmMIN;
@@ -67,6 +69,10 @@ public:
         this->gThetaArm = 0;
         this->gThetaArmMIN = -45;
         this->gThetaArmMAX = 45;
+
+        this->gThetaLeg = 0;
+        this->gThetaThigh = 0;
+        this->thetaLegIncreasing = false;
 
         this->facingDirection = Direction::RIGHT;
 
@@ -148,8 +154,10 @@ public:
 
     void move_arm_mouse_helper(GLfloat oldY, GLfloat oldX);
 
-    void draw_leg();
-    void draw_thigh();
+    void draw_left_thigh();
+    void draw_left_leg();
+    void draw_right_thigh();
+    void draw_right_leg();
     void draw_body();
     void draw_arm();
     void draw_head();
