@@ -39,15 +39,15 @@ void Character::shoot()
 void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat oldY)
 {
     // Normalize x
-    GLfloat x = (oldX / 16) - this->center.x;
+    GLfloat x = oldX - this->center.x;
     GLfloat y = oldY - this->center.y;
 
     // Calculate the angle of the arm
-    GLfloat angle = rad_to_degrees(atan(y / x)) * 0.75;
+    GLfloat angle = rad_to_degrees(atan(y / x));
 
     if (angle < this->gThetaArmMAX && angle > this->gThetaArmMIN)
     {
-        this->gThetaArm = angle * this->facingDirection;
+        this->gThetaArm = angle;
     }
 }
 
@@ -275,7 +275,6 @@ bool Character::is_inside_terrain(Terrain *terrain)
     if (terrain->get_color().b == 1.0)
     {
         this->terrainBelow = NULL;
-        this->canJump = true;
     }
 
     return false;

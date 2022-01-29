@@ -77,7 +77,7 @@ public:
         this->isJumping = false;
         this->isFalling = false;
         this->jumpTime = 0;
-        this->jumpSpeed = this->radius * 2 * 0.3 * INC_KEYIDLE;
+        this->jumpSpeed = this->height * 0.33 * INC_KEYIDLE; // 3x player height in 1 second
         this->jumpInitialY = center.y;
     };
     virtual ~Character()
