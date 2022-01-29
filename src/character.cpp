@@ -47,7 +47,7 @@ void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat oldY)
 
     if (angle < this->gThetaArmMAX && angle > this->gThetaArmMIN)
     {
-        this->gThetaArm = angle;
+        this->gThetaArm = angle * this->facingDirection;
     }
 }
 
