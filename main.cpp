@@ -104,6 +104,10 @@ void keyPress(unsigned char key, int x, int y)
     {
     case '1':
         // animate = !animate;
+        if (game->get_debug_mode())
+        {
+            game->set_global_camera(!game->get_debug_options().globalCamera);
+        }
         break;
     case 'w':
     case 'W':
@@ -127,7 +131,10 @@ void keyPress(unsigned char key, int x, int y)
         keyStatus[(int)('r')] = 1; // Using keyStatus trick
         break;
     case '2':
-        game->get_debug_options().drawCharacterHitbox ? game->set_debug_options(false) : game->set_debug_options(true);
+        if (game->get_debug_mode())
+        {
+            game->get_debug_options().drawCharacterHitbox ? game->set_debug_options(false) : game->set_debug_options(true);
+        }
         break;
     case 27:
         exit(0);
@@ -347,7 +354,7 @@ int main(int argc, char *argv[])
     {
         debug = true;
     }
-    game->set_debug_options(debug);
+    game->set_debug_mode(debug);
 
     // Generate seed for random enemy activity
     srand(time(NULL));

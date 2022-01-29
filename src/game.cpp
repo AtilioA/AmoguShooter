@@ -400,7 +400,7 @@ bool Game::is_outside_arena(Character *character)
     {
         if (character->get_center().y >= arenaPos.y)
         {
-            cout << "collided with bottom of arena" << endl;
+            // cout << "collided with bottom of arena" << endl;
             character->set_is_falling(false);
             character->set_is_jumping(false);
             character->set_can_jump(true);
@@ -408,7 +408,7 @@ bool Game::is_outside_arena(Character *character)
 
         if (character->get_center().y <= arenaPos.y)
         {
-            cout << "collided with top of arena" << endl;
+            // cout << "collided with top of arena" << endl;
             character->set_is_falling(true);
             character->set_is_jumping(false);
             character->set_can_jump(false);
@@ -584,16 +584,38 @@ Dimensions Game::get_arena_dimensions()
     return this->arenaDimensions;
 }
 
+bool Game::get_debug_mode()
+{
+    return this->debugMode;
+}
+
+void Game::set_debug_mode(bool debugMode)
+{
+    this->debugMode = debugMode;
+    set_debug_options(debugMode);
+}
+
 void Game::set_debug_options(bool debug)
 {
-    this->debugOptions.highlightTerrain = debug;
-    this->debugOptions.pacificEnemies = debug;
-    this->debugOptions.drawObjectCenter = debug;
-    this->debugOptions.drawCharacterHitbox = debug;
-    this->debugOptions.globalCamera = debug;
+    if (this->debugMode)
+    {
+        this->debugOptions.highlightTerrain = debug;
+        this->debugOptions.pacificEnemies = debug;
+        this->debugOptions.drawObjectCenter = debug;
+        this->debugOptions.drawCharacterHitbox = debug;
+        this->debugOptions.globalCamera = debug;
+    }
 }
 
 Debug Game::get_debug_options()
 {
     return this->debugOptions;
+}
+
+void Game::set_global_camera(bool globalCamera)
+{
+    if (this->debugMode)
+    {
+        this->debugOptions.globalCamera = globalCamera;
+    }
 }

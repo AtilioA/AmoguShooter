@@ -240,7 +240,7 @@ bool Character::is_inside_terrain(Terrain *terrain)
         {
             if (terrain->get_color().b != 1.0 && this->center.y <= terrainPos.y)
             {
-                cout << "collided from above terrain" << endl;
+                // cout << "collided from above terrain" << endl;
                 this->isFalling = false;
                 this->isJumping = false;
                 this->canJump = true;
@@ -261,7 +261,7 @@ bool Character::is_inside_terrain(Terrain *terrain)
 
             if (this->center.y >= terrainPos.y + terrain->get_height())
             {
-                cout << "collided from below terrain" << endl;
+                // cout << "collided from below terrain" << endl;
 
                 this->isFalling = true;
                 this->isJumping = false;

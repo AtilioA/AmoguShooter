@@ -28,6 +28,7 @@ private:
     GLint nCharacters;
     string arenaSVGFilename;
     Dimensions arenaDimensions;
+    bool debugMode;
     Debug debugOptions;
 
 public:
@@ -40,6 +41,7 @@ public:
         this->nCharacters = 0;
         this->arenaSVGFilename = "";
         this->arenaDimensions = {0, 0};
+        this->debugMode = false;
         this->debugOptions = {false, false, false, false, false};
     };
 
@@ -104,8 +106,11 @@ public:
     void set_arena_dimensions(Dimensions arenaDimensions);
     Dimensions get_arena_dimensions();
 
+    bool get_debug_mode();
+    void set_debug_mode(bool debugMode);
     void set_debug_options(bool debug);
     Debug get_debug_options();
+    void set_global_camera(bool globalCamera);
 };
 
 #endif /* GAME_H_ */
