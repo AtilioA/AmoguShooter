@@ -8,6 +8,9 @@
 #define INC_KEY 0.033
 #define INC_KEYIDLE 0.033
 
+// Default visor color
+#define DEFAULT_VISOR_COLOR Color({1.0, 1.0, 1.0})
+
 #include <map>
 #include <string>
 #include <bits/stdc++.h>

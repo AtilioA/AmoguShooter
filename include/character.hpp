@@ -68,6 +68,7 @@ public:
     {
         this->set_center(center);
         this->set_radius(radius);
+        this->visorColor = DEFAULT_VISOR_COLOR;
         this->set_crewmate_colors(colors);
         this->set_height(radius * 2);
         this->set_id(id);
@@ -136,6 +137,9 @@ public:
 
     void set_center(Point p);
     Point get_center();
+
+    void set_visor_color(Color visorColor);
+    Color get_visor_color();
 
     void set_crewmate_colors(CrewmateColors c);
     CrewmateColors get_crewmate_colors();

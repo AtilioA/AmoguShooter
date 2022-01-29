@@ -86,7 +86,7 @@ void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat oldY)
 
 void Character::draw_head()
 {
-    glColor3f(255.0 / 255, 255.0 / 255, 255.0 / 255);
+    glColor3f(this->visorColor.r, this->visorColor.g, this->visorColor.b);
 
     if (this->facingDirection == Direction::RIGHT)
     {
@@ -498,11 +498,6 @@ void Character::set_center(Point p)
     this->center = p;
 }
 
-void Character::set_crewmate_colors(CrewmateColors c)
-{
-    this->colors = c;
-}
-
 void Character::set_theta_arm(GLfloat theta)
 {
     this->gThetaArm = theta;
@@ -536,6 +531,21 @@ GLint Character::get_id()
 Point Character::get_center()
 {
     return this->center;
+}
+
+void Character::set_visor_color(Color visorColor)
+{
+    this->visorColor = visorColor;
+}
+
+Color Character::get_visor_color()
+{
+    return this->visorColor;
+}
+
+void Character::set_crewmate_colors(CrewmateColors c)
+{
+    this->colors = c;
 }
 
 CrewmateColors Character::get_crewmate_colors()
