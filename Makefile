@@ -52,6 +52,9 @@ debug: all
 exe:
 	./$(EXE) input/arena_teste.svg
 
+release: clean
+	-tar -cvf AtilioAntonioDadalto.zip include/* input/ obj/ src/* LICENSE main.cpp Makefile README.md
+
 # Limpa objetos e o executável do programa
 clean:
 	-rm $(OBJ)/*.o
