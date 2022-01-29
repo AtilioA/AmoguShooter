@@ -330,6 +330,7 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
         if (this->player->get_center().y + enemyYViewDistance >= enemy->get_center().y && this->player->get_center().y - enemyYViewDistance <= enemy->get_center().y)
         {
             // cout << "Player is close to enemy ID " << enemy->get_id() << endl;
+            enemy->set_visor_color(get_player_colors().upperBody);
 
             // Shoot at player at random intervals
             GLfloat randomNumber = rand() % (int)frameTime;
@@ -339,6 +340,14 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
                 enemy->shoot();
             }
         }
+        else
+        {
+            enemy->set_visor_color(DEFAULT_VISOR_COLOR);
+        }
+    }
+    else
+    {
+        enemy->set_visor_color(DEFAULT_VISOR_COLOR);
     }
 }
 
