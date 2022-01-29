@@ -316,21 +316,19 @@ void Character::move_character(GLfloat dx, GLfloat dy, GLfloat frameTime)
 
     if (!this->isJumping)
     {
-        // cout << "Not jumping" << endl;
-        // cout << "gThetaLeg: " << this->gThetaLeg << endl;
-        cout << abs(dx * frameTime * 3) << endl;
-        // cout << "gThetaLegMAX: " << this->gThetaLegMAX << endl;
         {
             if (abs(gThetaLeg + abs(dx * frameTime * 3)) > 30)
-                thetaLegIncreasing = !thetaLegIncreasing;
-            if (thetaLegIncreasing)
             {
-                // cout << "Increasing" << endl;
+                isWalkingObserve = !isWalkingObserve;
+            }
+            if (isWalkingObserve)
+            {
+                // Increase in observe
                 gThetaLeg += abs(dx * frameTime * 3);
             }
             else
             {
-                // cout << "Decreasing" << endl;
+                // Increase in reverse
                 gThetaLeg -= abs(dx * frameTime * 3);
             }
         }

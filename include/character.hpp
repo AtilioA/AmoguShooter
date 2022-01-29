@@ -28,14 +28,16 @@ protected:
     GLfloat trunkWidth;
     Terrain *terrainBelow;
 
+    // Combat
     Gunshot *gunshot;
-
     bool isAlive;
 
+    // Walking
     GLint facingDirection;
     bool isWalking;
     bool isAnimationObverse;
 
+    // Jumping
     bool isFalling;
     bool isJumping;
     bool canJump;
@@ -46,9 +48,8 @@ protected:
     // Angle of each joint
     GLfloat gThetaThigh;
     GLfloat gThetaLeg;
-    GLfloat thetaLegIncreasing;
-    GLfloat gThetaLegMAX;
-    GLfloat gThetaLegMIN;
+    GLfloat gThetaLegLIMIT;
+    bool isWalkingObserve;
 
     GLfloat gThetaArm;
     GLfloat gThetaArmMAX;
@@ -72,7 +73,8 @@ public:
 
         this->gThetaLeg = 0;
         this->gThetaThigh = 0;
-        this->thetaLegIncreasing = false;
+        this->gThetaLegLIMIT = 30;
+        this->isWalkingObserve = true;
 
         this->facingDirection = Direction::RIGHT;
 
