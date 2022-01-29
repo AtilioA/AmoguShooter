@@ -55,14 +55,28 @@ void Character::draw_head()
 {
     glColor3f(255.0 / 255, 255.0 / 255, 255.0 / 255);
 
-    glBegin(GL_POLYGON);
-    // clang-format off
-        glVertex2f(-this->trunkWidth / 2, 0);
-        glVertex2f(this->trunkWidth / 2, 0);
-        glVertex2f(this->trunkWidth / 2, this->height / 8);
-        glVertex2f(-this->trunkWidth / 2, this->height / 8);
-    // clang-format on
-    glEnd();
+    if (this->facingDirection == Direction::RIGHT)
+    {
+        glBegin(GL_POLYGON);
+        // clang-format off
+            glVertex2f(-this->trunkWidth / 2, 0);
+            glVertex2f(this->trunkWidth / 1.75, 0);
+            glVertex2f(this->trunkWidth / 1.75, this->height / 8);
+            glVertex2f(-this->trunkWidth / 2, this->height / 8);
+        // clang-format on
+        glEnd();
+    }
+    else
+    {
+        glBegin(GL_POLYGON);
+        // clang-format off
+            glVertex2f(-this->trunkWidth / 1.75, 0);
+            glVertex2f(this->trunkWidth / 2, 0);
+            glVertex2f(this->trunkWidth / 2, this->height / 8);
+            glVertex2f(-this->trunkWidth / 1.75, this->height / 8);
+        // clang-format on
+        glEnd();
+    }
 }
 
 void Character::draw_body()
