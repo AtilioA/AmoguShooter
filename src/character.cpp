@@ -371,21 +371,19 @@ void Character::move_character(GLfloat dx, GLfloat dy, GLfloat frameTime)
 
     if (!this->isJumping)
     {
+        if (abs(gThetaLeg + abs(dx * frameTime * 3)) > this->gThetaLegLIMIT)
         {
-            if (abs(gThetaLeg + abs(dx * frameTime * 3)) > 30)
-            {
-                isWalkingObserve = !isWalkingObserve;
-            }
-            if (isWalkingObserve)
-            {
-                // Increase in observe
-                gThetaLeg += abs(dx * frameTime * 3);
-            }
-            else
-            {
-                // Increase in reverse
-                gThetaLeg -= abs(dx * frameTime * 3);
-            }
+            isWalkingObserve = !isWalkingObserve;
+        }
+        if (isWalkingObserve)
+        {
+            // Increase in observe
+            gThetaLeg += abs(dx * frameTime * 3);
+        }
+        else
+        {
+            // Increase in reverse
+            gThetaLeg -= abs(dx * frameTime * 3);
         }
     }
 }

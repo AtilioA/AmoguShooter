@@ -84,7 +84,7 @@ public:
 
         this->gThetaLeg = 0;
         this->gThetaThigh = 0;
-        this->gThetaLegLIMIT = 30;
+        this->gThetaLegLIMIT = 20;
         this->isWalkingObserve = true;
 
         this->facingDirection = Direction::RIGHT;
