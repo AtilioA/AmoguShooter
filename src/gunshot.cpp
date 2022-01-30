@@ -6,7 +6,7 @@ void Gunshot::draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B)
     glBegin(GL_POLYGON);
     for (int i = 0; i < 360; i += 10)
     {
-        glVertex2f(radius * 1 * cos(rad_to_degrees(i)), radius * 1 * sin(rad_to_degrees(i)));
+        glVertex2f(radius * 1 * cos(deg_to_radians(i)), radius * 1 * sin(deg_to_radians(i)));
     }
     glEnd();
 }
@@ -21,8 +21,8 @@ void Gunshot::draw_gunshot(GLfloat x, GLfloat y, Color crewmateUpperBodyColor)
 
 void Gunshot::move(GLdouble frameTime)
 {
-    this->gX += this->gVel * sin(rad_to_degrees(this->gDirectionAng)) * frameTime;
-    this->gY += this->gVel * cos(rad_to_degrees(this->gDirectionAng)) * frameTime;
+    this->gX += this->gVel * sin(deg_to_radians(this->gDirectionAng)) * frameTime;
+    this->gY += this->gVel * cos(deg_to_radians(this->gDirectionAng)) * frameTime;
 }
 
 bool Gunshot::is_valid()

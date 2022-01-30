@@ -53,5 +53,6 @@ CrewmateColors get_random_enemy_colors();
 GLfloat smallest_dimension(Dimensions dimensions);
 
 GLfloat rad_to_degrees(GLfloat rad);
+GLfloat deg_to_radians(GLfloat deg);
 
 #endif /* UTILS_H */

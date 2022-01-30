@@ -85,6 +85,11 @@ GLfloat smallest_dimension(Dimensions dimensions)
         return dimensions.height;
 }
 
+GLfloat deg_to_radians(GLfloat deg)
+{
+    return deg * M_PI / 180.0;
+}
+
 GLfloat rad_to_degrees(GLfloat rad)
 {
     return rad * 180.0 / M_PI;
