@@ -60,39 +60,42 @@ void renderScene()
     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // cout << "\nDrawing game elements:" << endl;
-    // cout << "Drawing background... ";
-    game->get_arena_background()->draw_terrain();
-    // cout << "Drawing terrains... ";
-    game->draw_terrains();
-    // cout << "Drawing player... ";
-    game->draw_player();
-    // cout << "Drawing enemies..." << endl;
-    game->draw_enemies();
-    // cout << "Finished drawing game elements." << endl;
-
-    Player *player = game->get_player();
-    vector<Gunshot *> playerGunshots = player->get_gunshots();
-
-    for (auto &playerGunshot : playerGunshots)
-    {
-        playerGunshot->draw(player->get_crewmate_colors().upperBody);
-    }
-    for (size_t i = 0; i < game->get_enemies().size(); i++)
-    {
-        Enemy *currentEnemy = game->get_enemies()[i];
-
-        vector<Gunshot *> currentEnemyGunshots = currentEnemy->get_gunshots();
-        for (auto &currentEnemyGunshot : currentEnemyGunshots)
-        {
-            currentEnemyGunshot->draw(currentEnemy->get_crewmate_colors().upperBody);
-        }
-    }
-
     if (game->has_game_reached_end_state())
     {
         cout << "Game has reached end state!" << endl;
         RenderString(0, 0);
+    }
+    else
+    {
+
+        // cout << "\nDrawing game elements:" << endl;
+        // cout << "Drawing background... ";
+        game->get_arena_background()->draw_terrain();
+        // cout << "Drawing terrains... ";
+        game->draw_terrains();
+        // cout << "Drawing player... ";
+        game->draw_player();
+        // cout << "Drawing enemies..." << endl;
+        game->draw_enemies();
+        // cout << "Finished drawing game elements." << endl;
+
+        Player *player = game->get_player();
+        vector<Gunshot *> playerGunshots = player->get_gunshots();
+
+        for (auto &playerGunshot : playerGunshots)
+        {
+            playerGunshot->draw(player->get_crewmate_colors().upperBody);
+        }
+        for (size_t i = 0; i < game->get_enemies().size(); i++)
+        {
+            Enemy *currentEnemy = game->get_enemies()[i];
+
+            vector<Gunshot *> currentEnemyGunshots = currentEnemy->get_gunshots();
+            for (auto &currentEnemyGunshot : currentEnemyGunshots)
+            {
+                currentEnemyGunshot->draw(currentEnemy->get_crewmate_colors().upperBody);
+            }
+        }
     }
 
     glutSwapBuffers(); // Draw the new frame of the game.
