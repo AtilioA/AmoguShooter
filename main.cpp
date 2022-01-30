@@ -333,7 +333,8 @@ void idle(void)
 void aim_with_mouse(int x, int y)
 {
     y = ViewingHeight - y;
-    game->get_player()->move_arm_mouse_helper(x, y);
+
+    game->get_player()->move_arm_mouse_helper(x, Width, y, Height);
 }
 
 int main(int argc, char *argv[])

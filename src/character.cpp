@@ -69,16 +69,38 @@ void Character::shoot()
     }
 }
 
-void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat oldY)
+void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat maxX, GLfloat oldY, GLfloat maxY)
 {
     // Normalize x
     GLfloat x = oldX - this->center.x;
     GLfloat y = oldY - this->center.y;
 
-    // Calculate the angle of the arm
-    GLfloat angle = rad_to_degrees(atan(y / x));
+    cout << "x: " << x << " y: " << y << endl;
 
-    if (angle < this->gThetaArmMAX && angle > this->gThetaArmMIN)
+    if (x > maxX)
+    {
+        x = maxX;
+    }
+    else if (x < -maxX)
+    {
+        x = -maxX;
+    }
+
+    if (y > maxY)
+    {
+        y = maxY;
+    }
+    else if (y < -maxY)
+    {
+        y = -maxY;
+    }
+
+    cout << "newX: " << x << " newY: " << y << endl;
+
+    // Calculate the angle of the arm
+    GLfloat angle = rad_to_degrees(atan(y / x) * MOUSE_SENSITIVITY);
+
+    if (angle <= this->gThetaArmMAX && angle >= this->gThetaArmMIN)
     {
         this->gThetaArm = angle * this->facingDirection;
     }

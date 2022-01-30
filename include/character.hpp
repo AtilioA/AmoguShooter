@@ -184,7 +184,7 @@ public:
     void draw_arm();
     void draw_head();
 
-    void move_arm_mouse_helper(GLfloat oldY, GLfloat oldX);
+    void move_arm_mouse_helper(GLfloat oldX, GLfloat maxX, GLfloat oldY, GLfloat maxY);
     void rotate_arm(GLfloat inc);
     void rotate_thigh(GLfloat inc);
     void rotate_leg(GLfloat inc);

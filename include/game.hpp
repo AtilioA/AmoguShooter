@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#define MOUSE_SENSITIVITY 1.2
+
 typedef struct tDebug
 {
     bool highlightTerrain;
