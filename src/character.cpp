@@ -143,16 +143,16 @@ void Character::draw_left_thigh()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
-    if (facingDirection == Direction::LEFT)
+    if (this->facingDirection == Direction::RIGHT)
     {
-        glRotatef(-this->gThetaLeg / 2, 0, 0, 1);
+        glRotatef(this->gThetaLeg, 0, 0, 1);
     }
     else
     {
-        glRotatef(this->gThetaLeg / 2, 0, 0, 1);
+        glRotatef(-this->gThetaLeg, 0, 0, 1);
     }
 
-    glRotatef(this->gThetaLeg, 0, 0, 1);
+    // glRotatef(this->gThetaLeg, 0, 0, 1);
 
     glBegin(GL_POLYGON);
     // clang-format off
@@ -169,13 +169,15 @@ void Character::draw_left_leg()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
-    if (facingDirection == Direction::LEFT)
+    if (this->facingDirection == Direction::LEFT)
     {
-        glRotatef(this->gThetaLeg * 2, 0, 0, 1);
+        glRotatef(-this->gThetaLeg, 0, 0, 1);
+        glRotatef(15, 0, 0, 1);
     }
     else
     {
-        glRotatef(-this->gThetaLeg * 2, 0, 0, 1);
+        glRotatef(this->gThetaLeg, 0, 0, 1);
+        glRotatef(-30, 0, 0, 1);
     }
 
     glBegin(GL_POLYGON);
@@ -193,16 +195,16 @@ void Character::draw_right_thigh()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
-    if (facingDirection == Direction::RIGHT)
+    if (this->facingDirection == Direction::RIGHT)
     {
-        glRotatef(-this->gThetaLeg / 2, 0, 0, 1);
+        glRotatef(-this->gThetaLeg, 0, 0, 1);
     }
     else
     {
-        glRotatef(this->gThetaLeg / 2, 0, 0, 1);
+        glRotatef(this->gThetaLeg, 0, 0, 1);
     }
 
-    glRotatef(this->gThetaLeg, 0, 0, 1);
+    // glRotatef(this->gThetaLeg, 0, 0, 1);
 
     glBegin(GL_POLYGON);
     // clang-format off
@@ -219,13 +221,15 @@ void Character::draw_right_leg()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
-    if (facingDirection == Direction::RIGHT)
+    if (this->facingDirection == Direction::RIGHT)
     {
-        glRotatef(this->gThetaLeg * 2, 0, 0, 1);
+        glRotatef(-this->gThetaLeg, 0, 0, 1);
+        glRotatef(-15, 0, 0, 1);
     }
     else
     {
-        glRotatef(-this->gThetaLeg * 2, 0, 0, 1);
+        glRotatef(this->gThetaLeg, 0, 0, 1);
+        glRotatef(30, 0, 0, 1);
     }
 
     glBegin(GL_POLYGON);
