@@ -264,7 +264,7 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
 {
     int integerFrameTime = (int)frameTime;
 
-    int randomNumber = rand() % (integerFrameTime * 2);
+    int randomNumber = rand() % integerFrameTime;
 
     switch (randomNumber)
     {
