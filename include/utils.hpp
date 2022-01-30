@@ -17,15 +17,15 @@
 // Stores the size of a 2D window
 typedef struct tDimensions
 {
-    GLfloat width;
-    GLfloat height;
+    GLdouble width;
+    GLdouble height;
 } Dimensions;
 
 // Stores the coordinates of a point
 typedef struct tPoint
 {
-    GLfloat x;
-    GLfloat y;
+    GLdouble x;
+    GLdouble y;
 } Point;
 
 // Stores the RGB values of a color

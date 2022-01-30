@@ -11,7 +11,7 @@ void Gunshot::draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B)
     glEnd();
 }
 
-void Gunshot::draw_gunshot(GLfloat x, GLfloat y, Color crewmateUpperBodyColor)
+void Gunshot::draw_gunshot(GLdouble x, GLdouble y, Color crewmateUpperBodyColor)
 {
     glPushMatrix();
     glTranslatef(x, -y, 0);

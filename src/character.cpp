@@ -515,11 +515,11 @@ void Character::set_terrain_below(Terrain *terrain)
     this->terrainBelow = terrain;
 }
 
-void Character::set_speed(GLfloat speed)
+void Character::set_speed(GLdouble speed)
 {
     this->speed = speed;
 }
-GLfloat Character::get_speed()
+GLdouble Character::get_speed()
 {
     return this->speed;
 }
@@ -539,12 +539,12 @@ GLfloat Character::get_theta_arm()
     return this->gThetaArm;
 }
 
-void Character::set_radius(GLfloat r)
+void Character::set_radius(GLdouble r)
 {
     this->radius = r;
 }
 
-void Character::set_height(GLfloat h)
+void Character::set_height(GLdouble h)
 {
     this->height = h;
 }
@@ -584,22 +584,22 @@ CrewmateColors Character::get_crewmate_colors()
     return this->colors;
 }
 
-GLfloat Character::get_radius()
+GLdouble Character::get_radius()
 {
     return this->radius;
 }
 
-GLfloat Character::get_height()
+GLdouble Character::get_height()
 {
     return this->height;
 }
 
-void Character::set_trunk_width(GLfloat t)
+void Character::set_trunk_width(GLdouble t)
 {
     this->trunkWidth = t;
 }
 
-GLfloat Character::get_trunk_width()
+GLdouble Character::get_trunk_width()
 {
     return this->trunkWidth;
 }

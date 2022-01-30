@@ -23,13 +23,13 @@ protected:
     // Position
     GLint id;
     Point center;
-    GLfloat speed;
+    GLdouble speed;
     Terrain *terrainBelow;
 
     // Geometry
-    GLfloat radius;
-    GLfloat height;
-    GLfloat trunkWidth;
+    GLdouble radius;
+    GLdouble height;
+    GLdouble trunkWidth;
 
     // Style
     Color visorColor;
@@ -140,8 +140,8 @@ public:
     void set_center(Point p);
     Point get_center();
 
-    void set_speed(GLfloat speed);
-    GLfloat get_speed();
+    void set_speed(GLdouble speed);
+    GLdouble get_speed();
 
     void set_visor_color(Color visorColor);
     Color get_visor_color();
@@ -152,14 +152,14 @@ public:
     void set_theta_arm(GLfloat theta);
     GLfloat get_theta_arm();
 
-    void set_radius(GLfloat r);
-    GLfloat get_radius();
+    void set_radius(GLdouble r);
+    GLdouble get_radius();
 
-    void set_height(GLfloat h);
-    GLfloat get_height();
+    void set_height(GLdouble h);
+    GLdouble get_height();
 
-    void set_trunk_width(GLfloat t);
-    GLfloat get_trunk_width();
+    void set_trunk_width(GLdouble t);
+    GLdouble get_trunk_width();
 
     void set_terrain_below(Terrain *terrain);
     Terrain *get_terrain_below();

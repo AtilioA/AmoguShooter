@@ -195,7 +195,7 @@ bool Game::is_gunshot_inside_any_terrain(Gunshot *gunshot)
     return false;
 }
 
-void Game::move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime)
+void Game::move_a_character(Character *character, GLdouble dx, GLdouble dy, GLfloat frameTime)
 {
     character->move_character(dx, dy, frameTime);
     this->handle_collision(character, dx, dy, frameTime);
@@ -213,7 +213,7 @@ bool Game::check_collision(Character *character)
     }
 }
 
-void Game::handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime)
+void Game::handle_collision(Character *character, GLdouble dx, GLdouble dy, GLfloat frameTime)
 {
     if (this->check_collision(character))
     {
@@ -223,7 +223,7 @@ void Game::handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloa
 
 void Game::apply_gravity(GLfloat frameTime)
 {
-    GLfloat gravityVelocity = this->player->get_radius() * 0.33 * this->player->get_speed();
+    GLdouble gravityVelocity = this->player->get_radius() * 0.33 * this->player->get_speed();
 
     // Apply gravity to player
     this->move_a_character(this->player, 0, gravityVelocity, frameTime);
@@ -237,7 +237,7 @@ void Game::apply_gravity(GLfloat frameTime)
     }
 }
 
-bool Game::will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat frameTime)
+bool Game::will_enemy_fall(Enemy *enemy, GLdouble dx, GLfloat frameTime)
 {
     Terrain *terrainBelowEnemy = enemy->get_terrain_below();
     if (terrainBelowEnemy == NULL)
@@ -297,8 +297,8 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
 
 void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
 {
-    GLfloat enemyXViewDistance = this->get_arena_background()->get_height() * 0.4;
-    GLfloat enemyYViewDistance = enemy->get_height() * 3;
+    GLdouble enemyXViewDistance = this->get_arena_background()->get_height() * 0.4;
+    GLdouble enemyYViewDistance = enemy->get_height() * 3;
 
     if (enemy->get_center().x - enemyXViewDistance < this->player->get_center().x &&
         enemy->get_center().x + enemyXViewDistance > this->player->get_center().x)

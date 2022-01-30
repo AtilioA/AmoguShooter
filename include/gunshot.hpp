@@ -13,21 +13,21 @@
 class Character;
 class Gunshot
 {
-    GLfloat gXInit;
-    GLfloat gYInit;
-    GLfloat gX;
-    GLfloat gY;
+    GLdouble gXInit;
+    GLdouble gYInit;
+    GLdouble gX;
+    GLdouble gY;
     GLfloat gDirectionAng;
-    GLfloat gVel;
-    GLfloat gRadiusGunshot;
+    GLdouble gVel;
+    GLdouble gRadiusGunshot;
     GLint facingDirection;
 
 private:
     void draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B);
-    void draw_gunshot(GLfloat x, GLfloat y, Color crewmateUpperBodyColor);
+    void draw_gunshot(GLdouble x, GLdouble y, Color crewmateUpperBodyColor);
 
 public:
-    Gunshot(GLfloat x, GLfloat y, GLfloat deltaX, GLfloat deltaY, GLfloat charSpeed, GLfloat charRadius, GLfloat directionAng, GLint facingDirection)
+    Gunshot(GLdouble x, GLdouble y, GLdouble deltaX, GLdouble deltaY, GLdouble charSpeed, GLdouble charRadius, GLfloat directionAng, GLint facingDirection)
     {
         gXInit = x;
         gYInit = y;

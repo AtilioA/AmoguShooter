@@ -298,8 +298,8 @@ void idle(void)
 
         game->enemies_shoot_at_player(frameTime);
 
-        double inc = player->get_speed();
-        GLfloat dx = 0, dy = 0;
+        GLdouble inc = player->get_speed();
+        GLdouble dx = 0, dy = 0;
 
         // cout << player->get_is_jumping() << endl;
         if (player->get_is_jumping() && !player->get_is_falling())

@@ -64,9 +64,9 @@ public:
     Character *check_collision_gunshot_any_character(Gunshot *gunshot);
     void remove_character(Character *character);
 
-    void move_a_character(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime);
+    void move_a_character(Character *character, GLdouble dx, GLdouble dy, GLfloat frameTime);
     bool check_collision(Character *character);
-    void handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloat frameTime);
+    void handle_collision(Character *character, GLdouble dx, GLdouble dy, GLfloat frameTime);
 
     void add_enemy(Enemy *enemy);
     std::vector<Enemy *> get_enemies();
@@ -85,7 +85,7 @@ public:
 
     void apply_gravity(GLfloat frameTime);
 
-    bool will_enemy_fall(Enemy *enemy, GLfloat dx, GLfloat frameTime);
+    bool will_enemy_fall(Enemy *enemy, GLdouble dx, GLfloat frameTime);
     void enemies_shoot_at_player(GLfloat frameTime);
     void enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime);
     void move_enemy_randomly(Enemy *enemy, GLfloat frameTime);
