@@ -369,7 +369,7 @@ void Character::move_character(GLfloat dx, GLfloat dy, GLfloat frameTime)
     this->center.x += dx * frameTime;
     this->center.y += dy * frameTime;
 
-    if (!this->isJumping)
+    if (!this->isJumping && dx != 0)
     {
         if (abs(gThetaLeg + abs(dx * frameTime * 3)) > this->gThetaLegLIMIT)
         {
