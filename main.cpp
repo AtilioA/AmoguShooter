@@ -130,6 +130,11 @@ void keyPress(unsigned char key, int x, int y)
     case 'r':
     case 'R':
         keyStatus[(int)('r')] = 1; // Using keyStatus trick
+        if (game->get_debug_mode())
+        {
+            cout << "Resetting game (debug mode)..." << endl;
+            game->reset_game();
+        }
         break;
     case '2':
         if (game->get_debug_mode())
@@ -227,12 +232,6 @@ void idle(void)
     // cout << "Framerate: " << (int)framerate << endl;
     // cout << "frameTime: " << frameTime << endl;
 
-    if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
-    {
-        // cout << "Parsing " << game->get_arena_svg_filename() << endl;
-        game->reset_game();
-    }
-
     if (!shouldPreserveFramerateSpeed)
     {
         frameTime = 1;
@@ -279,6 +278,12 @@ void idle(void)
         else
         {
             cout << "Player won!" << endl;
+        }
+
+        if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
+        {
+            // cout << "Parsing " << game->get_arena_svg_filename() << endl;
+            game->reset_game();
         }
     }
     else
