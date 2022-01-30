@@ -586,17 +586,3 @@ Terrain *Character::get_terrain_below()
 {
     return this->terrainBelow;
 }
-
-void Character::jump(GLfloat clock)
-{
-    if (clock <= 0)
-    {
-        return;
-    }
-
-    // GLint jumpTime = 4;
-    // GLfloat jumpHeight = 3 * this->height;
-    // GLfloat jumpSpeed = jumpHeight / jumpTime / 2;
-
-    // GLfloat jumpAcceleration = jumpSpeed / jumpTime;
-}

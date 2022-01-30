@@ -223,14 +223,7 @@ void Game::handle_collision(Character *character, GLfloat dx, GLfloat dy, GLfloa
 
 void Game::apply_gravity(GLfloat frameTime)
 {
-    // Player should be affected by gravity in a way that they reach the ground in 2 seconds after when standing 3 times their own height from the ground.
-    // GLint MAX_JUMP_HEIGHT = this->player->get_height() * 3;
-    // GLint MAX_JUMP_TIME = 2;
-    // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / frameTime / MAX_JUMP_TIME;
-    // cout << "gravityVelocity: " << gravityVelocity << endl;
-    // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
-
-    GLfloat gravityVelocity = this->player->get_radius() * 0.3 * this->player->get_speed();
+    GLfloat gravityVelocity = this->player->get_radius() * 0.33 * this->player->get_speed();
 
     // Apply gravity to player
     this->move_a_character(this->player, 0, gravityVelocity, frameTime);
@@ -280,24 +273,22 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
         {
             move_a_character(enemy, -enemy->get_speed(), 0, frameTime);
         }
-        else
-        {
-            // move_a_character(enemy, enemy->get_speed(), 0, frameTime);
+        // else
+        // {
             // cout << enemy->get_id() << ": "
             //  << "would fall" << endl;
-        }
+        // }
         break;
     case 2:
         if (!will_enemy_fall(enemy, enemy->get_speed(), frameTime))
         {
             move_a_character(enemy, enemy->get_speed(), 0, frameTime);
         }
-        else
-        {
-            // move_a_character(enemy, -enemy->get_speed(), 0, frameTime);
+        // else
+        // {
             // cout << enemy->get_id() << ": "
             //  << "would fall" << endl;
-        }
+        // }
         break;
     default:
         break;
@@ -491,13 +482,6 @@ bool Game::is_character_inside_any_terrain(Character *character)
             }
 
             return true;
-        }
-        else
-        {
-            // if (this->debugOptions.highlightTerrain)
-            // {
-            //     terrain->set_color({0, 0, 0});
-            // }
         }
     }
 
