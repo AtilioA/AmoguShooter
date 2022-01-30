@@ -63,7 +63,7 @@ void Character::shoot()
 {
     if (glutGet(GLUT_ELAPSED_TIME) - this->get_last_time_fired() >= this->get_reload_time())
     {
-        Gunshot *newGunshot = new Gunshot(this->center.x, this->center.y, 0, 0, this->gThetaArm + (90 * this->facingDirection), this->facingDirection);
+        Gunshot *newGunshot = new Gunshot(this->center.x, this->center.y, 0, 0, this->speed, this->radius, this->gThetaArm + (90 * this->facingDirection), this->facingDirection);
         this->gunshots.push_back(newGunshot);
         this->set_last_time_fired(glutGet(GLUT_ELAPSED_TIME));
     }
@@ -493,6 +493,15 @@ void Character::set_terrain_below(Terrain *terrain)
     this->terrainBelow = terrain;
 }
 
+void Character::set_speed(GLfloat speed)
+{
+    this->speed = speed;
+}
+GLfloat Character::get_speed()
+{
+    return this->speed;
+}
+
 void Character::set_center(Point p)
 {
     this->center = p;
@@ -587,7 +596,7 @@ void Character::jump(GLfloat clock)
 
     // GLint jumpTime = 4;
     // GLfloat jumpHeight = 3 * this->height;
-    // GLfloat jumpVelocity = jumpHeight / jumpTime / 2;
+    // GLfloat jumpSpeed = jumpHeight / jumpTime / 2;
 
-    // GLfloat jumpAcceleration = jumpVelocity / jumpTime;
+    // GLfloat jumpAcceleration = jumpSpeed / jumpTime;
 }

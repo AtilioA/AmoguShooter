@@ -27,15 +27,15 @@ private:
     void draw_gunshot(GLfloat x, GLfloat y, Color crewmateUpperBodyColor);
 
 public:
-    Gunshot(GLfloat x, GLfloat y, GLfloat deltaX, GLfloat deltaY, GLfloat directionAng, GLint facingDirection)
+    Gunshot(GLfloat x, GLfloat y, GLfloat deltaX, GLfloat deltaY, GLfloat charSpeed, GLfloat charRadius, GLfloat directionAng, GLint facingDirection)
     {
         gXInit = x;
         gYInit = y;
         gX = x + deltaX;
         gY = y + deltaY;
         gDirectionAng = directionAng;
-        gVel = INC_KEYIDLE * 2;
-        gRadiusGunshot = 1;
+        gVel = charSpeed * 2;
+        gRadiusGunshot = charRadius / 4;
         facingDirection = facingDirection;
     };
 

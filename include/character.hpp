@@ -23,6 +23,7 @@ protected:
     // Position
     GLint id;
     Point center;
+    GLfloat speed;
     Terrain *terrainBelow;
 
     // Geometry
@@ -66,13 +67,14 @@ protected:
 public:
     Character(Point center, GLfloat radius, CrewmateColors colors, GLint id)
     {
+        this->set_id(id);
         this->set_center(center);
         this->set_radius(radius);
         this->visorColor = DEFAULT_VISOR_COLOR;
         this->set_crewmate_colors(colors);
         this->set_height(radius * 2);
-        this->set_id(id);
         this->set_terrain_below(NULL);
+        this->speed = (radius / 200);
 
         this->trunkWidth = radius;
 
@@ -96,7 +98,7 @@ public:
         this->isJumping = false;
         this->isFalling = false;
         this->jumpTime = 0;
-        this->jumpSpeed = this->height * 0.33 * INC_KEYIDLE; // 3x player height in 1 second
+        this->jumpSpeed = this->height * 0.33 * this->speed; // 3x player height in 1 second
         this->jumpInitialY = center.y;
     };
     virtual ~Character()
@@ -137,6 +139,9 @@ public:
 
     void set_center(Point p);
     Point get_center();
+
+    void set_speed(GLfloat speed);
+    GLfloat get_speed();
 
     void set_visor_color(Color visorColor);
     Color get_visor_color();

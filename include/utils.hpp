@@ -5,9 +5,6 @@
 
 #define M_PI 3.14159265358979323846
 
-#define INC_KEY 0.033
-#define INC_KEYIDLE 0.033
-
 // Default visor color
 #define DEFAULT_VISOR_COLOR Color({1.0, 1.0, 1.0})
 

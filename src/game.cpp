@@ -230,7 +230,7 @@ void Game::apply_gravity(GLfloat frameTime)
     // cout << "gravityVelocity: " << gravityVelocity << endl;
     // GLfloat gravityVelocity = MAX_JUMP_HEIGHT / MAX_JUMP_TIME;
 
-    GLfloat gravityVelocity = this->player->get_radius() * 0.3 * INC_KEYIDLE;
+    GLfloat gravityVelocity = this->player->get_radius() * 0.3 * this->player->get_speed();
 
     // Apply gravity to player
     this->move_a_character(this->player, 0, gravityVelocity, frameTime);
@@ -276,25 +276,25 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
     switch (randomNumber)
     {
     case 1:
-        if (!will_enemy_fall(enemy, -INC_KEY, frameTime))
+        if (!will_enemy_fall(enemy, -enemy->get_speed(), frameTime))
         {
-            move_a_character(enemy, -INC_KEY, 0, frameTime);
+            move_a_character(enemy, -enemy->get_speed(), 0, frameTime);
         }
         else
         {
-            // move_a_character(enemy, INC_KEY, 0, frameTime);
+            // move_a_character(enemy, enemy->get_speed(), 0, frameTime);
             // cout << enemy->get_id() << ": "
             //  << "would fall" << endl;
         }
         break;
     case 2:
-        if (!will_enemy_fall(enemy, INC_KEY, frameTime))
+        if (!will_enemy_fall(enemy, enemy->get_speed(), frameTime))
         {
-            move_a_character(enemy, INC_KEY, 0, frameTime);
+            move_a_character(enemy, enemy->get_speed(), 0, frameTime);
         }
         else
         {
-            // move_a_character(enemy, -INC_KEY, 0, frameTime);
+            // move_a_character(enemy, -enemy->get_speed(), 0, frameTime);
             // cout << enemy->get_id() << ": "
             //  << "would fall" << endl;
         }

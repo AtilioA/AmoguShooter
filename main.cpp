@@ -290,7 +290,7 @@ void idle(void)
 
         game->enemies_shoot_at_player(frameTime);
 
-        double inc = INC_KEYIDLE;
+        double inc = player->get_speed();
         GLfloat dx = 0, dy = 0;
 
         // cout << player->get_is_jumping() << endl;
