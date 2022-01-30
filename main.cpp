@@ -34,11 +34,11 @@ Game *game = new Game();
 void RenderString(float x, float y)
 {
     glColor3f(1.0f, 1.0f, 1.0f);
-    glRasterPos2f(game->get_player()->get_center().x, -game->get_arena_background()->get_center().y - game->get_arena_background()->get_height() / 2);
+    glRasterPos2f(game->get_player()->get_center().x - 7.5, -game->get_arena_background()->get_center().y - game->get_arena_background()->get_height() / 2);
 
     if (game->has_player_won())
     {
-        sprintf(str, "VITORIA! Aperte R para reiniciar");
+        sprintf(str, "  VITORIA! Aperte R para reiniciar");
         cout << "VITÓRIA" << endl;
     }
     else
@@ -46,6 +46,7 @@ void RenderString(float x, float y)
         sprintf(str, "GAME OVER! Aperte R para reiniciar");
         cout << "GAME OVER" << endl;
     }
+
     char *text;
     text = str;
     while (*text)
@@ -204,7 +205,7 @@ void init(Game *game)
     ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
     // glClearColor((GLfloat)r, (GLfloat)g, (GLfloat)b, 1);
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // Dark gray, no opacity(alpha).
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Dark gray, no opacity(alpha).
 
     cout << "\nArena width: " << game->get_arena_dimensions().width << ", height: " << game->get_arena_dimensions().height << endl;
     GLfloat smallestArenaDimension = smallest_dimension(game->get_arena_dimensions());
