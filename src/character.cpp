@@ -77,22 +77,13 @@ void Character::move_arm_mouse_helper(GLfloat oldX, GLfloat maxX, GLfloat oldY, 
 
     cout << "x: " << x << " y: " << y << endl;
 
-    if (x > maxX)
+    if (x > maxX || x < -maxX)
     {
-        x = maxX;
+        x = fabs(maxX);
     }
-    else if (x < -maxX)
+    if (y > maxY || y < -maxY)
     {
-        x = -maxX;
-    }
-
-    if (y > maxY)
-    {
-        y = maxY;
-    }
-    else if (y < -maxY)
-    {
-        y = -maxY;
+        y = fabs(maxY);
     }
 
     cout << "newX: " << x << " newY: " << y << endl;
