@@ -26,9 +26,10 @@ const GLint Height = 500;
 const GLint ViewingWidth = 500;
 const GLint ViewingHeight = 500;
 
-bool pressingRightClick = false;
 static bool shouldPreserveFramerateSpeed = true;
 static GLdouble framerate = 0;
+GLfloat oldY = 0;
+
 Game *game = new Game();
 
 void RenderString(float x, float y)
@@ -333,9 +334,7 @@ void idle(void)
 
 void aim_with_mouse(int x, int y)
 {
-    y = ViewingHeight - y;
-
-    game->get_player()->move_arm_mouse_helper(x, Width, y, Height);
+    game->get_player()->move_arm_mouse_helper(y, &oldY);
 }
 
 int main(int argc, char *argv[])

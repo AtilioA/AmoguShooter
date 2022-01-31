@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#define MOUSE_SENSITIVITY 1.2
+#define MOUSE_SENSITIVITY 0.2
 
 typedef struct tDebug
 {
