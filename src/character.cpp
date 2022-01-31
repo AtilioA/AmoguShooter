@@ -32,48 +32,8 @@ GLdouble Character::get_reload_time()
     return this->reloadTime;
 }
 
-void Character::delete_gunshots()
-{
-    for (std::vector<Gunshot *>::iterator it = this->gunshots.begin(); it != this->gunshots.end(); ++it)
-    {
-        delete *it;
-    }
-
-    this->gunshots.clear();
-}
-
-void Character::remove_gunshot(Gunshot *gunshot)
-{
-    for (size_t i = 0; i < this->gunshots.size(); i++)
-    {
-        if (this->gunshots[i] == gunshot)
-        {
-            this->gunshots.erase(this->gunshots.begin() + i);
-            break;
-        }
-    }
-}
-
-vector<Gunshot *> Character::get_gunshots()
-{
-    return this->gunshots;
-}
-
-void Character::shoot()
-{
-    if (glutGet(GLUT_ELAPSED_TIME) - this->get_last_time_fired() >= this->get_reload_time())
-    {
-        Gunshot *newGunshot = new Gunshot(this->center.x, this->center.y, 0, 0, this->speed, this->radius, this->gThetaArm + (90 * this->facingDirection), this->facingDirection);
-        this->gunshots.push_back(newGunshot);
-        this->set_last_time_fired(glutGet(GLUT_ELAPSED_TIME));
-    }
-}
-
 void Character::move_arm_mouse_helper(GLfloat yMouse, GLfloat *oldY)
 {
-    cout << "oldY: " << *oldY << endl;
-    cout << "yMouse: " << yMouse << endl;
-
     if (oldY == 0)
     {
         *oldY = yMouse;

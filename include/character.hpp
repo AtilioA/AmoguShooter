@@ -6,7 +6,6 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-#include "gunshot.hpp"
 #include "utils.hpp"
 #include "terrain.hpp"
 
@@ -16,7 +15,6 @@ enum Direction : GLint
     RIGHT = 1
 };
 
-class Gunshot;
 class Character // abstract class
 {
 protected:
@@ -36,7 +34,6 @@ protected:
     CrewmateColors colors;
 
     // Combat
-    std::vector<Gunshot *> gunshots;
     bool isAlive;
     GLdouble lastTimeFired;
     GLdouble reloadTime;
@@ -89,7 +86,6 @@ public:
 
         this->facingDirection = Direction::RIGHT;
 
-        this->gunshots = std::vector<Gunshot *>();
         this->isAlive = true;
         this->lastTimeFired = 0;
         this->reloadTime = (rand() % 1000) + 100; // milliseconds
@@ -103,7 +99,6 @@ public:
     };
     virtual ~Character()
     {
-        this->delete_gunshots();
     };
 
     GLfloat get_jump_speed();
@@ -125,10 +120,6 @@ public:
 
     bool is_alive();
     void set_alive(bool alive);
-    void delete_gunshots();
-    void remove_gunshot(Gunshot *gunshot);
-    std::vector<Gunshot *> get_gunshots();
-    void shoot();
     GLdouble get_last_time_fired();
     GLdouble get_reload_time();
     void set_last_time_fired(GLdouble lastTimeFired);

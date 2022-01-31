@@ -84,22 +84,9 @@ void renderScene()
         game->draw_enemies();
         // cout << "Finished drawing game elements." << endl;
 
-        Player *player = game->get_player();
-        vector<Gunshot *> playerGunshots = player->get_gunshots();
-
-        for (auto &playerGunshot : playerGunshots)
+        for (auto &gunshot : game->get_characters_gunshots())
         {
-            playerGunshot->draw(player->get_crewmate_colors().upperBody);
-        }
-        for (size_t i = 0; i < game->get_enemies().size(); i++)
-        {
-            Enemy *currentEnemy = game->get_enemies()[i];
-
-            vector<Gunshot *> currentEnemyGunshots = currentEnemy->get_gunshots();
-            for (auto &currentEnemyGunshot : currentEnemyGunshots)
-            {
-                currentEnemyGunshot->draw(currentEnemy->get_crewmate_colors().upperBody);
-            }
+            gunshot->draw();
         }
     }
 
@@ -179,7 +166,7 @@ void mouseClick(int button, int state, int mousex, int mousey)
     // Player shoot
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
     {
-        game->get_player()->shoot();
+        game->make_a_character_shoot(game->get_player());
     }
 
     // Player jump
@@ -326,11 +313,7 @@ void idle(void)
 
         game->apply_gravity(frameTime);
 
-        game->move_gunshots_character(player, frameTime);
-        for (auto &enemy : game->get_enemies())
-        {
-            game->move_gunshots_character(enemy, frameTime);
-        }
+        game->move_gunshots(frameTime);
     }
     glutPostRedisplay();
 }

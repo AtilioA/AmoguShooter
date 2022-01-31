@@ -13,6 +13,7 @@
 class Character;
 class Gunshot
 {
+    GLint shooterID;
     GLdouble gXInit;
     GLdouble gYInit;
     GLdouble gX;
@@ -21,31 +22,36 @@ class Gunshot
     GLdouble gVel;
     GLdouble gRadiusGunshot;
     GLint facingDirection;
+    Color color;
 
 private:
     void draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B);
-    void draw_gunshot(GLdouble x, GLdouble y, Color crewmateUpperBodyColor);
+    void draw_gunshot(GLdouble x, GLdouble y);
 
 public:
-    Gunshot(GLdouble x, GLdouble y, GLdouble deltaX, GLdouble deltaY, GLdouble charSpeed, GLdouble charRadius, GLfloat directionAng, GLint facingDirection)
+    Gunshot(GLint shooterID, GLdouble x, GLdouble y, GLdouble deltaX, GLdouble deltaY, GLdouble charSpeed, GLdouble charRadius, GLfloat directionAng, GLint facingDirection, Color crewmateUpperBody)
     {
-        gXInit = x;
-        gYInit = y;
-        gX = x + deltaX;
-        gY = y + deltaY;
-        gDirectionAng = directionAng;
-        gVel = charSpeed * 2;
-        gRadiusGunshot = charRadius / 4;
-        facingDirection = facingDirection;
+        this->shooterID = shooterID;
+        this->gXInit = x;
+        this->gYInit = y;
+        this->gX = x + deltaX;
+        this->gY = y + deltaY;
+        this->gDirectionAng = directionAng;
+        this->gVel = charSpeed * 2;
+        this->gRadiusGunshot = charRadius / 4;
+        this->facingDirection = facingDirection;
+        this->color = crewmateUpperBody;
     };
 
-    void draw(Color crewmateUpperBodyColor)
+    void draw()
     {
-        draw_gunshot(this->gX, this->gY, crewmateUpperBodyColor);
+        draw_gunshot(this->gX, this->gY);
     };
 
     bool is_inside_character(Character *character);
     bool is_inside_terrain(Terrain *terrain);
+
+    GLint get_shooter_id();
 
     GLfloat get_radius();
     Point get_center();

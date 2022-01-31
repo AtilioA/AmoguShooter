@@ -3,6 +3,18 @@
 
 using namespace std;
 
+void Game::make_a_character_shoot(Character *character)
+{
+    if (glutGet(GLUT_ELAPSED_TIME) - character->get_last_time_fired() >= character->get_reload_time())
+    {
+        Gunshot *newGunshot = new Gunshot(character->get_id(), character->get_center().x, character->get_center().y, 0, 0, character->get_speed(), character->get_radius(), character->get_theta_arm() + (90 * character->get_facing_direction()), character->get_facing_direction(), character->get_crewmate_colors().upperBody);
+
+        this->charactersGunshots.push_back(newGunshot);
+
+        character->set_last_time_fired(glutGet(GLUT_ELAPSED_TIME));
+    }
+}
+
 void Game::make_a_character_jump(Character *character, GLfloat frameTime)
 {
     // cout << "is_jumping: " << character->get_is_jumping() << endl;
@@ -67,22 +79,25 @@ bool Game::has_game_reached_end_state()
     }
 }
 
-void Game::move_gunshots_character(Character *character, GLfloat frameTime)
+vector<Gunshot *> Game::get_characters_gunshots()
 {
-    vector<Gunshot *> gunshots = character->get_gunshots();
-    for (vector<Gunshot *>::iterator it = gunshots.begin(); it != gunshots.end(); ++it)
+    return this->charactersGunshots;
+}
+
+void Game::move_gunshots(GLfloat frameTime)
+{
+    for (auto &gunshot : this->charactersGunshots)
     {
-        Gunshot *gunshot = *it;
-        this->move_a_gunshot(character, gunshot, frameTime);
+        this->move_a_gunshot(gunshot, frameTime);
     }
 }
 
-void Game::move_a_gunshot(Character *shooter, Gunshot *gunshot, GLfloat frameTime)
+void Game::move_a_gunshot(Gunshot *gunshot, GLfloat frameTime)
 {
     if (gunshot != NULL)
     {
         gunshot->move(frameTime);
-        this->handle_collision_gunshot(shooter, gunshot);
+        this->handle_collision_gunshot(gunshot);
     }
 }
 
@@ -105,19 +120,18 @@ void Game::remove_character(Character *character)
     }
 }
 
-void Game::handle_collision_gunshot(Character *shooter, Gunshot *gunshot)
+void Game::handle_collision_gunshot(Gunshot *gunshot)
 {
     if (this->check_collision_gunshot_non_character(gunshot))
     {
-        shooter->remove_gunshot(gunshot);
+        this->remove_gunshot(gunshot);
     }
     else
     {
         Character *hitCharacter = this->check_collision_gunshot_any_character(gunshot);
-
-        if (hitCharacter != NULL && hitCharacter != shooter)
+        if (hitCharacter != NULL && hitCharacter->get_id() != gunshot->get_shooter_id())
         {
-            shooter->remove_gunshot(gunshot);
+            this->remove_gunshot(gunshot);
             cout << "Hit character " << hitCharacter->get_id() << endl;
             hitCharacter->set_alive(false);
             if (hitCharacter == this->player)
@@ -193,6 +207,18 @@ bool Game::is_gunshot_inside_any_terrain(Gunshot *gunshot)
     }
 
     return false;
+}
+
+void Game::remove_gunshot(Gunshot *gunshot)
+{
+    for (size_t i = 0; i < this->charactersGunshots.size(); i++)
+    {
+        if (this->charactersGunshots[i] == gunshot)
+        {
+            this->charactersGunshots.erase(this->charactersGunshots.begin() + i);
+            break;
+        }
+    }
 }
 
 void Game::move_a_character(Character *character, GLdouble dx, GLdouble dy, GLfloat frameTime)
@@ -275,8 +301,8 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
         }
         // else
         // {
-            // cout << enemy->get_id() << ": "
-            //  << "would fall" << endl;
+        // cout << enemy->get_id() << ": "
+        //  << "would fall" << endl;
         // }
         break;
     case 2:
@@ -286,8 +312,8 @@ void Game::move_enemy_randomly(Enemy *enemy, GLfloat frameTime)
         }
         // else
         // {
-            // cout << enemy->get_id() << ": "
-            //  << "would fall" << endl;
+        // cout << enemy->get_id() << ": "
+        //  << "would fall" << endl;
         // }
         break;
     default:
@@ -328,7 +354,7 @@ void Game::enemy_shoot_at_player(Enemy *enemy, GLfloat frameTime)
             if (randomNumber < frameTime * 0.005)
             {
                 cout << "Enemy " << enemy->get_id() << " is shooting at player" << endl;
-                enemy->shoot();
+                this->make_a_character_shoot(enemy);
             }
         }
         else

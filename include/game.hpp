@@ -26,6 +26,7 @@ class Game
 private:
     Player *player;
     vector<Enemy *> enemies;
+    vector<Gunshot *> charactersGunshots;
     vector<Terrain *> terrains;
     Terrain *background;
     GLint nCharacters;
@@ -52,12 +53,16 @@ public:
     bool has_player_reached_arena_end();
     bool has_game_reached_end_state();
 
+    void make_a_character_shoot(Character *character);
     void make_a_character_jump(Character *character, GLfloat frameTime);
 
-    void move_gunshots_character(Character *character, GLfloat frameTime);
-    void move_a_gunshot(Character *shooter, Gunshot *gunshot, GLfloat frameTime);
+    vector<Gunshot *> get_characters_gunshots();
+    void move_gunshots(GLfloat frameTime);
+    void move_a_gunshot(Gunshot *gunshot, GLfloat frameTime);
+    void remove_gunshot(Gunshot *gunshot);
 
-    void handle_collision_gunshot(Character *shooter, Gunshot *gunshot);
+    void handle_collision_gunshot(Gunshot *gunshot);
+
     bool check_collision_gunshot_non_character(Gunshot *gunshot);
     bool is_gunshot_outside_arena(Gunshot *gunshot);
     bool is_gunshot_inside_any_terrain(Gunshot *gunshot);

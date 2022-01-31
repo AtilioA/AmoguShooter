@@ -11,11 +11,11 @@ void Gunshot::draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B)
     glEnd();
 }
 
-void Gunshot::draw_gunshot(GLdouble x, GLdouble y, Color crewmateUpperBodyColor)
+void Gunshot::draw_gunshot(GLdouble x, GLdouble y)
 {
     glPushMatrix();
     glTranslatef(x, -y, 0);
-    draw_circ(this->gRadiusGunshot, crewmateUpperBodyColor.r, crewmateUpperBodyColor.g, crewmateUpperBodyColor.b);
+    draw_circ(this->gRadiusGunshot, this->color.r, this->color.g, this->color.b);
     glPopMatrix();
 }
 
@@ -58,6 +58,11 @@ bool Gunshot::is_inside_terrain(Terrain *terrain)
     }
 
     return false;
+}
+
+GLint Gunshot::get_shooter_id()
+{
+    return this->shooterID;
 }
 
 GLfloat Gunshot::get_radius()
