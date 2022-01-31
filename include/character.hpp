@@ -98,7 +98,7 @@ public:
         this->isJumping = false;
         this->isFalling = false;
         this->jumpTime = 0;
-        this->jumpSpeed = this->height * 0.33 * this->speed; // 3x player height in 1 second
+        this->jumpSpeed = (this->height / 3) * this->speed; // 3x player height in 1 second
         this->jumpInitialY = center.y;
     };
     virtual ~Character()
@@ -184,7 +184,7 @@ public:
     void draw_arm();
     void draw_head();
 
-void move_arm_mouse_helper(GLfloat yMouse, GLfloat *oldY);
+    void move_arm_mouse_helper(GLfloat yMouse, GLfloat *oldY);
     void rotate_arm(GLfloat inc);
     void rotate_thigh(GLfloat inc);
     void rotate_leg(GLfloat inc);
