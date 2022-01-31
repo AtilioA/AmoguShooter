@@ -411,6 +411,7 @@ void Game::free()
 {
     delete this->player;
 
+    this->charactersGunshots.clear();
     this->enemies.clear();
     this->terrains.clear();
 
@@ -420,6 +421,7 @@ void Game::free()
 void Game::reset_game()
 {
     this->free();
+
     parseSVGFile(this->arenaSVGFilename, this);
 }
 
