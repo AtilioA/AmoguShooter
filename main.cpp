@@ -14,7 +14,7 @@ using namespace std;
 // Key status
 int keyStatus[256];
 
-// Char vector for endgame messages
+// Char array for endgame messages
 static char str[999];
 
 // Window dimensions
@@ -35,10 +35,12 @@ Game *game = new Game();
 void RenderString(float x, float y)
 {
     glColor3f(1.0f, 1.0f, 1.0f);
-    glRasterPos2f(game->get_player()->get_center().x - 7.5, -game->get_arena_background()->get_center().y - game->get_arena_background()->get_height() / 2);
+
+    GLfloat stringMargin = game->get_player()->get_radius() * 6;
 
     if (game->has_player_won())
     {
+        stringMargin = game->get_player()->get_radius() * 6.25;
         sprintf(str, "  VITORIA! Aperte R para reiniciar");
         cout << "VITÓRIA" << endl;
     }
@@ -47,6 +49,8 @@ void RenderString(float x, float y)
         sprintf(str, "GAME OVER! Aperte R para reiniciar");
         cout << "GAME OVER" << endl;
     }
+
+    glRasterPos2f(game->get_player()->get_center().x - stringMargin, -game->get_arena_background()->get_center().y - game->get_arena_background()->get_height() / 2);
 
     char *text;
     text = str;
@@ -69,7 +73,6 @@ void renderScene()
     }
     else
     {
-
         // cout << "\nDrawing game elements:" << endl;
         // cout << "Drawing background... ";
         game->get_arena_background()->draw_terrain();
