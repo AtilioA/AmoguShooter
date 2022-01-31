@@ -2,12 +2,12 @@ CC       := g++
 OBJ      := obj
 SRC      := src
 INC      := include
-CFLAGS   := -std=c++17 -lm -g -lGL -lGLU -lglut -Wall -pedantic -Wextra -Wno-unused-parameter -Wwrite-strings
+CFLAGS   := -std=c++17 -lm -g -lGL -lGLU -lglut -Wall -pedantic -Wextra -Wno-unused-parameter
 EXE 	 := trabalhocg
 PROJETO  := main
 
-# Cria objetos de todos os arquivos de código-fonte para então linká-los no programa final
-all: clean $(OBJ)/gunshot.o $(OBJ)/$(PROJETO).o $(OBJ)/game.o $(OBJ)/character.o $(OBJ)/terrain.o $(OBJ)/svg_reader.o $(OBJ)/utils.o $(OBJ)/player.o $(OBJ)/enemy.o $(OBJ)/tinyxml2.o
+
+all: clean $(OBJ)/gunshot.o $(OBJ)/$(PROJETO).o $(OBJ)/game.o $(OBJ)/character.o $(OBJ)/terrain.o $(OBJ)/svg_reader.o $(OBJ)/utils.o $(OBJ)/player.o $(OBJ)/enemy.o $(OBJ)/tinyxml2.o ## Create objects from all source code files from scratch and link them in the final program
 	$(CC) $(OBJ)/*.o -o $(EXE) $(CFLAGS)
 
 $(OBJ)/$(PROJETO).o: $(PROJETO).cpp
@@ -40,22 +40,21 @@ $(OBJ)/enemy.o: $(SRC)/enemy.cpp $(INC)/enemy.hpp
 $(OBJ)/tinyxml2.o: $(SRC)/tinyxml2.cpp $(INC)/tinyxml2.hpp
 	$(CC) -c $(CFLAGS) "$(SRC)/tinyxml2.cpp" -o "$(OBJ)/tinyxml2.o"
 
-run: all
+run: all  ## Compile and run executable with input/arena_teste.svg
 	./$(EXE) input/arena_teste.svg
 
-val: all
-	valgrind ./$(EXE) input/arena_teste.svg
-
-debug: all
+debug: all ## Compile and run executable with input/arena_teste.svg in debug mode
 	./$(EXE) input/arena_teste.svg -d
 
-exe:
+exe: ## Run executable with input/arena_teste.svg
 	./$(EXE) input/arena_teste.svg
 
-release: clean
+release: clean ## Compress code in a .zip file for distribution
 	-tar -cvf AtilioAntonioDadalto.zip include/* input/arena_teste.svg obj/ src/* LICENSE main.cpp Makefile README.md
 
-# Limpa objetos e o executável do programa
-clean:
+help:  ## Display help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
+
+clean: ## Clean objects and executables
 	-rm -f $(OBJ)/*.o
 	-rm -f $(EXE)
