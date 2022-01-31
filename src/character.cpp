@@ -82,13 +82,13 @@ void Character::move_arm_mouse_helper(GLfloat yMouse, GLfloat *oldY)
     GLfloat deltaY = yMouse - *oldY;
     this->gThetaArm += deltaY * MOUSE_SENSITIVITY * -this->facingDirection;
 
-    if (fabs(this->gThetaArm) > this->gThetaArmMAX)
+    if (this->gThetaArm > this->gThetaArmMAX)
     {
-        this->gThetaArm = this->gThetaArmMAX * this->facingDirection;
+        this->gThetaArm = this->gThetaArmMAX;
     }
-    if (fabs(this->gThetaArm) < this->gThetaArmMIN)
+    if (this->gThetaArm < this->gThetaArmMIN)
     {
-        this->gThetaArm = this->gThetaArmMIN * -this->facingDirection;
+        this->gThetaArm = this->gThetaArmMIN;
     }
 
     *oldY = yMouse;
