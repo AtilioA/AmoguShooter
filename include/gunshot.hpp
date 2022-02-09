@@ -26,7 +26,7 @@ class Gunshot
 
 private:
     void draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B);
-    void draw_gunshot(GLdouble x, GLdouble y);
+    void draw_bullet(GLdouble x, GLdouble y);
 
 public:
     Gunshot(GLint shooterID, GLdouble x, GLdouble y, GLdouble deltaX, GLdouble deltaY, GLdouble charSpeed, GLdouble charRadius, GLfloat directionAng, GLint facingDirection, Color crewmateUpperBody)
@@ -43,10 +43,11 @@ public:
         this->color = crewmateUpperBody;
     };
 
-    void draw()
+    void draw_gunshot()
     {
-        draw_gunshot(this->gX, this->gY);
+        draw_bullet(this->gX, this->gY);
     };
+    void move_gunshot(GLdouble frameTime);
 
     bool is_inside_character(Character *character);
     bool is_inside_terrain(Terrain *terrain);

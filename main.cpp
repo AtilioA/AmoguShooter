@@ -91,7 +91,7 @@ void render_scene()
         // cout << "Drawing gunshots..." << endl;
         for (auto &gunshot : game->get_characters_gunshots())
         {
-            gunshot->draw();
+            gunshot->draw_gunshot();
         }
         // cout << "Finished drawing game elements." << endl;
     }

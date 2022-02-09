@@ -11,7 +11,7 @@ void Gunshot::draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B)
     glEnd();
 }
 
-void Gunshot::draw_gunshot(GLdouble x, GLdouble y)
+void Gunshot::draw_bullet(GLdouble x, GLdouble y)
 {
     glPushMatrix();
     glTranslatef(x, -y, 0);
@@ -19,7 +19,7 @@ void Gunshot::draw_gunshot(GLdouble x, GLdouble y)
     glPopMatrix();
 }
 
-void Gunshot::move(GLdouble frameTime)
+void Gunshot::move_gunshot(GLdouble frameTime)
 {
     this->gX += this->gVel * sin(deg_to_radians(this->gDirectionAng)) * frameTime;
     this->gY += this->gVel * cos(deg_to_radians(this->gDirectionAng)) * frameTime;

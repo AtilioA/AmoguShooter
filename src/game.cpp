@@ -96,7 +96,7 @@ void Game::move_a_gunshot(Gunshot *gunshot, GLfloat frameTime)
 {
     if (gunshot != NULL)
     {
-        gunshot->move(frameTime);
+        gunshot->move_gunshot(frameTime);
         this->handle_collision_gunshot(gunshot);
     }
 }
