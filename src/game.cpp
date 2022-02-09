@@ -272,12 +272,9 @@ bool Game::will_enemy_fall(Enemy *enemy, GLdouble dx, GLfloat frameTime)
     }
     else
     {
-        // Add character trunk width / 2 later
-        // cout << "new: " << enemy->get_center().x + dx << endl;
-        // cout << "terrain: " << terrainBelowEnemy->get_center().x << " + " << terrainBelowEnemy->get_width() << "(" << terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width() << ")" << endl;
         GLfloat newX = enemy->get_center().x + (dx * frameTime);
-        if (newX <= terrainBelowEnemy->get_center().x ||
-            newX >= terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width())
+        if ((newX + enemy->get_trunk_width() / 4) <= terrainBelowEnemy->get_center().x ||
+            (newX - enemy->get_trunk_width() / 4) >= terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width())
         {
             return true;
         }
