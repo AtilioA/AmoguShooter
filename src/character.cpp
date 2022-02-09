@@ -34,14 +34,19 @@ GLdouble Character::get_reload_time()
 
 void Character::move_arm_mouse_helper(GLfloat yMouse, GLfloat *oldY)
 {
+    // Initialize oldY with current mouse position if it hasn't been initialized yet
     if (oldY == 0)
     {
         *oldY = yMouse;
     }
 
+    // Calculate the difference between the current mouse position and the last mouse position
     GLfloat deltaY = yMouse - *oldY;
+
+    // Update arm's angle considering mouse sensitivity and Character's facing direction as well
     this->gThetaArm += deltaY * MOUSE_SENSITIVITY * -this->facingDirection;
 
+    // Don't let the arm go past the max or min angles
     if (this->gThetaArm > this->gThetaArmMAX)
     {
         this->gThetaArm = this->gThetaArmMAX;
@@ -51,6 +56,7 @@ void Character::move_arm_mouse_helper(GLfloat yMouse, GLfloat *oldY)
         this->gThetaArm = this->gThetaArmMIN;
     }
 
+    // Update the old mouse position
     *oldY = yMouse;
 }
 
@@ -100,6 +106,7 @@ void Character::draw_left_thigh()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
+    // Draw thigh animation according to the facing direction
     if (this->facingDirection == Direction::RIGHT)
     {
         glRotatef(this->gThetaLeg, 0, 0, 1);
@@ -126,6 +133,7 @@ void Character::draw_left_leg()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
+    // Draw left animation according to the facing direction
     if (this->facingDirection == Direction::LEFT)
     {
         glRotatef(-this->gThetaLeg, 0, 0, 1);
@@ -152,6 +160,7 @@ void Character::draw_right_thigh()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
+    // Draw thigh animation according to the facing direction
     if (this->facingDirection == Direction::RIGHT)
     {
         glRotatef(-this->gThetaLeg, 0, 0, 1);
@@ -178,6 +187,7 @@ void Character::draw_right_leg()
 {
     glColor3f(this->colors.lowerBody.r, this->colors.lowerBody.g, this->colors.lowerBody.b);
 
+    // Draw leg animation according to the facing direction
     if (this->facingDirection == Direction::RIGHT)
     {
         glRotatef(-this->gThetaLeg, 0, 0, 1);
@@ -205,7 +215,9 @@ void Character::draw_arm()
 
     glTranslatef(this->center.x, -this->center.y, 0);
 
+    // Rotate with gThetaArm
     glRotatef(this->gThetaArm, 0, 0, 1);
+    // Flip with facingDirection according to the direction of the character
     glRotatef(90 * this->facingDirection, 0, 0, 1);
 
     glBegin(GL_POLYGON);
@@ -223,6 +235,7 @@ void Character::draw_character()
 {
     glPushMatrix();
 
+    // Move to the center of the character (remember that the coordinate starts from the top left corner)
     glTranslatef(this->center.x, -this->center.y, 0);
 
     // Left leg
@@ -265,6 +278,7 @@ void Character::draw_character()
     // Visual debug options
     if (game->get_debug_options().drawObjectCenter)
     {
+        // Draw dot at the center of the Character
         glPushMatrix();
         glTranslatef(this->center.x, -this->center.y, 0);
         glPointSize(4);
@@ -274,7 +288,7 @@ void Character::draw_character()
         glEnd();
         glPopMatrix();
 
-        // Also draw height
+        // Also draw dot at the height
         glPushMatrix();
         glTranslatef(this->center.x, -this->center.y - this->radius, 0);
         glTranslatef(0, this->height, 0);
@@ -286,6 +300,7 @@ void Character::draw_character()
         glPopMatrix();
     }
 
+    // Draw Character's borders/hitbox
     if (game->get_debug_options().drawCharacterHitbox)
     {
         glPushMatrix();
@@ -321,10 +336,12 @@ void Character::move_character(GLfloat dx, GLfloat dy, GLfloat frameTime)
     this->center.x += dx * frameTime;
     this->center.y += dy * frameTime;
 
+    // Only animate if the character is moving in the x direction and is not jumping
     if (!this->isJumping && dx != 0)
     {
         if (abs(gThetaLeg + abs(dx * frameTime * 3)) > this->gThetaLegLIMIT)
         {
+            // If the leg rotation is at the limit, we need to flip the direction
             isWalkingObserve = !isWalkingObserve;
         }
         if (isWalkingObserve)
@@ -349,6 +366,7 @@ bool Character::is_inside_terrain(Terrain *terrain)
     {
         if (this->center.x + this->trunkWidth / 2 >= terrainPos.x && this->center.x - this->trunkWidth / 2 <= terrainPos.x + terrain->get_width())
         {
+            // Collided with black Terrain (not arena background) from above (make Character able to jump)
             if (terrain->get_color().b != 1.0 && this->center.y <= terrainPos.y)
             {
                 this->isFalling = false;
@@ -357,6 +375,7 @@ bool Character::is_inside_terrain(Terrain *terrain)
                 this->terrainBelow = terrain;
             }
 
+            // Collided with Terrain from below (stop jump)
             if (this->center.y >= terrainPos.y + terrain->get_height())
             {
                 this->isFalling = true;
