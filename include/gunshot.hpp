@@ -43,10 +43,7 @@ public:
         this->color = crewmateUpperBody;
     };
 
-    void draw_gunshot()
-    {
-        draw_bullet(this->gX, this->gY);
-    };
+    void draw_gunshot();
     void move_gunshot(GLdouble frameTime);
 
     bool is_inside_character(Character *character);

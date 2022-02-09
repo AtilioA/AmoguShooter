@@ -11,6 +11,11 @@ void Gunshot::draw_circ(GLint radius, GLfloat R, GLfloat G, GLfloat B)
     glEnd();
 }
 
+void Gunshot::draw_gunshot()
+{
+    draw_bullet(this->gX, this->gY);
+}
+
 void Gunshot::draw_bullet(GLdouble x, GLdouble y)
 {
     glPushMatrix();
