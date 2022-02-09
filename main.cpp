@@ -2,7 +2,6 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <stdlib.h>
-#include <math.h>
 #include <iostream>
 
 #include "include/game.hpp"
@@ -17,27 +16,31 @@ int keyStatus[256];
 // Char array for endgame messages
 static char str[999];
 
-// Window dimensions
+/* Window dimensions */
 // "será exibida em uma janela de 500x500 pixel do sistema operacional"
 const GLint Width = 500;
 const GLint Height = 500;
-
-// Viewing dimensions
+// Default viewing dimensions (glOrtho/"Camera")
 const GLint ViewingWidth = 500;
 const GLint ViewingHeight = 500;
 
+// Whether to use frametime normalization or not
 static bool shouldPreserveFramerateSpeed = true;
-static GLdouble framerate = 0;
+
+// Auxiliary variable to calculate mouse movement (and rotate player's arm)
 GLfloat oldY = 0;
 
 Game *game = new Game();
 
 void RenderString(float x, float y)
 {
+    // Render the string in white color
     glColor3f(1.0f, 1.0f, 1.0f);
 
+    // Handpicked font margin adjusted to the window size (for game over message)
     GLfloat stringMargin = game->get_player()->get_radius() * 6;
 
+    // Change string according to game outcome
     if (game->has_player_won())
     {
         stringMargin = game->get_player()->get_radius() * 6.25;
@@ -50,8 +53,10 @@ void RenderString(float x, float y)
         cout << "GAME OVER" << endl;
     }
 
+    // Raster position for the text, determined by the player's position
     glRasterPos2f(game->get_player()->get_center().x - stringMargin, -game->get_arena_background()->get_center().y - game->get_arena_background()->get_height() / 2);
 
+    // Navigate through the string and display each character
     char *text;
     text = str;
     while (*text)
@@ -61,11 +66,12 @@ void RenderString(float x, float y)
     }
 }
 
-void renderScene()
+void render_scene()
 {
     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
 
+    // Only draw the game components if the game is not over
     if (game->has_game_reached_end_state())
     {
         cout << "Game has reached end state!" << endl;
@@ -82,46 +88,43 @@ void renderScene()
         game->draw_player();
         // cout << "Drawing enemies..." << endl;
         game->draw_enemies();
-        // cout << "Finished drawing game elements." << endl;
-
+        // cout << "Drawing gunshots..." << endl;
         for (auto &gunshot : game->get_characters_gunshots())
         {
             gunshot->draw();
         }
+        // cout << "Finished drawing game elements." << endl;
     }
 
-    glutSwapBuffers(); // Draw the new frame of the game.
+    // Flush OpenGL buffers so that the rendered image is visible.
+    glutSwapBuffers();
+    // Mark the current window as needing to be redisplayed.
     glutPostRedisplay();
 }
 
-void keyPress(unsigned char key, int x, int y)
+// Function called whenever a key is pressed; all shortcuts are handled by the switch statement
+void key_press(unsigned char key, int x, int y)
 {
     switch (key)
     {
+    // Enable 'global camera' (buggy but only exists for debugging purposes)
     case '1':
-        // animate = !animate;
         if (game->get_debug_mode())
         {
             game->set_global_camera(!game->get_debug_options().globalCamera);
         }
         break;
-    case 'w':
-    case 'W':
-        // player.jump();
-        keyStatus[(int)('w')] = 1; // Using keyStatus trick
-        break;
+    // Walk left
     case 'a':
     case 'A':
         keyStatus[(int)('a')] = 1; // Using keyStatus trick
         break;
-    case 's':
-    case 'S':
-        keyStatus[(int)('s')] = 1; // Using keyStatus trick
-        break;
+    // Walk right
     case 'd':
     case 'D':
         keyStatus[(int)('d')] = 1; // Using keyStatus trick
         break;
+    // Reset game (only works if the game is over or if the debug mode is enabled)
     case 'r':
     case 'R':
         keyStatus[(int)('r')] = 1; // Using keyStatus trick
@@ -131,24 +134,31 @@ void keyPress(unsigned char key, int x, int y)
             game->reset_game();
         }
         break;
+    // Toggle debug mode
     case '2':
         if (game->get_debug_mode())
         {
             game->get_debug_options().drawCharacterHitbox ? game->set_debug_options(false) : game->set_debug_options(true);
         }
         break;
-    case 27:
+    // Quit game
+    case 27: // Escape key
         exit(0);
     }
+
+    // Redraw the scene (maybe unnecessary)
     glutPostRedisplay();
 }
 
-void keyup(unsigned char key, int x, int y)
+// Handle key release
+void key_up(unsigned char key, int x, int y)
 {
     keyStatus[(int)(key)] = 0;
+    // Redraw the scene (maybe unnecessary)
     glutPostRedisplay();
 }
 
+// Make all keys 'up'
 void ResetKeyStatus()
 {
     int i = 0;
@@ -160,16 +170,16 @@ void ResetKeyStatus()
     }
 }
 
-// Function works on mouse click
-void mouseClick(int button, int state, int mousex, int mousey)
+// Function used to handle mouse presses
+void mouse_click(int button, int state, int mousex, int mousey)
 {
-    // Player shoot
+    // Player shoot on left click
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
     {
         game->make_a_character_shoot(game->get_player());
     }
 
-    // Player jump
+    // Player jump on right click
     Player *player = game->get_player();
     if (button == GLUT_RIGHT_BUTTON)
     {
@@ -188,20 +198,23 @@ void mouseClick(int button, int state, int mousex, int mousey)
         }
     }
 
+    // Redraw the scene (maybe unnecessary)
     glutPostRedisplay();
 }
 
 void init(Game *game)
 {
+    // Initialize all keys to 'up'
     ResetKeyStatus();
+
     // The color the windows will redraw. Its done to erase the previous frame.
-    // glClearColor((GLfloat)r, (GLfloat)g, (GLfloat)b, 1);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f); // Dark gray, no opacity(alpha).
 
     cout << "\nArena width: " << game->get_arena_dimensions().width << ", height: " << game->get_arena_dimensions().height << endl;
     GLfloat smallestArenaDimension = smallest_dimension(game->get_arena_dimensions());
     cout << "Smallest arena dimension: " << smallestArenaDimension << endl;
 
+    // Use ViewingHeight and ViewingWidth to create the default camera
     glMatrixMode(GL_PROJECTION); // Select the projection matrix
     glLoadIdentity();
     glOrtho(-(ViewingWidth / 2),  // X coordinate of left edge
@@ -217,16 +230,14 @@ void init(Game *game)
 
 void idle(void)
 {
+    // Calculate frametime/'deltatime'
     static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble currentTime, frameTime;
     currentTime = glutGet(GLUT_ELAPSED_TIME);
     frameTime = currentTime - previousTime;
     previousTime = currentTime;
-    framerate = 1.0 / frameTime * 1000;
 
-    // cout << "Framerate: " << (int)framerate << endl;
-    // cout << "frameTime: " << frameTime << endl;
-
+    // If we don't have to normalize with frameTime use 1 as multiplier (won't change anything)
     if (!shouldPreserveFramerateSpeed)
     {
         frameTime = 1;
@@ -234,6 +245,8 @@ void idle(void)
 
     Player *player = game->get_player();
 
+    // Use local camera (follows the player)
+    // The camera shouldn't move in y direction, only in x
     if (!game->get_debug_options().globalCamera)
     {
         glMatrixMode(GL_PROJECTION); // Select the projection matrix
@@ -246,8 +259,7 @@ void idle(void)
                 1);                                                                                           // Z coordinate of the “far” plane
         glMatrixMode(GL_MODELVIEW);                                                                           // Select the projection matrix
     }
-
-    else
+    else // if global camera is enabled
     {
         glMatrixMode(GL_PROJECTION); // Select the projection matrix
         glLoadIdentity();
@@ -262,6 +274,7 @@ void idle(void)
         glLoadIdentity();
     }
 
+    // If player has reached the end of the level or has died, stop the game
     if (game->has_game_reached_end_state())
     {
         cout << "Game ended!" << endl;
@@ -275,31 +288,34 @@ void idle(void)
             cout << "Player won!" << endl;
         }
 
+        // Allow the player to restart the game
         if (keyStatus['r'] == 1 || keyStatus['R'] == 1)
         {
-            // cout << "Parsing " << game->get_arena_svg_filename() << endl;
             game->reset_game();
         }
     }
     else
     {
+        // Never use unitialized frametime
         if (frameTime > 0)
         {
+            // Update enemies positions by moving them randomly
             game->move_enemies_randomly(frameTime);
         }
 
+        // Make enemies shoot at player if they are in range
         game->enemies_shoot_at_player(frameTime);
 
         GLdouble inc = player->get_speed();
         GLdouble dx = 0, dy = 0;
 
-        // cout << player->get_is_jumping() << endl;
+        // Continue player jump if they're jumping but not falling
         if (player->get_is_jumping() && !player->get_is_falling())
         {
             game->make_a_character_jump(player, frameTime);
         }
 
-        // Treat keyPress
+        /* Make character move */
         if (keyStatus['d'] == 1 || keyStatus['D'] == 1)
         {
             dx += inc;
@@ -311,22 +327,27 @@ void idle(void)
             game->move_a_character(player, dx, dy, frameTime);
         }
 
+        // Apply gravity to all characters
         game->apply_gravity(frameTime);
 
+        // Move all gunshots
         game->move_gunshots(frameTime);
     }
+
+    // Redraw the scene (maybe unnecessary)
     glutPostRedisplay();
 }
 
+// This function is called whenever the mouse is moved within the window
 void aim_with_mouse(int x, int y)
 {
+    // Rotate player's arm based on mouse movement
     game->get_player()->move_arm_mouse_helper(y, &oldY);
 }
 
 int main(int argc, char *argv[])
 {
-    // Initialize openGL with Double buffer and RGB color without transparency.
-    // Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.
+    // Program needs at least one argument (svg filepath) apart from the executable name
     if (argc < 2)
     {
         printf("Usage: %s <svg file>\n", argv[0]);
@@ -349,24 +370,25 @@ int main(int argc, char *argv[])
     parseSVGFile(arena_filename, game);
     cout << "Finished parsing SVG file." << endl;
 
+    // Initialize openGL with Double buffer and RGB color without transparency
+    // Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
-    // Create the window.
+    // Create the window
     glutInitWindowSize(Width, Height);
-    glutInitWindowPosition(150, 50);
+    glutInitWindowPosition(75, 75);
     glutCreateWindow("Trabalho 2D");
 
-    // Define callbacks.
-    glutDisplayFunc(renderScene);
-    glutKeyboardFunc(keyPress);
-    glutIdleFunc(idle);
-    glutKeyboardUpFunc(keyup);
-
-    // Mouse event handler
-    glutMouseFunc(mouseClick);
-
+    /* Define callbacks */
+    glutDisplayFunc(render_scene);
+    glutKeyboardFunc(key_press);
+    glutKeyboardUpFunc(key_up);
+    // Mouse events handlers
+    glutMouseFunc(mouse_click);
     glutPassiveMotionFunc(aim_with_mouse);
+    // Main rendering loop
+    glutIdleFunc(idle);
 
     init(game);
 
