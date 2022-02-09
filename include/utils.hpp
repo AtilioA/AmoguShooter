@@ -3,16 +3,16 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#define M_PI 3.14159265358979323846
-
-// Default visor color
-#define DEFAULT_VISOR_COLOR Color({1.0, 1.0, 1.0})
-
 #include <map>
 #include <string>
 #include <bits/stdc++.h>
 
 #include <GL/glut.h>
+
+#define M_PI 3.14159265358979323846
+
+// Default visor color
+#define DEFAULT_VISOR_COLOR Color({1.0, 1.0, 1.0})
 
 // Stores the size of a 2D window
 typedef struct tDimensions

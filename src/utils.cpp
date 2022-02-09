@@ -52,6 +52,7 @@ map<string, CrewmateColors> colorMap = {
 
 CrewmateColors get_random_enemy_colors()
 {
+    // Get random index from 0 to size of ENEMY_COLORS and use it to access the corresponding color
     int randomIndex = rand() % ENEMY_COLORS.size();
     string *randomColor = &ENEMY_COLORS[randomIndex];
 
@@ -67,6 +68,7 @@ CrewmateColors get_random_enemy_colors()
 
 CrewmateColors get_player_colors()
 {
+    // Hardcoded to return RED
     if (colorMap.find("RED") != colorMap.end())
     {
         return colorMap["RED"];
@@ -80,9 +82,13 @@ CrewmateColors get_player_colors()
 GLfloat smallest_dimension(Dimensions dimensions)
 {
     if (dimensions.width < dimensions.height)
+    {
         return dimensions.width;
+    }
     else
+    {
         return dimensions.height;
+    }
 }
 
 GLfloat deg_to_radians(GLfloat deg)
