@@ -30,11 +30,6 @@ void Gunshot::move_gunshot(GLdouble frameTime)
     this->gY += this->gVel * cos(deg_to_radians(this->gDirectionAng)) * frameTime;
 }
 
-bool Gunshot::is_valid()
-{
-    return MAX_DISTANCE > sqrt(pow(this->gX, 2) + pow(this->gY, 2));
-}
-
 bool Gunshot::is_inside_character(Character *character)
 {
     if (this->gX + this->gRadiusGunshot > character->get_center().x - character->get_trunk_width() / 2 &&

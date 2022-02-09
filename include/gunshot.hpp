@@ -1,8 +1,6 @@
 #ifndef GUNSHOT_H
 #define GUNSHOT_H
 
-#define MAX_DISTANCE 500
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
@@ -53,9 +51,6 @@ public:
 
     GLfloat get_radius();
     Point get_center();
-
-    void move(GLdouble frameTime);
-    bool is_valid();
 };
 
 #endif /* GUNSHOT_H */
