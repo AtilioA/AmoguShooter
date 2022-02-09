@@ -12,6 +12,7 @@ void Terrain::draw_terrain()
 
     glTranslatef(this->center.x, -this->center.y, 0);
 
+    // Draw terrain from the top left corner to the bottom right corner
     glBegin(GL_POLYGON);
     glVertex2f(0, 0);
     glVertex2f(this->width, 0);
@@ -22,6 +23,7 @@ void Terrain::draw_terrain()
 
     if (game->get_debug_options().drawObjectCenter)
     {
+        // Draw dot at the center of the terrain
         glPushMatrix();
         glTranslatef(this->center.x, -this->center.y, 0);
         glPointSize(3);
@@ -32,6 +34,7 @@ void Terrain::draw_terrain()
         glEnd();
         glPopMatrix();
 
+        // Draw borders/hitboxes in red
         glPushMatrix();
         glTranslatef(this->center.x, -this->center.y, 0);
         glColor3f(1.0, 0.0, 0.0);

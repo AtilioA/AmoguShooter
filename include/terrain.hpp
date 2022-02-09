@@ -1,3 +1,5 @@
+// Library for the Terrain class
+
 #ifndef TERRAIN_H
 #define TERRAIN_H
 #include <GL/gl.h>
@@ -22,6 +24,7 @@ public:
         this->color = color;
     }
 
+    // Draw Terrain object
     void draw_terrain();
 
     void set_vertex(Point p);
