@@ -26,12 +26,16 @@ void Gunshot::draw_bullet(GLdouble x, GLdouble y)
 
 void Gunshot::move_gunshot(GLdouble frameTime)
 {
+    /* Move the Gunshot considering the direction and the speed.
+    // The angle must be converted to radians for the trigonometric functions.
+    // The frameTime is used to normalize the movement. */
     this->gX += this->gVel * sin(deg_to_radians(this->gDirectionAng)) * frameTime;
     this->gY += this->gVel * cos(deg_to_radians(this->gDirectionAng)) * frameTime;
 }
 
 bool Gunshot::is_inside_character(Character *character)
 {
+    // Check if the Gunshot is inside the Character considering that the character is drawn from the center to the edges (hence the divisions by 2)
     if (this->gX + this->gRadiusGunshot > character->get_center().x - character->get_trunk_width() / 2 &&
         this->gX - this->gRadiusGunshot < character->get_center().x + character->get_trunk_width() / 2 && this->gY + this->gRadiusGunshot > character->get_center().y - character->get_radius() &&
         this->gY - this->gRadiusGunshot < character->get_center().y + character->get_radius())
@@ -48,6 +52,7 @@ bool Gunshot::is_inside_terrain(Terrain *terrain)
 {
     Point terrainPos = terrain->get_center();
 
+    // Check if the Gunshot is inside the Terrain considering that the terrain is drawn from the top left corner to the bottom right corner
     if (this->gY + this->gRadiusGunshot >= terrainPos.y &&
         this->gY - this->gRadiusGunshot <= terrainPos.y + terrain->get_height())
     {
