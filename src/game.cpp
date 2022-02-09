@@ -5,12 +5,14 @@ using namespace std;
 
 void Game::make_a_character_shoot(Character *character)
 {
+    // Check if Character can shoot (based on their reload time and the time since the last shot)
     if (glutGet(GLUT_ELAPSED_TIME) - character->get_last_time_fired() >= character->get_reload_time())
     {
         Gunshot *newGunshot = new Gunshot(character->get_id(), character->get_center().x, character->get_center().y, 0, 0, character->get_speed(), character->get_radius(), character->get_theta_arm() + (90 * character->get_facing_direction()), character->get_facing_direction(), character->get_crewmate_colors().upperBody);
 
         this->charactersGunshots.push_back(newGunshot);
 
+        // Update the last time the Character fired a Gunshot
         character->set_last_time_fired(glutGet(GLUT_ELAPSED_TIME));
     }
 }
@@ -21,8 +23,10 @@ void Game::make_a_character_jump(Character *character, GLfloat frameTime)
     // cout << "initial y: " << character->get_jump_initial_y() - character->get_height() * 3 << endl;
     // cout << "y: " << character->get_center().y << endl;
 
+    // Player can't jump if they're already jumping (AKA double-jumping, etc)
     character->set_can_jump(false);
 
+    // If the player is jumping, move them up, but only if they're not at the top of the jump (3x their height)
     if (character->get_is_jumping() && (character->get_jump_initial_y() - character->get_height() * 3) < character->get_center().y)
     {
         character->set_is_jumping(true);
@@ -48,6 +52,7 @@ bool Game::has_player_reached_arena_end()
 
 bool Game::has_player_won()
 {
+    // Player has won if they have reached the end of the arena
     if (this->has_game_reached_end_state())
     {
         if (!this->player->is_alive())
@@ -65,11 +70,14 @@ bool Game::has_player_won()
 
 bool Game::has_game_reached_end_state()
 {
+    // End state is defined as:
+    // The player being alive at the end of the arena or
     if (this->player->is_alive() && this->has_player_reached_arena_end())
     {
         return true;
     }
-    if (!this->player->is_alive())
+    // the player being dead at any point.
+    else if (!this->player->is_alive())
     {
         return true;
     }
@@ -109,6 +117,7 @@ void Game::remove_character(Character *character)
     }
     else
     {
+        // If it's an Enemy, remove it from the enemies vector
         for (size_t i = 0; i < this->enemies.size(); i++)
         {
             if (this->enemies[i] == character)
@@ -131,15 +140,19 @@ void Game::handle_collision_gunshot(Gunshot *gunshot)
         Character *hitCharacter = this->check_collision_gunshot_any_character(gunshot);
         if (hitCharacter != NULL && hitCharacter->get_id() != gunshot->get_shooter_id())
         {
+            // Gunshot collided with a character and should be removed
             this->remove_gunshot(gunshot);
             cout << "Hit character " << hitCharacter->get_id() << endl;
+
+            // Set character as dead and remove from game
             hitCharacter->set_alive(false);
             if (hitCharacter == this->player)
             {
-                cout << "Player hit by a gunshot" << endl;
+                cout << "Player has been hit by a gunshot" << endl;
                 return;
             }
 
+            // Only remove the character here if it is not the player
             remove_character(hitCharacter);
         }
     }
@@ -229,7 +242,7 @@ void Game::move_a_character(Character *character, GLdouble dx, GLdouble dy, GLfl
 
 bool Game::check_collision(Character *character)
 {
-    if (this->is_outside_arena(character) || this->is_character_inside_any_terrain(character))
+    if (this->is_character_outside_arena(character) || this->is_character_inside_any_terrain(character))
     {
         return true;
     }
@@ -266,12 +279,15 @@ void Game::apply_gravity(GLfloat frameTime)
 bool Game::will_enemy_fall(Enemy *enemy, GLdouble dx, GLfloat frameTime)
 {
     Terrain *terrainBelowEnemy = enemy->get_terrain_below();
+
+    // If enemy has no terrain below, it can't fall
     if (terrainBelowEnemy == NULL)
     {
         return false;
     }
     else
     {
+        // Check if Enemy will be outside Terrain's x coordinates (i.e. will fall)
         GLfloat newX = enemy->get_center().x + (dx * frameTime);
         if ((newX + enemy->get_trunk_width() / 4) <= terrainBelowEnemy->get_center().x ||
             (newX - enemy->get_trunk_width() / 4) >= terrainBelowEnemy->get_center().x + terrainBelowEnemy->get_width())
@@ -422,17 +438,18 @@ void Game::reset_game()
     parseSVGFile(this->arenaSVGFilename, this);
 }
 
-bool Game::is_outside_arena(Character *character)
+bool Game::is_character_outside_arena(Character *character)
 {
     Terrain *arenaTerrain = this->background;
     Point arenaPos = this->background->get_center();
 
+    // Check if player is outside the arena vertically
     if (character->get_center().y - character->get_radius() < arenaPos.y ||
         character->get_center().y + character->get_radius() * 0.98 > arenaPos.y + arenaTerrain->get_height())
     {
         if (character->get_center().y >= arenaPos.y)
         {
-            // cout << "collided with bottom of arena" << endl;
+            // Player collided with bottom of the arena and should be able to jump again
             character->set_is_falling(false);
             character->set_is_jumping(false);
             character->set_can_jump(true);
@@ -440,7 +457,7 @@ bool Game::is_outside_arena(Character *character)
 
         if (character->get_center().y <= arenaPos.y)
         {
-            // cout << "collided with top of arena" << endl;
+            // Player collided with the top of the arena and should stop jumping
             character->set_is_falling(true);
             character->set_is_jumping(false);
             character->set_can_jump(false);
@@ -448,11 +465,13 @@ bool Game::is_outside_arena(Character *character)
         return true;
     }
 
+    // Player collided with bottom of the arena and should mark it as the terrain 'below'
     if (character->get_center().y + character->get_radius() > arenaPos.y + arenaTerrain->get_height())
     {
         character->set_terrain_below(this->get_arena_background());
     }
 
+    // Check if player is outside the arena horizontally
     if (character->get_center().x - character->get_trunk_width() / 2 < arenaPos.x || character->get_center().x + character->get_trunk_width() / 2 > arenaPos.x + arenaTerrain->get_width())
     {
         return true;
@@ -464,28 +483,17 @@ bool Game::is_outside_arena(Character *character)
 bool Game::is_character_inside_any_other_character(Character *character)
 {
     GLint charID = character->get_id();
+
+    // Check collision for player
     if (charID != this->player->get_id() && character->is_inside_another_character(this->player))
     {
         return true;
     }
 
+    // Check collision for enemies
     for (size_t i = 0; i < this->enemies.size(); i++)
     {
         if (charID != this->enemies[i]->get_id() && character->is_inside_another_character(this->enemies[i]))
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool Game::is_player_inside_any_enemy()
-{
-    for (size_t i = 0; i < this->enemies.size(); i++)
-    {
-        Enemy *enemy = this->enemies[i];
-        if (this->player->is_inside_another_character(enemy))
         {
             return true;
         }
@@ -501,6 +509,7 @@ bool Game::is_character_inside_any_terrain(Character *character)
         Terrain *terrain = this->terrains[i];
         if (character->is_inside_terrain(terrain))
         {
+            // If this debug option is enabled, highlight the terrain that the character collided with
             if (this->debugOptions.highlightTerrain)
             {
                 terrain->set_color(character->get_crewmate_colors().upperBody);
@@ -511,11 +520,6 @@ bool Game::is_character_inside_any_terrain(Character *character)
     }
 
     return false;
-}
-
-bool Game::is_player_inside_any_terrain()
-{
-    return is_character_inside_any_terrain(this->player);
 }
 
 // Enemy interface
@@ -557,7 +561,6 @@ void Game::draw_terrains()
     }
 }
 
-// Player interface
 Player *Game::get_player()
 {
     return this->player;
