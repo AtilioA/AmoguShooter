@@ -5,7 +5,7 @@ Simple side-scrolling game written in C++ OpenGL for Computer Graphics classes i
 
 Make sure you have FreeGLUT installed on your system:
 - For Debian: [freeglut3](https://packages.debian.org/buster/freeglut3), [freeglut3-dev](https://packages.debian.org/buster/freeglut3)
-- For Arch: [freeglut](https://archlinux.org/packages/extra/x86_64/freeglut/)
+- For Arch: [freeglut](https://archlinux.org/packages/extra/x86_64/freeglut/), [glu](https://archlinux.org/packages/extra/x86_64/glu/)
 
 The program was developed to be compatible with Linux, or, more specifically, with Ubuntu 20.04. Other platforms might not produce correct results or might not even work at all.
 
