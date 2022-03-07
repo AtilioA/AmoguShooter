@@ -301,10 +301,9 @@ void idle(void)
         {
             // Update enemies positions by moving them randomly
             game->move_enemies_randomly(frameTime);
+            // Make enemies shoot at player if they are in range
+            game->enemies_shoot_at_player(frameTime);
         }
-
-        // Make enemies shoot at player if they are in range
-        game->enemies_shoot_at_player(frameTime);
 
         GLdouble inc = player->get_speed();
         GLdouble dx = 0, dy = 0;
